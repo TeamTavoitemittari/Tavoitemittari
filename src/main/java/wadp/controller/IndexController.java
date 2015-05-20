@@ -17,5 +17,6 @@ public class IndexController {
     public String showIndex(Model model) {
         
         return "index";
+        
     }
 }
