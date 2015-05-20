@@ -99,6 +99,12 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.easyb</groupId>
+            <artifactId>maven-easyb-plugin</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
     
 
@@ -131,43 +137,6 @@
                         <version>5.0.3</version>  
                     </dependency>  
                 </dependencies>  
-                <configuration>
-                    <instrumentation>
-                        <excludes>                    
-                            <!-- Exclude unneccecary files from coverage report -->
-                            <!-- Interfaces -->
-                            <exclude>wadp/repository/CommentRepository.class</exclude>
-                            <exclude>wadp/repository/FileObjectRepository.class</exclude>
-                            <exclude>wadp/repository/ImageRepository.class</exclude>
-                            <exclude>wadp/repository/PostRepository.class</exclude>
-                            <exclude>wadp/repository/TripRepository.class</exclude>
-                            <exclude>wadp/repository/FriendshipRepository.class</exclude>
-                            <exclude>wadp/repository/NotificationRepository.class</exclude>
-                            <exclude>wadp/repository/UserRepository.class</exclude>
-                            <!-- Entities -->
-                            <exclude>wadp/domain/FileObject.class</exclude>
-                            <exclude>wadp/domain/Image.class</exclude>
-                            <exclude>wadp/domain/Comment.class</exclude>
-                            <exclude>wadp/domain/Friendship.class</exclude>
-                            <exclude>wadp/domain/Notification.class</exclude>
-                            <exclude>wadp/domain/Trip.class</exclude>
-                            <exclude>wadp/domain/User.class</exclude>
-                            <exclude>wadp/domain/Post.class</exclude>
-                            <exclude>wadp/domain/form/UserForm.class</exclude>
-							<!-- Other -->
-                            <exclude>wadp/profiles/DevProfile.class</exclude>
-                            <exclude>wadp/profiles/ProdProfile.class</exclude>
-							
-                        </excludes>
-                    </instrumentation>
-                    <formats>
-                        <format>xml</format>
-                        <format>html</format>
-                    </formats>
-                    <maxmem>256m</maxmem>
-                    <!-- aggregated reports for multi-module projects -->
-                    <aggregate>true</aggregate>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -192,6 +161,26 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <plugin>
+                <groupId>org.easyb</groupId>
+                <artifactId>maven-easyb-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <storyType>html</storyType>
+                    <storyReport>${basedir}/target/easyb/easyb-report.html
+                    </storyReport>
+                </configuration>
+            </plugin>
+            
         </plugins>
     </build>
 </project>
