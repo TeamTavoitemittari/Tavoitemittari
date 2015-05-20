@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Posts</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
+    <link rel="stylesheet" href="/css/skel.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-desktop.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.dropotron.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/skel-layers.min.js"></script>
+    <script src="/js/init.js"></script>
+</head>
+<body>
+    <div th:replace="fragments/header :: header">header</div>
+
+    <div id="main-wrapper">
+        <div id="main" class="container">
+            <div class="row">
+                <div class="3u">
+                    <div class="sidebar">
+                        <section>
+                            <h2 class="major"><span>Add new post</span></h2>
+                            <form method="POST" th:action="@{/posts}" enctype="multipart/form-data">
+                                <label for="file">File</label>
+                                <input type="file" name="file" id="file" accept="image/*"/><br/><br/>
+
+                                <label for="image_text">Image text</label>
+                                <textarea  name="image_text"
+                                           id="image_text"
+                                           placeholder="Comment your image here!"
+                                           cols="55"
+                                           rows="10"></textarea><br/>
+                                <label for="trips">Trips</label>
+                                <select name="trips" id="trips" multiple="multiple" style='height: 150px'>
+                                    <option th:each="trip : ${trips}" value="Helsinki" th:value="${trip.id}" th:text="${trip.header}">
+                                        Helsinki
+                                    </option>
+                                    <!--/*-->
+                                    <option value="Tallinna">Tallinna</option>
+                                    <option value="Moskova">Moskova</option>
+                                    <option value="Tukholma">Tukholma</option>
+                                    <option value="Berliini">Berliini</option>
+                                    <!--*/-->
+                                </select>
+
+                                <br/><input type="submit" value="Add!"/>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+                <div class="9u important(collapse)">
+                    <div class="content content-right">
+                        <article class="box page-content">
+                            <header>
+                                <h2>Existing posts</h2>
+                                <p th:if="${#lists.isEmpty(posts)}">Nothing here but the allure of future travels</p>
+                            </header>
+                        </article>
+                        <div class="row" th:if="${posts != null}">
+                            <div class="5u" th:each="post : ${posts}">
+                                <section class="box feature post-summary">
+                                    <ul class="meta">
+                                        <li class="icon fa-clock-o" th:text="'Posted on ' + ${#calendars.format(post.postDate,'dd MMMM yyyy HH:mm')}">15 minutes ago</li>
+                                        <li class="icon fa-comments"><label th:text="${#lists.size(post.comments)}">8</label></li>
+                                    </ul> 
+                                    <a href="#" th:href="@{'/posts/'+${post.id}}">
+                                        <img id="user-image" th:attr="src=@{'/user_images/' + ${post.image.galleryThumbnailId}}"/>
+                                    </a>
+                                    <p th:text="${post.imageText}"></p>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
