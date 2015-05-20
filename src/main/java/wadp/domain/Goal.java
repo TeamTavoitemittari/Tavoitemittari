@@ -5,11 +5,40 @@
  */
 
 package wadp.domain;
-
+import javax.persistence.Entity;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 /**
  *
  * @author mnoponen
  */
+@Entity
 public class Goal {
     
-}
+    private String grade;
+    @OneToMany
+    private List<Skill> skills;
+    
+    
+     public String getGrade() {
+        return this.grade;
+    }
+
+    public void setGrade(String name) {
+        this.grade = name;
+    }
+        
+     public List<Skill> getSkills() {
+        return this.skills;
+                }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+}    
+        
+   
+
+        
