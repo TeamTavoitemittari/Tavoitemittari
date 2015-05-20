@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
  * @author mnoponen
  */
 @Entity
-public class Goal {
+public class Goal extends AbstractPersistable<Long>{
     
     private String grade;
     @OneToMany
@@ -26,13 +26,13 @@ public class Goal {
         return this.grade;
     }
 
-    public void setGrade(String name) {
-        this.grade = name;
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
         
      public List<Skill> getSkills() {
         return this.skills;
-                }
+    }
 
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
