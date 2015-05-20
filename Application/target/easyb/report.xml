@@ -1,0 +1,8 @@
+<easyb time='Wed May 20 11:14:16 EEST 2015' totalbehaviors='0' totalfailedbehaviors='0' totalpendingbehaviors='0' executionTime='369'>
+  <stories scenarios='0' failedscenarios='0' pendingscenarios='0' executionTime='369'>
+    <story name='empty_' scenarios='0' failedscenarios='0' pendingscenarios='0' executionTime='369'>
+      <execute name='empty_' />
+    </story>
+  </stories>
+  <specifications specifications='0' failedspecifications='0' pendingspecifications='0' executionTime='0' />
+</easyb>
