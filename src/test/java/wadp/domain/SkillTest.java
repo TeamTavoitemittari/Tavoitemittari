@@ -22,7 +22,6 @@ public class SkillTest {
         Skill skill = new Skill("Planetary calculation");
         skill.addExercise(exercise);
         assertEquals(1, skill.getExercises().size());
-        fail("Adding an exercise did not work.");
     }
 
     /**
@@ -35,7 +34,6 @@ public class SkillTest {
         assertEquals(0, skill.getExercises().size());
         skill.addExercise(new Exercise("Calculate the mass of the sun"));
         assertEquals(1, skill.getExercises().size());
-        fail("The test case is a prototype.");
     }
     
     /**
