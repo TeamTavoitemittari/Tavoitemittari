@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Trips</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>        
+        <link rel="stylesheet" href="/css/skel.css" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/style-desktop.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.dropotron.min.js"></script>
+        <script src="/js/skel.min.js"></script>
+        <script src="/js/skel-layers.min.js"></script>
+        <script src="/js/init.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript" th:inline="javascript">            
+            function toggleFormVisibility() {
+                var e = document.getElementById('editripform');
+                if(e.style.display === 'block'){   
+                    e.style.display = 'none';                    
+                } else {
+                   e.style.display = 'block';
+                }
+            }
+        </script>
+        <div th:replace="fragments/header :: header">header</div>
+        
+        <div id="main-wrapper">
+            <div id="main" class="container">
+                <div class="row">
+                    <div class="3u">
+                        <div class="sidebar">
+                            <!-- Sidebar -->
+                            <section>
+                                <h2 class="major"><span>Create new trip</span></h2>
+                                <ul class="divided">
+                                    <li>
+                                        <article class="box post-summary">
+                                            <form method="POST" th:action="@{/trips}" >
+                                                <label for="trip_header">Trip header</label>        
+                                                <input type="text" id="trip_header" name="header" />
+                                                <br/>
+                                                <label for="description">Trip description</label>
+                                                <textarea name="description"
+                                                          id="description"
+                                                          placeholder="Write description from your trip!"
+                                                          cols="55"
+                                                          rows="10"></textarea>
+                                                <br/>
+                                                <label for="description">Who can see my trip</label>
+                                                <select id="visibility" name="visibility">          
+                                                    <option th:each="visibility : ${visibilities}" th:value="${visibility}" 
+                                                            th:text="${#strings.capitalizeWords(#strings.toLowerCase(visibility))}">Option 1</option>
+                                                </select>
+                                                <br/>
+                                                <input type="submit" value="Save"/>
+                                            </form>
+                                        </article>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="9u important(collapse)">
+                        <div class="content content-right">
+                            <article class="box page-content">
+                                <header>
+                                    <h2>Your trips</h2>
+                                    <p th:if="${#lists.isEmpty(trips)}">You are yet to experience the wonders of the world</p>
+                                </header>
+                            </article>
+                            <div id="triplist" th:replace="fragments/triplist :: triplist">trip list</div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row 200%">
+                    <div class="12u">        
+                        <!-- Features -->
+                                                
+                    </div>
+                </div>
+            </div>       
+        </div>    
+    </body>
+</html>
