@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Edit Trip</title> 
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>        
+        <link rel="stylesheet" href="/css/skel.css" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/style-desktop.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.dropotron.min.js"></script>
+        <script src="/js/skel.min.js"></script>
+        <script src="/js/skel-layers.min.js"></script>
+        <script src="/js/init.js"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/header :: header">header</div>
+        <div id="main-wrapper">
+            <div id="main" class="container">
+                <div class="row">
+                    <div class="12u">
+                        <div class="content">
+                            <article class="box page-content">
+                                <header>
+                                    <h2>Edit trip</h2>
+                                    <p th:if="${trip != null}" th:text="${trip.header}" >Trip name</p>
+                                </header>
+
+                                <section>
+                                    <!--<span class="image featured"><img src="images/pic05.jpg" alt="" /></span>-->
+                                    <form method="POST" th:action="@{'/trips/'+${trip.id}+'/edit'}" >
+                                        <label for="trip_header">Trip header</label> 
+                                        <div class="6u">
+                                            <input type="text" id="trip_header" name="header" th:value='${trip.header}'/>
+                                        </div>
+                                        <br/>
+                                        <label for="description">Trip description</label>
+                                        <div class="9u">
+                                            <textarea name="description" th:value='${trip.description}' th:field="*{trip.description}"
+                                                      id="description"
+                                                      cols="55"
+                                                      rows="10"></textarea>
+                                        </div>
+                                        
+                                        <br/>
+                                        <label for="visibility">Who can see my trip</label>
+                                        <div class="3u">
+                                            <select id="visibility" name="visibility"> 
+                                                <option th:each="visibility : ${visibilities}" th:value="${visibility}" 
+                                                        th:text="${#strings.capitalizeWords(#strings.toLowerCase(visibility))}"
+                                                        th:selected="${#strings.toLowerCase(visibility) == #strings.toLowerCase(trip.visibility)}">Option 1</option>
+                                            </select>
+                                        </div>
+                                        <br/>
+                                        <input th:if="${trip != null}" type="hidden" name="tripId" th:value="${trip.id}"></input>
+                                        <input type="submit" value="Save changes"/>
+                                    </form>
+                                </section>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
