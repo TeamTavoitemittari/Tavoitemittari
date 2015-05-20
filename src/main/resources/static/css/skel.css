@@ -14,7 +14,10 @@
 
 	body {
 		/* min-width: (containers) */
-		min-width: 1200px;
+		margin-left: auto;
+                margin-right: auto;
+                
+                width: 1200px;
 	}
 
 	.container {
@@ -24,6 +27,10 @@
 		/* width: (containers) */
 		width: 1200px;
 	}
+        
+        .center {
+            margin: 0 auto;
+        }
 
 	/* Modifiers */
 
