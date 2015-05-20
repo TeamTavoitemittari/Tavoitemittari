@@ -3,9 +3,11 @@
 package wadp.domain;
 
 import java.util.ArrayList;
+import javax.persistence.Entity;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-
-public class Skill {
+@Entity
+public class Skill extends AbstractPersistable<Long>{
     
     private String description;
     private ArrayList<Exercise> exercises;

@@ -1,8 +1,11 @@
 
 package wadp.domain;
 
+import javax.persistence.Entity;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-public class Exercise {
+@Entity
+public class Exercise extends AbstractPersistable<Long>{
     
     public String description;
     
