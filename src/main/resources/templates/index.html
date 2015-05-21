@@ -7,22 +7,17 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content=""/>
         <meta name="author" content=""/>
-        <link rel="stylesheet" href="/css/style.css" />
-        <link rel="stylesheet" href="/css/style-desktop.css" />
         <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
-
+        <link rel="stylesheet" href="/css/narrow.css"/>
         <title>Tavoitemittari</title>
-
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
     </head>
 
     <body>
-        <div class="row">
-            <div class ="col-lg-4">
-                <h1 class="major text-center">Tavoitemittari</h1>
+        <div class="container">
+            <div>
+                <h1 class="text-center">Tavoitemittari</h1>
+                <br/>
                 <form>
                     <div class="form-group">
                         <label for="email">Sähköpostiosoite</label>
@@ -37,13 +32,13 @@
                             <input type="checkbox"/> Muista minut
                         </label>
                     </div>
-                    <button type="submit" class="button btn-block">Kirjaudu sisään</button>
+                    <button class="btn btn-primary btn-lg center-block" type="submit">Kirjaudu sisään</button>
                 </form>
-                <br></br>
-                <p>
+                <br/><br/>
+                <p class="text-center">
                     Ei ole tunnusta? Ei hätää.
                 </p>
-                <a href="#">Rekisteröidy</a>    
+                <button class="btn btn-success round center-block" type="submit">Rekisteröidy!</button> 
             </div>
         </div>
     </body></html>
