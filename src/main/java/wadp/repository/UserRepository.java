@@ -6,17 +6,17 @@
 package wadp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import wadp.domain.Student;
+import wadp.domain.User;
 
 /**
  *
  * @author OP
  */
 
-public interface StudentRepository extends JpaRepository <Student, Long> {
+public interface UserRepository extends JpaRepository <User, Long> {
     
   /// no  username so users identified by email address
     
-    Student findByEmail(String username);
+    User findByEmail(String email);
     
 }

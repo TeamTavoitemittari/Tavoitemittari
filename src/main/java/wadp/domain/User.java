@@ -19,22 +19,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  * @author OP
  */
 @Entity
-public class Student extends AbstractPersistable<Long> {
+public class User extends AbstractPersistable<Long> {
     
     /// no username since students will be identifyed by email address(?)
-    
-    
-      //  @Length(min = 5, max = 15)
-    @NotBlank
-    @Email
+     
     @Column(unique = true)
-    private String email;
-    
-    @NotBlank
-    private String name;
-  
-    @NotBlank
-    @Length(min = 5, max = 20)
+    private String email;    
+   ///  teacher or a student 
+    private String userRole;    
+    private String name;   
     private String password;
 
     @OneToMany
@@ -72,4 +65,14 @@ public class Student extends AbstractPersistable<Long> {
     public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+    
+    
 }
