@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package wadp.repository;
 
-/**
- *
- * @author villvirt
- */
-public class ExerciseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import wadp.domain.Exercise;
+
+
+public interface ExerciseRepository extends JpaRepository<Exercise, Long>{
     
 }
