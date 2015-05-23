@@ -16,7 +16,7 @@ public class IndexController {
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex(Model model) {
         
-        return "courses";
+        return "index";
         
     }
 }
