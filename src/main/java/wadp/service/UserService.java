@@ -43,8 +43,6 @@ public List<User> list() {
        
 public User createUser(String email, String password, String name, String userRole) {
         
-        
-        
         if (email== null || email.isEmpty()) {
             throw new IllegalArgumentException("Email must not be null or empty");
         }
