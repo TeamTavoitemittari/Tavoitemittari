@@ -11,4 +11,4 @@ Application for tracking and assessing mathematics learning of school children
 
 [![Build Status](https://travis-ci.org/TeamTavoitemittari/Tavoitemittari.svg?branch=master)](https://travis-ci.org/TeamTavoitemittari/Tavoitemittari)
 
-[![Coverage Status](https://coveralls.io/repos/TeamTavoitemittari/Tavoitemittari/badge.svg)](https://coveralls.io/r/TeamTavoitemittari/Tavoitemittari)
+[![Coverage Status](https://coveralls.io/repos/TeamTavoitemittari/Tavoitemittari/badge.svg?branch=master)](https://coveralls.io/r/TeamTavoitemittari/Tavoitemittari?branch=master)
