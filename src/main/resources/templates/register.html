@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+                  <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
         <meta charset="utf-8"/>
@@ -12,29 +12,41 @@
         <link rel="stylesheet" href="/css/narrow.css"/>
         <title>Tavoitemittari</title>
     </head>
+
     <body>
         <div class="container">
             <div>
                 <h1 class="text-center">Tavoitemittari</h1>
                 <br/>
-
-                <b th:if="${#fields.hasErrors('user')}" th:errors="*{user}">Error message</b>
-                <br></br>
-
                 <form th:action="@{/register}"  method="post">
-                    <table>
+                    <b th:if="${#fields.hasErrors('user')}" th:errors="*{user}">Error message</b>
+                <br></br>
+                     <b th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}">Error message</b>
+                     <div class="form-group">
+                        <label for="text">Nimi</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Matti Meikäläinen"/>
+                     </div>
+                    
+                    <b th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">Error message</b>
+                    <div class="form-group">
+                        <label for="email">Sähköpostiosoite</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
+                    </div>
+                     <b th:if="${#fields.hasErrors('user.confirmemail')}" th:errors="*{user.confirmemail}">Error message</b>
+                     <div class="form-group">
+                        <label for="email">Sähköpostiosoite uudelleen</label>
+                        <input type="email" name="confirmemail" class="form-control" id="confirmemail" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
+                    </div>
+                   
 
 
-                        <tr>
-                            <td>Name</td>
-                            <td><input type="text" name="name" class="form-control"  placeholder="nimi" /></td>
-                            <td th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}">Error message</td>
-                        </tr>
-                        <tr>
-                            <td>Role</td>
-                            <td> <select name="userRole"  class="form-control">
+                     
+                    <div class="form-group">
+                        <label for="password">Käyttäjän rooli</label>
+                    <select name="userRole"  class="form-control">
                                     <option value="student">student</option>
                                     <option value="teacher">teacher</option>
+<<<<<<< HEAD
 
 
                                 </select>
@@ -75,8 +87,29 @@
                         </tr>
 
                     </table>
+=======
+                                </select> 
+                    </div>
+                   
+                     <b th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">Error message</b>
+                    <div class="form-group">
+                        <label for="password">Salasana</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Salasana"/>
+                    </div>
+                     <b th:if="${#fields.hasErrors('user.confirmpassword')}" th:errors="*{user.confirmpassword}">Error message</b>
+                     <div class="form-group">
+                        <label for="password">Salasana uudelleen</label>
+                        <input type="password" name="confirmpassword"  class="form-control" id="confirmpassword" placeholder="Salasana"/>
+                    </div>
+
+
+
+                   
+                    <button class="btn btn-primary btn-lg center-block" type="submit">Rekisteröidy</button>
+>>>>>>> 2e56d5298dea17460928e5ca7b5191134ba1f170
                 </form>
+                <br/><br/>
+              
             </div>
         </div>
-    </body>
-</html>
+    </body></html>

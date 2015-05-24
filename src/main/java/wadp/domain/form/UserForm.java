@@ -14,22 +14,22 @@ import org.hibernate.validator.constraints.Email;
 
 
 @FieldMatch.List({
-        @FieldMatch(first = "password", second = "confirmpassword", message = "The password fields must match"),
-        @FieldMatch(first = "email", second = "confirmemail", message = "The email fields must match")})
+        @FieldMatch(first = "password", second = "confirmpassword", message = "Varmista että kirjoitit salasanat oikein!"),
+        @FieldMatch(first = "email", second = "confirmemail", message = "Varmista että kirjoitit sähköpostiosoitteesi oikein!")})
 
 public class UserForm {
 
-    @NotNull(message="Email cannot be null")
-    @NotBlank(message="Email cannot be empty")
-    @Email(message="Must be a valid email")
+    @NotNull(message="Sähköpostia ei voi jättää tyhjäksi!")
+    @NotBlank(message="Sähkäpostiaei voi jättää tyhjäksi!")
+    @Email(message="Sähköpostiosoitteen pitää olla validi!")
     private String email;
     
-    @NotNull(message="Name cannot be null")
-    @NotBlank(message="Name cannot be empty")
+    @NotNull(message="Nimeä ei voi jättää tyhjäksi!")
+    @NotBlank(message="Nimeä ei voi jättää tyhjäksi! !")
     private String name;
 
-    @NotNull(message="Password cannot be null")
-    @Length(min=8, message="Password must contain at least 8 characters")
+    @NotNull(message="Salasanaa ei voi jättää tyhjäksi!")
+    @Length(min=8, message="Salasanan pitää olla ainakin 8 kirjainta!")
     private String password;
     private String userRole;
     private String confirmpassword;
