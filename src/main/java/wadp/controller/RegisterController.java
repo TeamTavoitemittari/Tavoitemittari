@@ -13,6 +13,7 @@ import wadp.service.UserService;
 import wadp.service.EmailAlreadyRegisteredException;
 
 import javax.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/register")
@@ -22,7 +23,7 @@ public class RegisterController {
     private UserService UserService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createUser(@ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
+    public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -33,8 +34,9 @@ public class RegisterController {
             bindingResult.addError(new FieldError("user", "email", "This email address already registered!"));
             return "register";
         }
+        redirectAttributes.addFlashAttribute("registeredEmail", user.getEmail());
         
-        return "redirect:view";
+        return "redirect:welcome";
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import wadp.repository.UserRepository;
 import java.util.List;
+import javax.transaction.Transactional;
 
 import wadp.domain.User;
 
@@ -40,7 +41,7 @@ public List<User> list() {
         }
         return false;
     }
-       
+@Transactional       
 public User createUser(String email, String password, String name, String userRole) {
         
         if (email== null || email.isEmpty()) {
