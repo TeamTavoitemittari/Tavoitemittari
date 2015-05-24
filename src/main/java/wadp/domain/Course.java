@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 public class Course extends AbstractPersistable<Long> {
     
     private String name;
+    private String description;
     
     @OneToMany
     private List<Goal> goals;
@@ -29,4 +30,13 @@ public class Course extends AbstractPersistable<Long> {
     public void setGoals(List<Goal> goals) {
         this.goals = goals;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
 }

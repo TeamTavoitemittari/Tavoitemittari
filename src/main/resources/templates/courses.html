@@ -25,6 +25,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class ="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">Tavoitemittari</a>
                 </div>
@@ -50,11 +51,13 @@
                         <button type="submit" class="btn btn-default">Hae</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Kirjaudu ulos</a></li>
+                        <li><a href="/logout">Kirjaudu ulos</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        
+        <!--Dummy hard-coded courses for demonstration-->
 
         <div class="row  center-block col-xs-10 col-sm-4 col-md-3 col-lg-2">
             <div class="panel panel-primary">
@@ -79,6 +82,23 @@
                     <p><a href="#" class="btn btn-success" role="button">Ilmoittaudu</a> <a href="#" class="btn btn-default" role="button">Lisätietoja</a></p>
                 </div>
 
+            </div>
+        </div>
+        
+        <!--List of courses found in database-->
+
+        <div th:if="${courses != null}">
+            <div class="row  center-block col-xs-10 col-sm-4 col-md-3 col-lg-2" th:each="course : ${courses}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" th:text="${course.name}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Anatomian perusteet</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p th:text="${course.description}">Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1.</p> 
+                        <p><a href="#" class="btn btn-success" role="button">Ilmoittaudu</a> <a href="#" class="btn btn-default" role="button">Lisätietoja</a></p>
+                    </div>
+
+                </div>
             </div>
         </div>
 

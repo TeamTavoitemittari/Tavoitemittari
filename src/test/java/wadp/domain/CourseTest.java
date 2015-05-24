@@ -83,4 +83,14 @@ public class CourseTest {
         assertEquals(expResult.getGoals(), instance.getGoals());
     }
     
+    @Test
+    public void testGetAndSetDescription(){
+        System.out.println("setAndGetDescription");
+        Course course = new Course();
+        course.setDescription("descrip");
+        assertEquals("descrip", course.getDescription());
+        course.setDescription("second");
+        assertEquals("second", course.getDescription());
+    }
+    
 }

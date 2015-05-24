@@ -20,39 +20,35 @@ import wadp.domain.User;
 @Service
 public class UserService {
 
-    
+    @Autowired
+    private UserRepository userRepository;
 
- @Autowired
- private UserRepository userRepository;
-         
-    
-
-public List<User> list() {
+    public List<User> list() {
         List<User> list = userRepository.findAll();
-        
+
         return list;
     }
-       
- private boolean emailAlreadyRegistered(String email) {
+
+    private boolean emailAlreadyRegistered(String email) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
             return true;
         }
         return false;
     }
-       
-public User createUser(String email, String password, String name, String userRole) {
-        
-        if (email== null || email.isEmpty()) {
+
+    public User createUser(String email, String password, String name, String userRole) {
+
+        if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email must not be null or empty");
         }
         email = email.toLowerCase();
         email = email.trim();
-        
+
         if (emailAlreadyRegistered(email)) {
             throw new EmailAlreadyRegisteredException();
         }
-        
+
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -62,5 +58,15 @@ public User createUser(String email, String password, String name, String userRo
         return userRepository.save(user);
     }
 
-   
+    public User authenticate(String email, String password) throws AuthenticationException {
+        User user = userRepository.findByEmail(email);
+
+        if (user == null || !user.passwordEquals(password)) {
+            throw new AuthenticationException("Unable to authenticate user with email" + email) {
+            };
+        }
+
+        return user;
+    }
+
 }

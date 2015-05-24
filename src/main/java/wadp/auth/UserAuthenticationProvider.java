@@ -11,26 +11,27 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import wadp.domain.User;
+import wadp.service.UserService;
 
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
 
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public Authentication authenticate(Authentication a) throws AuthenticationException {
-//        String username = a.getPrincipal().toString();
-//        String password = a.getCredentials().toString();
-//
-//        User u = userService.authenticate(username, password);
-//
-//        List<GrantedAuthority> grantedAuths = new ArrayList<>();
-//
-//        grantedAuths.add(new SimpleGrantedAuthority(u.getUserRole()));
-//
-//        return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
-        return null;
+        String email = a.getPrincipal().toString();
+        String password = a.getCredentials().toString();
+
+        User user = userService.authenticate(email, password);
+
+        List<GrantedAuthority> grantedAuths = new ArrayList<>();
+
+        grantedAuths.add(new SimpleGrantedAuthority(user.getUserRole()));
+
+        return new UsernamePasswordAuthenticationToken(email, password, grantedAuths);
     }
 
     @Override

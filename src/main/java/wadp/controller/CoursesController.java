@@ -1,22 +1,23 @@
-package wadp.controller;
 
-import java.util.*;
+package wadp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import wadp.service.CourseService;
 
-// Any request not handled by other controllers is redirected to index
 @Controller
-@RequestMapping("*")
-public class IndexController {
-
+@RequestMapping("/courses")
+public class CoursesController {
+    
+    @Autowired
+    private CourseService courseService;
+    
     @RequestMapping(method = RequestMethod.GET)
-    public String showIndex(Model model) {
-        
-        return "index";
-        
+    public String showCoursesPage(Model model) {
+        model.addAttribute("courses", courseService.getCourses());
+        return "courses";
     }
 }
