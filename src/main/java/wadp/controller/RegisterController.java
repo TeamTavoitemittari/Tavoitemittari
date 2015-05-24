@@ -31,7 +31,7 @@ public class RegisterController {
         try {
             UserService.createUser(user.getEmail(), user.getPassword(), user.getName(), user.getUserRole());
         } catch (EmailAlreadyRegisteredException ex) {
-            bindingResult.addError(new FieldError("user", "email", "This email address already registered!"));
+            bindingResult.addError(new FieldError("user", "email", "Sähköpostiosoite on jo rekisteröity palveluun!"));
             return "register";
         }
         redirectAttributes.addFlashAttribute("registeredEmail", user.getEmail());

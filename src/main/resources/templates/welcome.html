@@ -22,10 +22,10 @@
                 
                    
                 Sinut on rekisteröity palveluun sähköpostiosoitteella <b th:text="${registeredEmail}">Registered email.</b>. <br></br>
-                <p>
-        <a href="index.html">Kirjaudu sisään</a>
-             </p>
-                
+             <form action="/index">
+                <button class="btn btn-success round center-block" type="submit">Kirjaudu sisään!</button> 
+                </form>
+                <hr></hr>
                 
             <p>(Lista
                 käyttäjistä herokun testaamista varten)</p>
