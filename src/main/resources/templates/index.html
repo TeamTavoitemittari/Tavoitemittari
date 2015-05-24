@@ -22,11 +22,11 @@
                 <form method="POST" class="form-horizontal" role="form" th:action="@{/authenticate}">
                     <div class="form-group">
                         <label for="email">Sähköpostiosoite</label>
-                        <input type="email" class="form-control" id="email" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
                     </div>
                     <div class="form-group">
                         <label for="password">Salasana</label>
-                        <input type="password" class="form-control" id="password" placeholder="Salasana"/>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Salasana"/>
                     </div>
                     <div class="checkbox">
                         <label>

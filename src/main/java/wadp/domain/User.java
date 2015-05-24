@@ -42,8 +42,8 @@ public class User extends AbstractPersistable<Long> {
         this.email = email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+   public void setPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
     
     public String getName() {
