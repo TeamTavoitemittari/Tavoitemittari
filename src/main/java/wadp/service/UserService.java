@@ -37,17 +37,10 @@ public class UserService {
         }
         return false;
     }
-<<<<<<< HEAD
-
-    public User createUser(String email, String password, String name, String userRole) {
-
-        if (email == null || email.isEmpty()) {
-=======
 @Transactional       
 public User createUser(String email, String password, String name, String userRole) {
         
         if (email== null || email.isEmpty()) {
->>>>>>> 2e56d5298dea17460928e5ca7b5191134ba1f170
             throw new IllegalArgumentException("Email must not be null or empty");
         }
         email = email.toLowerCase();
