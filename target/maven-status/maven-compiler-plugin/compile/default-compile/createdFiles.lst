@@ -17,10 +17,13 @@ wadp/service/CourseService.class
 wadp/domain/Course.class
 wadp/config/SecurityConfiguration$AuthenticationConfiguration.class
 wadp/domain/Goal.class
+wadp/service/ExerciseService.class
 wadp/domain/form/UserForm.class
+wadp/service/GoalService.class
 wadp/config/GeneralConfig.class
 wadp/controller/CoursesController.class
 wadp/controller/IndexController.class
+wadp/service/SkillService.class
 wadp/domain/Exercise.class
 wadp/config/SecurityConfiguration.class
 wadp/controller/RegisterController.class

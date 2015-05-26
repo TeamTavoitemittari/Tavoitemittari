@@ -1,4 +1,5 @@
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/repository/SkillRepository.java
+/Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/service/GoalService.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/repository/GoalRepository.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/domain/User.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/repository/CourseRepository.java
@@ -11,6 +12,7 @@
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/domain/Skill.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/controller/RegisterController.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/config/SecurityConfiguration.java
+/Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/service/SkillService.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/profiles/ProdProfile.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/repository/UserRepository.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/domain/form/UserForm.java
@@ -22,4 +24,5 @@
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/Application.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/service/UserService.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/service/CourseService.java
+/Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/service/ExerciseService.java
 /Users/Anna/Ohjelmointi/Tavoitemittari/src/main/java/wadp/auth/UserAuthenticationProvider.java
