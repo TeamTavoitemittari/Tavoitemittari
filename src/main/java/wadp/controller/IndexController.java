@@ -13,26 +13,29 @@ import wadp.service.UserService;
 @Controller
 @RequestMapping("*")
 public class IndexController {
-    
+
     @Autowired
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex(Model model) {
-        
-        return "index";    
+
+        return "index";
     }
-    
-     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public String showPrototype(Model model) {
-        return "courses";  
+        return "courses";
     }
-    
-    
-    
-      @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-     public String showWelcomePage(Model model) {
+
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    public String showWelcomePage(Model model) {
         model.addAttribute("users", userService.list());
         return "welcome";
+    }
+
+    @RequestMapping(value = "/coursedemo", method = RequestMethod.GET)
+    public String getCourseDemo(Model model) {
+        return "course";
     }
 }
