@@ -1,228 +1,47 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Index</title>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
-    <link rel="stylesheet" href="/css/skel.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/style-desktop.css" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->    
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.dropotron.min.js"></script>
-    <script src="/js/skel.min.js"></script>
-    <script src="/js/skel-layers.min.js"></script>
-    <script src="/js/init.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGBcJ-D045wfMa-cBIrfKARkx93_U98sU"></script>
-    <script type="text/javascript" src="/js/googlemap.js"></script>
-</head>
-<body class="homepage">
-    <script type="text/javascript" th:inline="javascript">
-        $(function(){            
-            var googleMap1;
-            var googleMap2;
-            var googleMap3;
-            var mapCoordinates1 = /*[[${coordinates1}]]*/ 0.0;
-            var mapCoordinates2 =/*[[${coordinates2}]]*/ 0.0;
-            var mapCoordinates3 =/*[[${coordinates3}]]*/ 0.0;
+    <head lang="en">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="/css/narrow.css"/>
+        <title>Tavoitemittari</title>
+    </head>
 
-            (function() {
-                var latLng = /*[[${startPoint1}]]*/ 0.0;
-                if(mapCoordinates1 !== null) {
-                    if (mapCoordinates1.length > 0){
-                        googleMap1 = initialize(latLng[0], latLng[1], 'googleMap1', true);
-                    }
-                }                
-                
-                latLng = /*[[${startPoint2}]]*/ 0.0;
-                if(mapCoordinates2 !== null) {
-                    if (mapCoordinates2.length > 0){
-                        googleMap2 = initialize(latLng[0], latLng[1], 'googleMap2', true);
-                    }
-                }
-                
-                latLng = /*[[${startPoint3}]]*/ 0.0;
-                if(mapCoordinates3 !== null) {
-                    if (mapCoordinates3.length > 0){                                            
-                        googleMap3 = initialize(latLng[0], latLng[1], 'googleMap3', true);
-                    }
-                }
-            })();
-
-            if(googleMap1){
-                drawMarkers(googleMap1, mapCoordinates1);
-                drawPolyLinePath(googleMap1);
-            }
-            
-            if(googleMap2){
-                drawMarkers(googleMap2, mapCoordinates2);
-                drawPolyLinePath(googleMap2);
-            }
-            
-            if(googleMap3){
-                drawMarkers(googleMap3, mapCoordinates3);
-                drawPolyLinePath(googleMap3);
-            }
-        });
-    </script>
-    <div th:replace="fragments/header :: header">header</div>
-    <br/>
-    <div th:each="user : ${users}">
-        <a href="#" th:href="@{'profile/' + ${user.id}}" th:text="${user.username}">user name</a>
-    </div>
-
-    <!-- Main -->
-    <div id="main-wrapper">
-        <div id="main" class="container">
-            <div class="row 200%">
-                <div class="12u">
-                    <!-- Highlight -->
-                    <section class="box highlight">
-                        <header>
-                            <h2>Below you can browse public trips and travelers</h2>
-                            <p>To access more features, please log in or register!</p>
-                        </header>
-                        <div class="image featured" th:replace="fragments/map :: map"></div>
-                    </section>
-                </div>
-            </div>
-            <div class="row 200%" th:if="${activeUsers != null} and ${!#lists.isEmpty(activeUsers)}">
-                <div class="12u">
-                    <!-- Most Active users -->
-                    <section class="box features">
-                        <h2 class="major"><span>Most active users</span></h2>
-                        <div>
-                            <div class="row">
-                                <div class="3u" th:each="entry: ${activeUsers}">
-                                    <!-- User -->
-                                    <section class="box feature">
-                                        <a href="#" class="image featured" th:href="@{'profile/' + ${(entry.key).id}}">
-                                            <img id="user-image" th:attr="src=@{'/user_images/' + @{${entry.key.profilePicId}}}" alt="No picture"/>
-                                        </a>
-                                        <h3><a href="#" th:href="@{'profile/' + ${(entry.key).id}}" th:text="${(entry.key).username}">Traveler one</a></h3>
-                                        <ul class="meta">
-                                            <li></li>
-                                            <li th:text="'Trips made by traveler: ' + ${#lists.size((entry.key).trips)}">No trips made</li>
-                                            <li th:text="'Posts made by traveler: ' + ${(entry.value)}">No posts made</li>
-                                            <li th:text="'Comments made by traveler: ' + ${#lists.size((entry.key).comments)}">No comments made</li>                                            
-                                        </ul>                                        
-                                    </section>
-                                </div>
-                            </div>
-                            <div class="row" th:if="${#lists.size(activeUsers) > 5}">
-                                <div class="12u">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button big">Show all users</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-            <div class="row 200%" th:if="${tripsInMap != null} and ${!#lists.isEmpty(tripsInMap)}">
-                <div class="12u">
-                    <section class="box blog">
-                        <h2 class="major"><span>Top three newest trips</span></h2>
-                        <div>
-                            <!-- One trip-->
-                            <div class="row" th:each="entry, iterStat: ${tripsInMap}">
-                                <div class="9u">
-                                    <div class="content content-left">
-                                        <!-- Trip -->
-                                        <article class="box post"> 
-                                            <header>
-                                                <h3><a href="/trips.html" th:href="@{'/trips/'+${(entry.key).id}}" th:text="${(entry.key).header}"></a></h3>                                                
-                                                <ul class="meta">
-                                                    <li class="icon fa-clock-o" th:text="'Created on ' + ${#calendars.format((entry.key).creationDate,'dd MMMM yyyy HH:mm')}">15 minutes ago</li>
-                                                    <li class="icon fa-comments"><label th:text="${#lists.size((entry.key).comments)}">8</label></li>
-                                                </ul>
-                                                <p th:text="${(entry.key).description}">Small description in here!</p>
-                                            </header>
-                                            <div th:if="(${iterStat.count} == 1 and ${!#lists.isEmpty(coordinates1)}) or 
-                                                 (${iterStat.count} == 2 and ${!#lists.isEmpty(coordinates2)}) or 
-                                                 (${iterStat.count} == 3 and ${!#lists.isEmpty(coordinates3)})" >
-                                                <div class="image featured" th:id="'googleMap' + ${iterStat.count}" style="height: 600px;"></div>
-                                            </div>
-                                            <a href="#" class="button" th:href="@{'/trips/'+${(entry.key).id}}">Continue Reading</a>
-                                        </article>
-                                    </div>
-                                </div>
-                                <div class="3u" th:if="${!#lists.isEmpty((entry.key).posts)}" >
-                                    <div class="sidebar">
-                                        <!-- Recent Posts -->
-                                        <section class="box feature">
-                                            <h2 class="major"><span>Recent Posts</span></h2>
-                                            <ul class="divided">
-                                                <!-- Post -->
-                                                <li th:each="post: ${(entry.value)}">
-                                                    <article class="box feature">                                                        
-                                                        <ul class="meta">
-                                                            <li class="icon fa-clock-o" th:text="${#calendars.format(post.postDate,'dd MMMM yyyy HH:mm')}">6 hours ago</li>
-                                                            <li class="icon fa-comments"><label th:text="${#lists.size(post.comments)}">0</label></li>
-                                                        </ul>
-                                                        <a href="#" th:href="@{'/posts/'+${post.id}}">
-                                                            <img id="user-image" th:attr="src=@{'/user_images/' + ${post.image.galleryThumbnailId}}"/>
-                                                        </a>
-                                                    </article>
-                                                </li>
-                                            </ul>      
-                                            <a href="#" class="button alt" th:href="@{'/trips/'+${(entry.key).id}}">Browse Archives</a>
-                                        </section>                                                                                
-                                    </div>
-                                </div>
-                                <!-- End of one trip-->
-                                <div style="width: 20px"></div>
-                            </div>                            
-                        </div>
-                    </section>
-                </div>
+    <body>
+        <div class="container">
+            <div>
+                <h1 class="text-center">Tavoitemittari</h1>
+                <br/>
+                <form method="POST" class="form-horizontal extra-padding" role="form" th:action="@{/authenticate}">
+                    <div class="form-group">
+                        <label for="email">Sähköpostiosoite</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Salasana</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Salasana"/>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"/> Muista minut
+                        </label>
+                    </div>
+                    <button class="btn btn-primary btn-lg center-block" type="submit">Kirjaudu sisään</button>
+                </form>
+                <br/><br/>
+                <p class="text-center">
+                    Ei ole tunnusta? Ei hätää.
+                </p>
+                <form action="/register">
+                    <button class="btn btn-success round center-block" type="submit">Rekisteröidy!</button> 
+                </form>
             </div>
         </div>
-    </div>
-
-    <!-- Footer -->
-    <footer id="footer" class="container">
-        <div class="row 200%">
-            <div class="12u">
-                <!-- About -->
-                <section>
-                    <h2 class="major"><span>What's this about?</span></h2>
-                    <p>
-                        This is <strong>TXT</strong>, yet another free responsive site template designed by
-                        <a href="http://n33.co">AJ</a> for <a href="http://html5up.net">HTML5 UP</a>. It's released under the
-                        <a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for
-                        whatever you're working on (personal or commercial), just be sure to give us credit for the design.
-                        That's basically it :)
-                    </p>
-                </section>
-            </div>
-        </div>
-        <div class="row 200%">
-            <div class="12u">
-                <!-- Contact -->
-                <section>
-                    <h2 class="major"><span>Get in touch</span></h2>
-                    <ul class="contact">
-                        <li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
-                        <li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-                        <li><a class="icon fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-                        <li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-                        <li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>
-                    </ul>
-                </section>
-            </div>
-        </div>
-        
-        <!-- Copyright -->
-        <div id="copyright">
-            <ul class="menu">
-                <li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            </ul>
-        </div>
-    </footer>
-</body>
-</html>
+    </body></html>

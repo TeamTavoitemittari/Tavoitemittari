@@ -14,7 +14,9 @@
 
 	body
 	{
+                padding: 15;
 		background: #f2f5f3;
+                
 	}
 
 		body.is-loading *
