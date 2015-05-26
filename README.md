@@ -1,4 +1,4 @@
-# Tavoitemittari
+#  Tavoitemittari
 [Tavoitemittari](http://tavoitemittari.herokuapp.com/login)
 
 Application for tracking and assessing mathematics learning of school children
