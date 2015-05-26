@@ -22,13 +22,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/index", "/welcome", "/prototype", "/view", "/login", "/register", "/search", "/user_images*/**",
+                .antMatchers("/index", "/prototype", "/login", "/register",
                         "/css*/**", "/js*/**", "/fonts*/**", "/images*/**").permitAll()
                 .anyRequest().authenticated();
 
 
         http.formLogin()
-                .loginPage("/login")
+                .loginPage("/index")
                 .loginProcessingUrl("/authenticate")
                 .defaultSuccessUrl("/courses")
                 .usernameParameter("email")
