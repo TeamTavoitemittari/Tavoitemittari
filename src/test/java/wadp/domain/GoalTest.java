@@ -77,9 +77,8 @@ public class GoalTest {
     public void testGetSkills() {
         System.out.println("getSkills");
         Goal instance = new Goal();
-        List<Skill> expResult = null;
         List<Skill> result = instance.getSkills();
-        assertEquals(expResult, result);
+        assertEquals(result, instance.getSkills());
         
     }
 
