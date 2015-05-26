@@ -36,6 +36,8 @@ public class IndexController {
 
     @Autowired
     private SkillService skillService;
+    
+    private boolean added = false;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex(Model model) {
@@ -60,6 +62,8 @@ public class IndexController {
     }
 
     private void createDummyCourse() {
+        if(added) return;
+        
         Course course = new Course();
         course.setName("Tähtitiede 1");
         course.setDescription("Kurssilla perehdytään erinäisiin taivankappaleisiina alkaen omasta aurinkokunnastamme"
@@ -193,16 +197,26 @@ public class IndexController {
         Exercise exer26 = new Exercise("893");
         Exercise exer27 = new Exercise("Lue Carl Saganin Kosmos ja kirjoita siitä neljän sivun referaatti.");
         
+        exerciseService.addExercise(exer23);
+        exerciseService.addExercise(exer24);
+        exerciseService.addExercise(exer25);
+        exerciseService.addExercise(exer26);
+        exerciseService.addExercise(exer27);
+        
 
         skill5.addExercise(exer23);
         skill5.addExercise(exer24);
         skill5.addExercise(exer25);
         skill5.addExercise(exer26);
         skill5.addExercise(exer27);
+        
+        skillService.addSkill(skill5);
 
         ArrayList<Skill> skillz = new ArrayList<>();
         skillz.add(skill5);
         goal3.setSkills(skillz);
+        
+        goalService.addGoal(goal3);
 
         ArrayList<Goal> goals = new ArrayList<>();
         goals.add(goal1);
@@ -210,6 +224,8 @@ public class IndexController {
         goals.add(goal3);
 
         course.setGoals(goals);
+        
+        added = true;
 
         courseService.addCourse(course);
 

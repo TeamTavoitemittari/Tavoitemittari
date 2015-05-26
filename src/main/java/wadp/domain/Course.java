@@ -1,5 +1,6 @@
 
 package wadp.domain;
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.util.List;
@@ -11,9 +12,12 @@ public class Course extends AbstractPersistable<Long> {
     
     private String name;
     private String description;
-    
     @OneToMany
     private List<Goal> goals;
+    
+    public Course(){
+        this.goals=new ArrayList<Goal>();
+    }
     
     public String getName() {
         return this.name;

@@ -7,7 +7,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Exercise extends AbstractPersistable<Long>{
     
-    public String description;
+    private String description;
+
+    public Exercise() {
+    }
     
     public Exercise(String description){
         this.description=description;
