@@ -16,7 +16,7 @@ before "create a new user", {
 }
 
 scenario "user can login with correct password", {
-    given 'command login selected', {
+ /*   given 'command login selected', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/index");
         element = driver.findElement(By.name("email"));
@@ -35,7 +35,7 @@ scenario "user can login with correct password", {
         driver.getPageSource().contains("Minun kurssini").shouldBe true
         driver.getPageSource().contains("Kaikki kurssit").shouldBe true
         driver.getPageSource().contains("Ilmoittaudu").shouldBe true
-    }
+    } */
 }
 
 scenario "user can not login with incorrect password", {
