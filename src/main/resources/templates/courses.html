@@ -25,7 +25,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                        <span class ="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">Tavoitemittari</a>
                 </div>
@@ -56,7 +55,7 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        
+
         <!--Dummy hard-coded courses for demonstration-->
 
         <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
@@ -64,7 +63,7 @@
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body mypanel">
                     <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p> 
                     <p><a href="#" class="btn btn-success" role="button">Ilmoittaudu</a> <a href="#" class="btn btn-default" role="button">Lisätietoja</a></p>
                 </div>
@@ -85,6 +84,7 @@
             </div>
         </div>
         
+
         <!--List of courses found in database-->
 
         <div th:if="${courses != null}">
