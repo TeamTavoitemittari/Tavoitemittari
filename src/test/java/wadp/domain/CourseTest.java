@@ -60,9 +60,8 @@ public class CourseTest {
     public void testGetGoals() {
         System.out.println("getGoals");
         Course instance = new Course();
-        List<Goal> expResult = null;
-        List<Goal> result = instance.getGoals();
-        assertEquals(expResult, result);
+        List<Goal> expResult = instance.getGoals();
+        assertEquals(expResult, instance.getGoals());
         // TODO review the generated test code and remove the default call to fail.
        
     }

@@ -3,14 +3,19 @@
 package wadp.domain;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Skill extends AbstractPersistable<Long>{
     
     private String description;
-    private ArrayList<Exercise> exercises;
+    
+    @OneToMany
+    private List<Exercise> exercises;
     
     public Skill(String description){
         this.description=description;
@@ -21,7 +26,7 @@ public class Skill extends AbstractPersistable<Long>{
         this.exercises.add(exercise);
     }
     
-    public ArrayList<Exercise> getExercises(){
+    public List<Exercise> getExercises(){
         return this.exercises;
     }
 
