@@ -1,5 +1,6 @@
 package wadp.controller;
 
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,14 @@ public class RegisterController {
 
     @Autowired
     private UserService UserService;
+    
+    
+    //testausta varten
+    @PostConstruct
+    private void init(){
+        UserService.createUser("oppilas@a.com","oppilas","Matti Meikalainen","student");
+        UserService.createUser("ope@a.com","ope","Olli Opettaja", "teacher");
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
