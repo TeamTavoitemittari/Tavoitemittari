@@ -40,13 +40,13 @@ public class IndexController {
     private boolean added = false;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showIndex(Model model) {
+    public String showIndex() {
         createDummyCourse();
         return "index";
     }
 
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
-    public String showPrototype(Model model) {
+    public String showPrototype() {
         return "courses";
     }
 
