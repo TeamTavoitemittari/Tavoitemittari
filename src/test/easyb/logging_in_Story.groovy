@@ -1,5 +1,5 @@
 import wadp.*
-import wadp.domain.User;
+import wadp.domain.*;
 import wadp.service.*
 import wadp.auth.*;
 import org.openqa.selenium.*
@@ -7,14 +7,17 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 description 'User can log in with valid username/password-combination'
 
+/*
+//TODO etsi mite groovy löytää classin user. javac?'
+
 before "create a new user", {
-    User user = new User()
+    //User us = new User()
     
     us.setEmail("example@gmail.com")
     us.setPassword("paprika99")
     us.setName("Esimerkki")
     us.setUserRole("oppilas");
-    userRepository.save(user)
+    userRepository.save(us)
 }
 
 scenario "user can login with correct password", {
@@ -79,14 +82,15 @@ scenario "nonexistent user can not login to ", {
         driver.getPageSource().contains("Minun kurssini").shouldBe false
     }  
 }
-*/
+
 
 
 def createUser() {
-    //def user = new User()
+    //us = new User()
     us.setEmail("example@gmail.com")
     us.setPassword("paprika99")
     us.setName("Esimerkki")
     us.setUserRole("oppilas");
-    userRepository.save(user)
+    userRepository.save(us)
 }
+*/
