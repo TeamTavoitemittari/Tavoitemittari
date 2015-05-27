@@ -16,40 +16,7 @@
         <script src="/js/init.js"></script>
     </head>
     <body>
-
-<<<<<<< HEAD
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">Minun kurssini</a></li>
-                        <li><a href="#">Kaikki kurssit</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Asetukset <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Omat tiedot</a></li>
-                                <li><a href="#">Kieliasetukset</a></li>
-                                <li><a href="#">Tietoturva</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Hae kursseja"/>
-                        </div>
-                        <button type="submit" class="btn btn-default">Hae</button>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" onclick="document.forms['logout'].submit();">Kirjaudu ulos</a></li>
-                    </ul>
-                    <form name="logout" action="#" th:action="@{/logout}" method="post">
-                        <input type="hidden" value="Sign Out"/>
-                    </form>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-=======
         <div th:replace="fragments/components :: course-navbar">navbar</div>
->>>>>>> 0b5c3ec6859d3c9e78473f192f4d7aba73d2f7df
 
         <!--Dummy hard-coded courses for demonstration-->
         <div>
@@ -69,21 +36,34 @@
 
                 </div>
             </div>
-<<<<<<< HEAD
+        </div>
+
+        <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-success" role="button">Ilmoittaudu</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                </div>
+
+            </div>
         </div>
 
 
         <!--List of courses found in database-->
-=======
->>>>>>> 0b5c3ec6859d3c9e78473f192f4d7aba73d2f7df
 
-            <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
+        <div th:if="${courses != null}">
+            <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${courses}">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">Anatomian perusteet</span></h3>
                     </div>
                     <div class="panel-body">
-                        <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p>
+                        <p th:text="${course.description}">Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1. </p> 
                     </div>
                     <div class="panel-footer">
                         <button class="btn btn-success" role="button">Ilmoittaudu</button> <button class="btn btn-default" role="button">Lisätietoja</button>
@@ -91,28 +71,8 @@
 
                 </div>
             </div>
-
-
-            <!--List of courses found in database-->
-
-            <div th:if="${courses != null}">
-                <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${courses}">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading clearfix">
-                            <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">Anatomian perusteet</span></h3>
-                        </div>
-                        <div class="panel-body">
-                            <p th:text="${course.description}">Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1. </p> 
-                        </div>
-                        <div class="panel-footer">
-                            <button class="btn btn-success" role="button">Ilmoittaudu</button> <button class="btn btn-default" role="button">Lisätietoja</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
+
 
         <script src="/js/bootstrap.js"></script>
         <script src="/js/jquery.min.js"></script>
