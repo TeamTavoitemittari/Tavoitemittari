@@ -63,6 +63,7 @@ public User createUser(String email, String password, String name, String userRo
         User user = userRepository.findByEmail(email);
 
         if (user == null || !user.passwordEquals(password)) {
+            System.out.println("Error in user authentication");
             throw new AuthenticationException("Unable to authenticate user with email" + email) {
             };
         }

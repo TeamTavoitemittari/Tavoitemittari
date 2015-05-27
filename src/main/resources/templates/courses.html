@@ -16,53 +16,63 @@
         <script src="/js/init.js"></script>
     </head>
     <body>
-        
+
         <div th:replace="fragments/components :: course-navbar">navbar</div>
-        
+
         <!--Dummy hard-coded courses for demonstration-->
+        <div>
 
-        <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
-                </div>
-                <div class="panel-body mypanel">
-                    <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p> 
-                    <p><a href="#" class="btn btn-success" role="button">Ilmoittaudu</a> <a href="#" class="btn btn-default" role="button">Lisätietoja</a></p>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Anatomian perusteet</h3>
-                </div>
-                <div class="panel-body">
-                    <p>Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1.</p> 
-                    <p><a href="#" class="btn btn-success" role="button">Ilmoittaudu</a> <a href="#" class="btn btn-default" role="button">Lisätietoja</a></p>
-                </div>
-
-            </div>
-        </div>
-        
-
-        <!--List of courses found in database-->
-
-        <div th:if="${courses != null}">
-            <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${courses}">
+            <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">Anatomian perusteet</span></h3>
+                        <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Anatomian perusteet</h3>
                     </div>
                     <div class="panel-body">
-                        <p th:text="${course.description}">Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1.</p> 
-                        <p><a href="#" class="btn btn-success" role="button">Ilmoittaudu</a> <a href="#" class="btn btn-default" role="button">Lisätietoja</a></p>
+                        <p>Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1.
+                        </p> 
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-success" role="button">Ilmoittaudu</button> <button class="btn btn-default" role="button">Lisätietoja</button>
                     </div>
 
                 </div>
             </div>
+
+            <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-success" role="button">Ilmoittaudu</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!--List of courses found in database-->
+
+            <div th:if="${courses != null}">
+                <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${courses}">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">Anatomian perusteet</span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <p th:text="${course.description}">Kurssilla perehdymme ihmiskehon eri osiin. Opimme tunnistamaan kaikki luut, lihakset ja hermopisteet. Kurssin esitietoina on Terveystieto 1. </p> 
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-success" role="button">Ilmoittaudu</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <script src="/js/bootstrap.js"></script>

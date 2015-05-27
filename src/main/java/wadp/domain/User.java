@@ -26,6 +26,7 @@ public class User extends AbstractPersistable<Long> {
     private String name;   
     private String password;
 
+    
     @OneToMany
     private List<Course> courses;
     
