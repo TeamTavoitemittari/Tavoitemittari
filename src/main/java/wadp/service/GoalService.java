@@ -14,7 +14,7 @@ public class GoalService {
     @Autowired
     private GoalRepository goalRepository;
     
-    private List<Goal> findGoals(){
+    public List<Goal> getGoals(){
         return goalRepository.findAll();
     }
     
