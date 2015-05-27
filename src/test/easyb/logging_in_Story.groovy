@@ -16,9 +16,9 @@ before "create a new user", {
 }
 
 scenario "user can login with correct password", {
-/*    given 'command login selected', {
+/*        given 'right view is selected', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/index");
+        driver.get("http://localhost:8080/");
         driver.getPageSource()
     }
 
@@ -33,18 +33,47 @@ scenario "user can login with correct password", {
 
     then 'user will be logged in to system', {
         driver.getPageSource().contains("EI OLE TUNNUSTA? EI HÄTÄÄ.").shouldBe false
+        driver.getPageSource().contains("Minun kurssini").shouldBe true
     } 
-    */
+   
 }
 
 scenario "user can not login with incorrect password", {
-    given 'command login selected', {}
-    when 'a valid username and incorrect password are entered', {}
-    then 'user will not be logged in to system', {}
+    given 'right view is selected', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/");
+    }
+    when 'a valid username and incorrect password are entered', {
+        element = driver.findElementByName("email");
+        element.sendKeys("example@gmail.com");
+        element = driver.findElement(By.id("password"));
+        element.sendKeys("papri");
+        element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
+        element.submit();
+    }
+    then 'user will not be logged in to system', {
+        driver.getPageSource()
+        driver.getPageSource().contains("EI OLE TUNNUSTA? EI HÄTÄÄ.").shouldBe true
+        driver.getPageSource().contains("Minun kurssini").shouldBe false
+    }
 }
 
 scenario "nonexistent user can not login to ", {
-    given 'command login selected', {}
-    when 'a nonexistent username and some password are entered', {}
-    then 'user will not be logged in to system', {}
+   /* given 'right view is selected', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/");
+    }
+    when 'a nonexistent username and some password are entered', {
+        element = driver.findElementByName("email");
+        element.sendKeys("e@gmail.com");
+        element = driver.findElement(By.id("password"));
+        element.sendKeys("paprika99");
+        element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
+        element.submit();
+    }
+    then 'user will not be logged in to system', {
+        driver.getPageSource().contains("EI OLE TUNNUSTA? EI HÄTÄÄ.").shouldBe true
+        driver.getPageSource().contains("Minun kurssini").shouldBe false
+    }
+    */
 }
