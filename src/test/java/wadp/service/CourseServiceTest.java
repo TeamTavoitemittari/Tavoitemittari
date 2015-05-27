@@ -9,51 +9,45 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import wadp.Application;
 import wadp.domain.Course;
+import wadp.repository.CourseRepository;
 
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
+@DirtiesContext (classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CourseServiceTest {
+    
+    @Autowired
+    private CourseService courseService;
+   
+    @Autowired
+    private CourseRepository courseRepository;
+    
+    private Course course;
 
-    public CourseServiceTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of getCourses method, of class CourseService.
-     */
     @Test
     public void testGetCourses() {
-        System.out.println("getCourses");
-        CourseService instance = new CourseService();
-        List<Course> expResult = null;
-        List<Course> result = instance.getCourses();
-        assertEquals(expResult, result);
+        course = new Course();
+        course.setName("todari");
+        courseRepository.save(course);
+        assertEquals("todari", courseService.getCourses().get(0).getName());
+        assertEquals(1, courseService.getCourses().size());
     }
 
-    /**
-     * Test of addCourse method, of class CourseService.
-     */
     @Test
     public void testAddCourse() {
-        System.out.println("addCourse");
-        Course course = null;
-        CourseService instance = new CourseService();
-        instance.addCourse(course);
+        course = new Course();
+        course.setName("todari");
+        courseService.addCourse(course);
+        
+        assertEquals("todari", courseRepository.findAll().get(0).getName());
+        assertEquals(1, courseRepository.findAll().size());
     }
 }

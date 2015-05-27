@@ -30,16 +30,9 @@ import wadp.repository.SkillRepository;
 @DirtiesContext (classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ExerciseServiceTest {
     
- 
-
-    
     @Autowired 
     ExerciseService service;
    
-    
-   
-  
-    
   
     @Test
     public void testAddandGetExcercises() {
@@ -50,7 +43,6 @@ public class ExerciseServiceTest {
         service.addExercise(harjoitus2);
         List<Exercise> harjoitukset= service.getExercises();   
         assertEquals(harjoitukset.size(), 2);
-       
         
     }
  

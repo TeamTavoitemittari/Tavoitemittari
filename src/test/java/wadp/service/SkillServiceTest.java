@@ -30,18 +30,12 @@ import wadp.repository.SkillRepository;
 @DirtiesContext (classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class SkillServiceTest {
     
- 
-
-    
     @Autowired 
     SkillService service;
    
     @Autowired 
     SkillRepository repo;
    
-  
-    
-  
     @Test
     public void testAddandGetSkills() {
         
@@ -50,9 +44,6 @@ public class SkillServiceTest {
         List<Skill> taidot= service.getSkills();
         assertEquals(taidot.size(), 1);
        
-        
     }
  
-
-    
 }

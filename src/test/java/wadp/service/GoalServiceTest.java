@@ -29,26 +29,17 @@ import wadp.domain.Goal;
 @DirtiesContext (classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class GoalServiceTest {
     
- 
-
-    
     @Autowired 
-    GoalService service;
+    private GoalService service;
    
-    
-   
-  
-    
-  
     @Test
     public void testAddandGetGoals() {
-        
+
         Goal tavoite1 = new Goal();
         service.addGoal(tavoite1);
         List<Goal> tavoitteet= service.getGoals();         
         assertEquals(tavoitteet.size(), 1);
-       
-        
+   
     }
  
 
