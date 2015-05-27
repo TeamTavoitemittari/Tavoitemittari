@@ -16,6 +16,12 @@ public class Skill extends AbstractPersistable<Long>{
     
     @OneToMany
     private List<Exercise> exercises;
+
+    public Skill() {
+    }
+    
+    
+    
     
     public Skill(String description){
         this.description=description;
