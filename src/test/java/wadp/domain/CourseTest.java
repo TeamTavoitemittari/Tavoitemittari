@@ -6,6 +6,7 @@
 
 package wadp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,83 +15,56 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author harkonsa
- */
 public class CourseTest {
     
-    public CourseTest() {
-    }
+    
     
    
 
     /**
-     * Test of getName method, of class Course.
+     * Test of getName and setName method, of class Course.
      */
     @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Course instance = new Course();
-        instance.setName("name");
-        String expResult = "name";
-        String result = instance.getName();
-        assertEquals(expResult, result);
+    public void testGetAndSetName() {
+        
+        Course kurssi = new Course();
+        kurssi.setName("nimi");
+        String nimi = kurssi.getName();
+        assertEquals(nimi, "nimi");
         // TODO review the generated test code and remove the default call to fail.
         
     }
 
-    /**
-     * Test of setName method, of class Course.
-     */
-    @Test
-    public void testSetName() {
-        System.out.println("setName");
-        String name = "name";
-        Course instance = new Course();
-        instance.setName(name);
-        String result = instance.getName();
-        assertEquals(name, result);
-    }
+
 
     /**
-     * Test of getGoals method, of class Course.
+     * Test of set and getGoals method, of class Course.
      */
     @Test
-    public void testGetGoals() {
+    public void testSetandGetGoals() {
         System.out.println("getGoals");
-        Course instance = new Course();
-        List<Goal> expResult = null;
-        List<Goal> result = instance.getGoals();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        Course kurssi = new Course();
+        Goal tavoite = new Goal(); 
+        tavoite.setGrade("10");
+        ArrayList<Goal> tavoitteet = new ArrayList();
+        tavoitteet.add(tavoite);
+        kurssi.setGoals(tavoitteet);       
+        assertEquals(1, kurssi.getGoals().size());
+     
        
     }
 
-    /**
-     * Test of setGoals method, of class Course.
-     */
-    @Test
-    public void testSetGoals() {
-        System.out.println("setGoals");
-        List<Goal> goals = null;
-        Course instance = new Course();
-        instance.setGoals(goals);
-        Course expResult = new Course();
-        expResult.setGoals(goals);
-         
-        // TODO review the generated test code and remove the default call to fail.
-        assertEquals(expResult.getGoals(), instance.getGoals());
-    }
+  
+    
     
     @Test
     public void testGetAndSetDescription(){
-        System.out.println("setAndGetDescription");
-        Course course = new Course();
-        course.setDescription("descrip");
-        assertEquals("descrip", course.getDescription());
-        course.setDescription("second");
-        assertEquals("second", course.getDescription());
+        
+        Course kurssi = new Course();
+        kurssi.setDescription("descrip");
+        assertEquals("descrip", kurssi.getDescription());
+        kurssi.setDescription("second");
+        assertEquals("second", kurssi.getDescription());
     }
     
 }

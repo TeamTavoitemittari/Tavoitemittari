@@ -12,7 +12,7 @@ import wadp.domain.User;
 public interface UserRepository extends JpaRepository <User, Long> {
     
   /// no  username so users identified by email address
-    
+        
     User findByEmail(String email);
     
 }
