@@ -6,6 +6,7 @@
 
 package wadp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,88 +15,45 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author harkonsa
- */
+
 public class GoalTest {
     
-    public GoalTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
+   
     /**
-     * Test of getGrade method, of class Goal.
+     * Test of getGrade and setGrade method, of class Goal.
      */
     @Test
-    public void testGetGrade() {
+    public void testSetAndGetGrade() {
         System.out.println("getGrade");
-        Goal instance = new Goal();
-        instance.setGrade("testi");
+        Goal tavoite = new Goal();
+        tavoite.setGrade("testi");
         String expResult = "testi";
-        String result = instance.getGrade();
+        String result = tavoite.getGrade();
         assertEquals(expResult, result);
        
        
     }
 
-    /**
-     * Test of setGrade method, of class Goal.
-     */
-    @Test
-    public void testSetGrade() {
-        System.out.println("setGrade");
-        String name = "testi";
-        Goal instance = new Goal();
-        instance.setGrade("testi");
-        String result = instance.getGrade();
-        String expResult = "testi";        
-        assertEquals(expResult, result);
-        
-      
-    }
 
     /**
-     * Test of getSkills method, of class Goal.
+     * Test of getSkills and setSkills, of class Goal.
      */
     @Test
-    public void testGetSkills() {
+    public void testSetAndGetSkills() {
         System.out.println("getSkills");
-        Goal instance = new Goal();
-        List<Skill> result = instance.getSkills();
-        assertEquals(result, instance.getSkills());
         
+        Goal tavoite = new Goal();        
+        Skill taito = new Skill("Taito");
+        Exercise harjoitus = new Exercise("Harjoitus");
+        taito.addExercise(harjoitus);
+        ArrayList<Skill> taidot = new ArrayList();
+        taidot.add(taito);
+        tavoite.setSkills(taidot);
+        assertEquals(1, tavoite.getSkills().size());
+        
+       
     }
 
-    /**
-     * Test of setSkills method, of class Goal.
-     */
-    @Test
-    public void testSetSkills() {
-        System.out.println("setSkills");
-        List<Skill> skills = null;
-        Goal instance = new Goal();
-        instance.setSkills(skills);
-        Goal expResult = new Goal();
-        expResult.setSkills(skills);
-        
-        assertEquals(expResult.getSkills(), instance.getSkills());
-      
-    }
+
     
 }
