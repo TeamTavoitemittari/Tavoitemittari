@@ -5,7 +5,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 description 'User can log in with valid username/password-combination'
 
-/*
+
 scenario "user can login with correct password", {
     given 'right view is selected', {
         driver = new HtmlUnitDriver();
@@ -15,9 +15,9 @@ scenario "user can login with correct password", {
         element = driver.findElement(By.id("name"));
         element.sendKeys("esimerkki");
         element = driver.findElementByName("email");
-        element.sendKeys("example@gmail.com");
+        element.sendKeys("esimerkki4@test.com");
         element = driver.findElementByName("confirmemail");
-        element.sendKeys("example@gmail.com");
+        element.sendKeys("esimerkki4@test.com");
         
         element = driver.findElement(By.id("password"));
         element.sendKeys("paprika99");
@@ -30,7 +30,7 @@ scenario "user can login with correct password", {
 
     when 'a valid username and password are entered', {
         element = driver.findElementByName("email");
-        element.sendKeys("example@gmail.com");
+        element.sendKeys("esimerkki4@test.com");
         element = driver.findElement(By.id("password"));
         element.sendKeys("paprika99");
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
@@ -43,7 +43,7 @@ scenario "user can login with correct password", {
     } 
 }
 
-/*
+
 scenario "user can not login with incorrect password", {
     given 'right view is selected', {
         driver = new HtmlUnitDriver();
@@ -53,9 +53,9 @@ scenario "user can not login with incorrect password", {
         element = driver.findElement(By.id("name"));
         element.sendKeys("esimerkki");
         element = driver.findElementByName("email");
-        element.sendKeys("example@gmail.com");
+        element.sendKeys("esimerkki5@test.com");
         element = driver.findElementByName("confirmemail");
-        element.sendKeys("example@gmail.com");
+        element.sendKeys("esimerkki5@test.com");
         
         element = driver.findElement(By.id("password"));
         element.sendKeys("paprika99");
@@ -67,7 +67,7 @@ scenario "user can not login with incorrect password", {
     }
     when 'a valid username and incorrect password are entered', {
         element = driver.findElementByName("email");
-        element.sendKeys("example@gmail.com");
+        element.sendKeys("esimerkki5@test.com");
         element = driver.findElement(By.id("password"));
         element.sendKeys("papri");
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
@@ -81,7 +81,7 @@ scenario "user can not login with incorrect password", {
 }
 
 scenario "nonexistent user can not login to ", {
-   /* given 'right view is selected', {
+    given 'right view is selected', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/index");
     }
@@ -100,4 +100,4 @@ scenario "nonexistent user can not login to ", {
 }
 
 
-*/
+
