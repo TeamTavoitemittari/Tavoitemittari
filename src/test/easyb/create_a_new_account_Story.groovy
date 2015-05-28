@@ -10,7 +10,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 description """A new user account can be created 
               if a proper unused username 
               and a proper password are given"""
-
+/*
 scenario "creation successfully with correct username and password", {
     given 'command new user is selected', {
         driver = new HtmlUnitDriver();
@@ -216,3 +216,4 @@ scenario "can not login with account that is not successfully created", {
         driver.getPageSource().contains("Minun kurssini").shouldBe false
     }
 }
+*/

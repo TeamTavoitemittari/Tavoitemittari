@@ -8,7 +8,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 description 'Anyone can view the course goal view for a course'
 
 
-
+/*
 scenario "User can view the course demo for a course", {
         given 'correct view is selected', {
             driver = new HtmlUnitDriver();
@@ -24,3 +24,4 @@ scenario "User can view the course demo for a course", {
    
 }
 
+*/

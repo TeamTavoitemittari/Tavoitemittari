@@ -5,7 +5,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 description 'User can log in with valid username/password-combination'
 
-
+/*
 scenario "user can login with correct password", {
     given 'right view is selected', {
         driver = new HtmlUnitDriver();
@@ -96,6 +96,4 @@ scenario "nonexistent user can not log in", {
         driver.getPageSource().contains("Minun kurssini").shouldBe false
     }  
 }
-
-
-
+*/
