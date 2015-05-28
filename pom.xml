@@ -138,6 +138,24 @@
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
+                    <instrumentation>
+                        <excludes>                    
+                            <!-- Exclude unneccecary files from coverage report -->
+                            <!-- Interfaces -->
+                            <exclude>wadp/repository/CourseRepository.class</exclude>
+                            <exclude>wadp/repository/ExerciseRepository.class</exclude>
+                            <exclude>wadp/repository/GoalRepository.class</exclude>
+                            <exclude>wadp/repository/SkillRepository.class</exclude>
+                            <exclude>wadp/repository/UserRepository.class</exclude>
+                            <!-- Entities -->
+                            <exclude>wadp/domain/form/UserForm.class</exclude>
+                            <exclude>wadp/auth/UserAuthenticationProvider.class</exclude>
+                            <!-- Other -->
+                            <exclude>wadp/Application.class</exclude>
+                            <exclude>wadp/validation/FieldMatch.class</exclude>
+                            <exclude>wadp/validation/FieldMatchValidator.class</exclude>
+                        </excludes>
+                    </instrumentation>
                     <formats>
                         <format>xml</format>
                         <format>html</format>
@@ -152,7 +170,7 @@
                         <artifactId>asm</artifactId>  
                         <version>5.0.3</version>  
                     </dependency>  
-                </dependencies>  
+                </dependencies>
             </plugin>
 
             <plugin>
