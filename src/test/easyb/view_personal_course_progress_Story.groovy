@@ -11,13 +11,16 @@ description 'Anyone can view the course goal view for a course'
 
 scenario "User can view the course demo for a course", {
         given 'correct view is selected', {
-    }
+            driver = new HtmlUnitDriver();
+            driver.get("http://localhost:8080/coursedemo");
+        }
 
-    when 'user looks at the page', {
-    }
+        when 'user looks at the page', {
+        }
 
-    then 'user will see the course goal view', {
-    } 
+        then 'user will see the course goal view', {
+            driver.getPageSource().contains("9-10").shouldBe true
+        } 
    
 }
 

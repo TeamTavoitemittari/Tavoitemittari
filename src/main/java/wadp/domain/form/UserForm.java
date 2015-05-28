@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.Email;
 public class UserForm {
 
     @NotNull(message="Sähköpostia ei voi jättää tyhjäksi!")
-    @NotBlank(message="Sähkäpostiaei voi jättää tyhjäksi!")
+    @NotBlank(message="Sähköpostia ei voi jättää tyhjäksi!")
     @Email(message="Sähköpostiosoitteen pitää olla validi!")
     private String email;
     

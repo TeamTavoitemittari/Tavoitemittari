@@ -26,6 +26,7 @@ scenario "user can login with correct password", {
         element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy')]"));
         element.submit();
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
+        element.click();
     }
 
     when 'a valid username and password are entered', {
@@ -38,7 +39,6 @@ scenario "user can login with correct password", {
     }
 
     then 'user will be logged in to system', {
-        driver.getPageSource().contains("EI OLE TUNNUSTA? EI HÄTÄÄ.").shouldBe false
         driver.getPageSource().contains("Minun kurssini").shouldBe true
     } 
 }
@@ -64,6 +64,7 @@ scenario "user can not login with incorrect password", {
         element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy')]"));
         element.submit();
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
+        element.click();
     }
     when 'a valid username and incorrect password are entered', {
         element = driver.findElementByName("email");
@@ -74,13 +75,11 @@ scenario "user can not login with incorrect password", {
         element.submit();
     }
     then 'user will not be logged in to system', {
-        driver.getPageSource()
-        driver.getPageSource().contains("EI OLE TUNNUSTA? EI HÄTÄÄ.").shouldBe true
         driver.getPageSource().contains("Minun kurssini").shouldBe false
     }
 }
 
-scenario "nonexistent user can not login to ", {
+scenario "nonexistent user can not log in", {
     given 'right view is selected', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/index");
@@ -94,7 +93,6 @@ scenario "nonexistent user can not login to ", {
         element.click();
     }
     then 'user will not be logged in to system', {
-        driver.getPageSource().contains("EI OLE TUNNUSTA? EI HÄTÄÄ.").shouldBe true
         driver.getPageSource().contains("Minun kurssini").shouldBe false
     }  
 }
