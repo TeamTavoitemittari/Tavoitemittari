@@ -78,7 +78,7 @@ public class IndexControllerTest {
     public void testShowIndex() {
         String index = indexController.showIndex();
         List<Course> courses = courseRepository.findAll();
-        assertEquals(1, courses.size());
+        assertTrue(courses.size()>1);
         assertEquals("index", index);
         
     }

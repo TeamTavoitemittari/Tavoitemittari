@@ -63,6 +63,7 @@ public class IndexController {
 
     private void createDummyCourse() {
         if(added) return;
+        if(courseService.getCourses().size()>0) return;
         
         Course course = new Course();
         course.setName("Tähtitiede 1");
