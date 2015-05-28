@@ -25,11 +25,11 @@ public class RegisterController {
     
     
     //testausta varten
-    @PostConstruct
-    private void init(){
-        UserService.createUser("oppilas@a.com","oppilas","Matti Meikalainen","student");
-        UserService.createUser("ope@a.com","ope","Olli Opettaja", "teacher");
-    }
+//    @PostConstruct
+//    private void init(){
+//        UserService.createUser("oppilas@a.com","oppilas","Matti Meikalainen","student");
+//        UserService.createUser("ope@a.com","ope","Olli Opettaja", "teacher");
+//    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
