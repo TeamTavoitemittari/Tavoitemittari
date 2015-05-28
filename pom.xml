@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.1.8.RELEASE</version>
+        <version>1.2.3.RELEASE</version>
     </parent>
 
     <dependencies>
@@ -108,6 +108,13 @@
         </dependency>
         
         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.3.6</version>
+        </dependency>
+
+        
+        <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
             <version>1.4.01</version>
@@ -124,7 +131,7 @@
                     <dependency>
                         <groupId>org.springframework</groupId>
                         <artifactId>springloaded</artifactId>
-                        <version>1.2.0.RELEASE</version>
+                        <version>1.2.3.RELEASE</version>
                     </dependency>
                 </dependencies>
             </plugin>
