@@ -151,6 +151,7 @@
                             <exclude>wadp/domain/form/UserForm.class</exclude>
                             <exclude>wadp/auth/UserAuthenticationProvider.class</exclude>
                             <!-- Other -->
+                            <exclude>wadp/profiles/ProdProfile.class</exclude>
                             <exclude>wadp/Application.class</exclude>
                             <exclude>wadp/validation/FieldMatch.class</exclude>
                             <exclude>wadp/validation/FieldMatchValidator.class</exclude>
