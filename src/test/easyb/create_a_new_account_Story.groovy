@@ -104,7 +104,7 @@ scenario "creation fails with correct username and too short password", {
     }
 }
 
-/*
+
 scenario "creation fails with correct username and password consisting of letters", {
     given 'command new user is selected', {
         driver = new HtmlUnitDriver();
@@ -131,7 +131,7 @@ scenario "creation fails with correct username and password consisting of letter
         driver.getPageSource().contains("Sinut on").shouldBe false
     }
 }
-*/
+
 
 
 scenario "creation fails with no email and valid password", {
