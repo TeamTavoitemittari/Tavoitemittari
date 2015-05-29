@@ -44,6 +44,11 @@ public class IndexController {
         createDummyCourse();
         return "index";
     }
+     @RequestMapping(value = "loginerror", method = RequestMethod.GET)
+     public String showLoginError(Model model) {
+        model.addAttribute("error", "Tarkista syöttämäsi tiedot!");
+        return "index";
+    }
 
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public String showPrototype() {

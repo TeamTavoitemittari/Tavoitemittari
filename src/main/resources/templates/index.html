@@ -18,7 +18,7 @@
         <div class="container">
             <div>
                 <h1 class="text-center">Tavoitemittari</h1>
-                <br/>
+                <br/> <b th:text="${error}"> </b>
                 <form method="POST" class="form-horizontal extra-padding" role="form" th:action="@{/authenticate}">
                     <div class="form-group">
                         <label for="email">Sähköpostiosoite</label>

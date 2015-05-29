@@ -19,7 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/index", "/prototype", "/coursedemo", "/welcome", "/login", "/register",
+                .antMatchers("/index","/loginerror", "/prototype", "/coursedemo", "/welcome", "/login", "/register",
                         "/css*/**", "/js*/**", "/fonts*/**", "/images*/**").permitAll()
                 .anyRequest().authenticated();
 
@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/index")
                 .loginProcessingUrl("/authenticate")
                 .defaultSuccessUrl("/courses", true)
+                .failureUrl("/loginerror")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .permitAll();
