@@ -75,7 +75,7 @@ public User createUser(String email, String password, String name, String userRo
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByEmail(authentication.getName());
     }
-      public void clearUsers(){
+      public void deleteAll(){
           userRepository.deleteAll();
       }
 

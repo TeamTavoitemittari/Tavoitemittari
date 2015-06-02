@@ -11,6 +11,8 @@ import wadp.repository.CourseRepository;
 @Service
 public class CourseService {
     
+    
+    
     @Autowired
     private CourseRepository courseRepository;
     
@@ -23,4 +25,7 @@ public class CourseService {
         courseRepository.save(course);
     }
     
+    public void deleteAll(){
+        courseRepository.deleteAll();
+    }
 }
