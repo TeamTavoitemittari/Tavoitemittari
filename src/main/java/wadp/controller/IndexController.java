@@ -55,10 +55,10 @@ public class IndexController {
         return "course";
     }
 
-    @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/addcourse", method = RequestMethod.GET)
     public String getAddCourse(Model model) {
         return "addCourse";
-    }
+    }*/
 
    
 }

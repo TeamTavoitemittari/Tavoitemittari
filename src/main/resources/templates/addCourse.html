@@ -19,12 +19,20 @@
                 <h1 class="text-center">Uusi kurssi</h1>
                 <br/>
                 <form method="post">
+                    <b th:if="${#fields.hasErrors('courseForm')}" th:errors="*{courseForm}">Error message</b>
+                    <br></br>
+                    <b th:if="${#fields.hasErrors('courseForm.name')}" th:errors="*{courseForm.name}">Error message</b>
                     <div class="form-group">
-                        <label for="text">Kurssin nimi</label>
+                        <label for="text">Nimi</label>
                         <input type="text" name="name" class="form-control" id="name"/>
-                    </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Kurssin kuvaus</label>
+                        <textArea name="description" class="form-control" id="description"></textArea>
+                    </div>
                 </form>
 
             </div>
         </div>
-    </body></html>
+    </body>
+</html>

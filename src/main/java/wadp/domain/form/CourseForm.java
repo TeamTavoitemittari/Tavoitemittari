@@ -1,15 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package wadp.domain.form;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import wadp.validation.FieldMatch;
+
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
+
 /**
- *
- * @author villvirt
+ * Form object for new user creation. Necessary fields are passed to UserService that will create User object that will
+ * be saved to database
  */
+
+
+
 public class CourseForm {
+
+    
+    @NotNull(message="Nimeä ei voi jättää tyhjäksi!")
+    @NotBlank(message="Nimeä ei voi jättää tyhjäksi! !")
+    private String name;
+
+    private String description;
+
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getDescription(){
+        return description;
+    }
+    
+    public void setDescription(String description){
+        this.description = description;
+    }
     
 }
