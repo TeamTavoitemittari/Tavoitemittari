@@ -18,7 +18,7 @@ import wadp.domain.form.CourseForm;
 import wadp.service.CourseService;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/addcourse")
 public class AddCourseController {
 
     @Autowired
@@ -27,10 +27,8 @@ public class AddCourseController {
     
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createCourse(RedirectAttributes redirectAttributes, @ModelAttribute("courseForm") @Valid CourseForm courseForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "addcourse";
-        }
+    public String createCourse(@ModelAttribute("course") @Valid CourseForm courseForm, BindingResult bindingResult) {
+        
             Course newCourse = new Course();
             newCourse.setName(courseForm.getName());
             newCourse.setDescription(courseForm.getDescription());
@@ -40,7 +38,7 @@ public class AddCourseController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String Register(Model model) {
-        model.addAttribute("courseForm", new CourseForm());
+        model.addAttribute("course", new CourseForm());
         return "addcourse";
     }
 
@@ -48,5 +46,5 @@ public class AddCourseController {
         
     
     
-    
+  
 }

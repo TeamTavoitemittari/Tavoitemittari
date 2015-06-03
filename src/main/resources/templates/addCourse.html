@@ -18,10 +18,10 @@
             <div>
                 <h1 class="text-center">Uusi kurssi</h1>
                 <br/>
-                <form method="post">
-                    <b th:if="${#fields.hasErrors('courseForm')}" th:errors="*{courseForm}">Error message</b>
+                <form th:action="@{/addcourse}" method="post">
+                    <b th:if="${#fields.hasErrors('course')}" th:errors="*{course}">Error message</b>
                     <br></br>
-                    <b th:if="${#fields.hasErrors('courseForm.name')}" th:errors="*{courseForm.name}">Error message</b>
+                    <b th:if="${#fields.hasErrors('course.name')}" th:errors="*{course.name}">Error message</b>
                     <div class="form-group">
                         <label for="text">Nimi</label>
                         <input type="text" name="name" class="form-control" id="name"/>
@@ -30,6 +30,8 @@
                         <label for="text">Kurssin kuvaus</label>
                         <textArea name="description" class="form-control" id="description"></textArea>
                     </div>
+                    
+                    <button class="btn btn-primary btn-lg center-block" type="submit">Lisää </button>
                 </form>
 
             </div>

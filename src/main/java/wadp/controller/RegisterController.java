@@ -34,18 +34,18 @@ public class RegisterController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
+    public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm userForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
         try {
-            UserService.createUser(user.getEmail(), user.getPassword(), user.getName(), user.getUserRole());
+            UserService.createUser(userForm.getEmail(), userForm.getPassword(), userForm.getName(), userForm.getUserRole());
         } catch (EmailAlreadyRegisteredException ex) {
             bindingResult.addError(new FieldError("user", "email", "Sähköpostiosoite on jo rekisteröity palveluun!"));
             return "register";
         }
-        redirectAttributes.addFlashAttribute("registeredEmail", user.getEmail());
+        redirectAttributes.addFlashAttribute("registeredEmail", userForm.getEmail());
         
         return "redirect:welcome";
     }
