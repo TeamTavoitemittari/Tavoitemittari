@@ -37,6 +37,8 @@ public class CourseServiceTest {
         course = new Course();
         course.setName("todari");
         courseRepository.save(course);
+        
+        //index 0 is dummycourse
         assertEquals("todari", courseService.getCourses().get(0).getName());
         assertEquals(1, courseService.getCourses().size());
     }
@@ -47,6 +49,7 @@ public class CourseServiceTest {
         course.setName("todari");
         courseService.addCourse(course);
         
+        //index 0 is dummycourse
         assertEquals("todari", courseRepository.findAll().get(0).getName());
         assertEquals(1, courseRepository.findAll().size());
     }

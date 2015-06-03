@@ -3,10 +3,7 @@ package wadp.controller;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -29,6 +26,9 @@ public class IndexControllerTest {
 
     @Autowired
     private IndexController indexController;
+    
+    @Autowired
+    private CoursesController coursesController;
 
     private Model model;
 
@@ -77,6 +77,7 @@ public class IndexControllerTest {
     @Test
     public void testShowIndex() {
         String index = indexController.showIndex();
+        coursesController.createDummyCourse();
         List<Course> courses = courseRepository.findAll();
         assertTrue(courses.size()>0);
         assertEquals("index", index);

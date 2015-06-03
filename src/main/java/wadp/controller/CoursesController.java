@@ -44,10 +44,10 @@ public class CoursesController {
     @PostConstruct
     private void init() {
         courseService.deleteAll();
-        createDummyCourse();
+       // createDummyCourse();
     }
 
-    private void createDummyCourse() {
+    public void createDummyCourse() {
         if (added) {
             return;
         }

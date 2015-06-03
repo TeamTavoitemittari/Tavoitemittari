@@ -24,10 +24,10 @@ public class RegisterController {
     private UserService UserService;
     
     
-    //testausta varten
+    //for testing
    @PostConstruct
    private void init(){
-       //poistetaan vanhat herokua varten
+       //deleting old inits so heroku works
        UserService.deleteAll();
        UserService.createUser("oppilas@a.com","oppilas","Matti Meikalainen","student");
        UserService.createUser("ope@a.com","ope","Olli Opettaja", "teacher");
