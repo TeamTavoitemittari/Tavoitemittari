@@ -29,6 +29,10 @@ public class AddCourseController {
     @RequestMapping(method = RequestMethod.POST)
     public String createCourse(@ModelAttribute("course") @Valid CourseForm courseForm, BindingResult bindingResult) {
         
+        if(bindingResult.hasErrors()){
+            return "addcourse";
+        }
+        
             Course newCourse = new Course();
             newCourse.setName(courseForm.getName());
             newCourse.setDescription(courseForm.getDescription());
@@ -37,7 +41,7 @@ public class AddCourseController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String Register(Model model) {
+    public String AddCourse(Model model) {
         model.addAttribute("course", new CourseForm());
         return "addcourse";
     }
