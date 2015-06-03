@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import wadp.repository.UserRepository;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import wadp.domain.User;
 
@@ -75,6 +76,19 @@ public User createUser(String email, String password, String name, String userRo
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByEmail(authentication.getName());
     }
+      
+     @Transactional 
+     public User ChangePassword(String newPassword){
+        User user = getAuthenticatedUser();
+        user.setPassword(newPassword);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), auth.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authRequest);
+//        auth.setAuthenticated(false);
+        return user;
+     
+     }
+
       public void clearUsers(){
           userRepository.deleteAll();
       }
