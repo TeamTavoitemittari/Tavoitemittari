@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import wadp.service.CourseService;
 
 @Controller
-@RequestMapping("/courses")
+@RequestMapping("/mycourses")
 public class CoursesController {
     
     @Autowired
@@ -17,7 +17,7 @@ public class CoursesController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String showCoursesPage(Model model) {
-        model.addAttribute("courses", courseService.getCourses());
-        return "courses";
+        model.addAttribute("mycourses", courseService.getCourses());
+        return "mycourses";
     }
 }

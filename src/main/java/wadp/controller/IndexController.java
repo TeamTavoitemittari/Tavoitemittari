@@ -52,7 +52,7 @@ public class IndexController {
 
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public String showPrototype() {
-        return "courses";
+        return "mycourses";
     }
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
