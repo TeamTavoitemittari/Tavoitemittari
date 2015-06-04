@@ -85,7 +85,7 @@ public class IndexControllerTest {
 
     @Test
     public void testShowPrototype() {
-        assertEquals("courses", indexController.showPrototype());
+        assertEquals("mycourses", indexController.showPrototype());
     }
 
     @Test
