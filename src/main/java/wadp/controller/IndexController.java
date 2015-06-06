@@ -41,7 +41,10 @@ public class IndexController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex() {
-        createDummyCourse();
+        if (courseService.getCourses().isEmpty()) {
+            createDummyCourse();
+        }
+
         return "index";
     }
 
