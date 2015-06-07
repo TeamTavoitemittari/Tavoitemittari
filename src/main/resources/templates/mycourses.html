@@ -44,10 +44,12 @@
                         <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
                     </div>
                     <div class="panel-body">
-                        <p th:text="${course.description}">...</p> 
+                        <p th:text="${course.description}">Course description</p> 
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-success" role="button">Tavoitemittariin</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        <form th:method="GET" th:action="'/course/' + ${course.id}">
+                        <button class="btn btn-success" type="submit" role="button">Tavoitemittariin</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        </form>
                     </div>
 
                 </div>

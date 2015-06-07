@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wadp.domain.Course;
+import wadp.domain.CourseProgressTracker;
 import wadp.domain.User;
 import wadp.service.CourseService;
+import wadp.service.ProgressService;
 import wadp.service.UserService;
 
-@RequestMapping("/course")
+@RequestMapping(value = "course")
 public class CourseController {
     
     @Autowired
@@ -20,6 +22,9 @@ public class CourseController {
     @Autowired
     private UserService userService;
     
+    @Autowired
+    private ProgressService progressService;
+    
     
     @RequestMapping(method = RequestMethod.POST)
     public void createCourse(){
@@ -27,13 +32,16 @@ public class CourseController {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public void getCourse(Model model, @PathVariable Long id){
-        Course course = courseService.getCourseById(id);
-        if(course==null){
-            // TODO: throw new course not found exception
-        }
-        model.addAttribute("course", course);
-        User user = userService.getAuthenticatedUser();
-        //still need to add: finding course progress per user and adding 
+    public String getCourse(Model model, @PathVariable Long id){
+//        Course course = courseService.getCourseById(id);
+//        if(course==null){
+//            // TODO: throw new course not found exception
+//        }
+//        model.addAttribute("course", course);
+//        User user = userService.getAuthenticatedUser();
+//        CourseProgressTracker tracker = progressService.getProgress(user, course);
+//        model.addAttribute("tracker", tracker);
+        
+        return "redirect:/course";
     }
 }

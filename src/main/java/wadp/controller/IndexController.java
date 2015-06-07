@@ -37,14 +37,10 @@ public class IndexController {
     @Autowired
     private SkillService skillService;
 
-    private boolean added = false;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex() {
-        if (courseService.getCourses().isEmpty()) {
-            createDummyCourse();
-        }
-
+        createDummyCourse();
         return "index";
     }
 
@@ -76,12 +72,8 @@ public class IndexController {
     }
 
     private void createDummyCourse() {
-        if (added) {
-            return;
-        }
-        if (courseService.getCourses().size() > 0) {
-            return;
-        }
+        
+        if(courseService.getCourses().size()>0) return;
 
         Course course = new Course();
         course.setName("Tähtitiede 1");
@@ -242,8 +234,6 @@ public class IndexController {
         goals.add(goal3);
 
         course.setGoals(goals);
-
-        added = true;
 
         courseService.addCourse(course);
 

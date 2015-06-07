@@ -17,7 +17,7 @@ public class CoursesController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String showCoursesPage(Model model) {
-        model.addAttribute("mycourses", courseService.getCourses());
+        model.addAttribute("courses", courseService.getCourses());
         return "mycourses";
     }
 }
