@@ -79,7 +79,13 @@ public User createUser(String email, String password, String name, String userRo
       
      @Transactional 
      public User ChangePassword(String newPassword){
+         if (newPassword== null || newPassword.isEmpty()) {
+            throw new IllegalArgumentException("newPassword must not be null or empty");
+        }
         User user = getAuthenticatedUser();
+         if (user==null) {
+            throw new AuthenticatedUserIsNullException();
+        }
         user.setPassword(newPassword);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), auth.getAuthorities());

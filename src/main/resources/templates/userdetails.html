@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Courses</title>
+        <title>Omat tiedot</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
@@ -41,20 +41,21 @@
                         <p th:if="${#fields.hasErrors('newpassword')}" th:errors="*{newpassword}">Error message</p>
                        
                          <div class="form-group">
-                        <label for="password">Uusi salasana</label>
+                        <label for="password">Uusi salasana:</label>
                         <input type="password" class="form-control" name="password" id="password" placeholder="Salasana"/>
                     </div>
                          <div class="form-group">
-                        <label for="password">Uusi salasana uudelleen</label>
+                        <label for="password">Uusi salasana uudelleen:</label>
                         <input type="password" class="form-control" name="confirmpassword" id="confirmpasswordpassword" placeholder="Salasana uudelleen"/>
                     </div>
                         
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-success" role="button">Vaihda salasana</button>
+                        <button class="btn btn-success" role="button">Vaihda salasana</button>  <a href="/userdetails_info"><button type="button" class="btn btn-default" role="button">Lisätietoja</button></a>
+                        
                     </div>
                     </form>           
-
+                    
                 </div>
             </div>
         

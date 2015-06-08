@@ -21,6 +21,7 @@ import wadp.domain.Skill;
 import wadp.domain.User;
 import wadp.domain.form.ProperPasswordForm;
 import wadp.domain.form.UserForm;
+import wadp.service.AuthenticatedUserIsNullException;
 import wadp.service.CourseService;
 import wadp.service.EmailAlreadyRegisteredException;
 import wadp.service.ExerciseService;
@@ -62,21 +63,37 @@ public class UserDetailsController {
         return "userdetails";
     }
     
+    @RequestMapping(value = "/userdetails_info", method = RequestMethod.GET)
+    public String ShowUserDetailsInfoPage(Model model) {
+        model.addAttribute("message", "Omat tiedot -sivulla voit vaihtaa salasanasi. Uuden salasanan pitää olla vähintään 8-merkkinen.");
+       
+        return "userdetails_template";
+    }
+      @RequestMapping(value = "/userdetails_passwordchanged", method = RequestMethod.GET)
+    public String showPasswordChangedPage(Model model) {
+        
+        return "userdetails_template";
+    }
+    
     
     @RequestMapping(value = "/userdetails", method = RequestMethod.POST)
     public String ChangeUserPassword(RedirectAttributes redirectAttributes, @ModelAttribute("newpassword") @Valid ProperPasswordForm newpassword, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            
-           
+                  
         return "userdetails";
         }
         
-        
+        try {
         userService.ChangePassword(newpassword.getPassword());
-                
+        } catch (AuthenticatedUserIsNullException ex) {
+            
+        bindingResult.addError(new FieldError("newpassword","", "Autentikointi ongelma."));
+        return "userdetails";
+    
+        }        
         redirectAttributes.addFlashAttribute("message", "Salasana vaihdettu.");
         
-        return "redirect:userdetails";
+        return "redirect:userdetails_passwordchanged";
     }
 
 
