@@ -19,12 +19,12 @@
     <body>
         <div class="container">
             <div class="row" th:if="${course != null}">
-                <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" > <!-- th:each="goal : ${course.goals}"" -->
-                    <h1>9-10</h1>
-                    <div class="panel panel-primary">
+                <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" th:each="goal : ${course.goals}">
+                    <h1 th:text="${goal.grade}">4-10</h1>
+                    <div class="panel panel-primary" th:each="skill : ${goal.skills}">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#ymp1">
+                                <a data-toggle="collapse" th:href="'#' + ${goal.grade} + ${skill.description}" th:text="${skill.description}">
                                     Ympyrä</a>
                             </h4>
                             <div class="clearfix">
@@ -33,222 +33,20 @@
                                 </label>
                             </div>
                         </div>
-                        <div id="ymp1" class="panel-collapse collapse">
+                        <div th:id="${goal.grade} + ${skill.description}" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
+                                        <li class="list-group-item" th:each="exercise : ${skill.exercises}" th:utext="${'Tähän tulis, joku kuvas skillistä' + '&lt;br /&gt;' + exercise.description}"></li>
+                                        <!-- <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
                                             sekä sektorin alasta</li>
                                         <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#pyt1">
-                                    Pythagoraan lause</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="pyt1" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#yhden1">
-                                    Yhdenmuotoisuus</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="yhden1" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
+                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li> -->
                                     </ul>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <hr/>
-                    <h1>7-8</h1>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#ymp2">
-                                    Ympyrä</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="ymp2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#pyt2">
-                                    Pythagoraan lause</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="pyt2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#yhden2">
-                                    Yhdenmuotoisuus</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="yhden2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    <h1>5-6</h1>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#ymp3">
-                                    Ympyrä</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="ymp3" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#pyt3">
-                                    Pythagoraan lause</a>
-                            </h4>
-                            <div class="clearfix" >
-                                <label  class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                            <div ></div>
-                        </div>
-                        <div id="pyt3" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#yhden3">
-                                    Yhdenmuotoisuus</a>
-                            </h4>
-                            <div class="clearfix">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox"/>Osaan
-                                </label>
-                            </div>
-                        </div>
-                        <div id="yhden3" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>  <ul class="list-group">
-                                        <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                            sekä sektorin alasta</li>
-                                        <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
-                                        <li class="list-group-item"><b>Tehtävät:</b><p>112,113,115, Tee jotain etc.</p></li>
-                                    </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">
                     <div class="progress">
