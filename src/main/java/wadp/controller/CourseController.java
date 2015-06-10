@@ -2,6 +2,7 @@
 package wadp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,8 @@ import wadp.service.CourseService;
 import wadp.service.ProgressService;
 import wadp.service.UserService;
 
-@RequestMapping(value = "course")
+@Controller
+@RequestMapping(value = "/course")
 public class CourseController {
     
     @Autowired
@@ -33,15 +35,16 @@ public class CourseController {
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getCourse(Model model, @PathVariable Long id){
-//        Course course = courseService.getCourseById(id);
-//        if(course==null){
-//            // TODO: throw new course not found exception
-//        }
-//        model.addAttribute("course", course);
+        Course course = courseService.getCourseById(id);
+        
+        if(course==null){
+            // TODO: throw new course not found exception
+        }
+        model.addAttribute("course", course);
 //        User user = userService.getAuthenticatedUser();
 //        CourseProgressTracker tracker = progressService.getProgress(user, course);
 //        model.addAttribute("tracker", tracker);
         
-        return "redirect:/course";
+        return "course";
     }
 }

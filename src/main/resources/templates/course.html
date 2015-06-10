@@ -18,8 +18,8 @@
 
     <body>
         <div class="container">
-            <div class="row">
-                <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" style="float: none">
+            <div class="row" th:if="${course != null}">
+                <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" > <!-- th:each="goal : ${course.goals}"" -->
                     <h1>9-10</h1>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -28,7 +28,7 @@
                                     Ympyrä</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -53,7 +53,7 @@
                                     Pythagoraan lause</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -78,7 +78,7 @@
                                     Yhdenmuotoisuus</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -104,7 +104,7 @@
                                     Ympyrä</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -129,7 +129,7 @@
                                     Pythagoraan lause</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -154,7 +154,7 @@
                                     Yhdenmuotoisuus</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -180,7 +180,7 @@
                                     Ympyrä</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -205,7 +205,7 @@
                                     Pythagoraan lause</a>
                             </h4>
                             <div class="clearfix" >
-                                <label  class="checkbox-inline" style="float: right">
+                                <label  class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -231,7 +231,7 @@
                                     Yhdenmuotoisuus</a>
                             </h4>
                             <div class="clearfix">
-                                <label class="checkbox-inline" style="float: right;">
+                                <label class="checkbox-inline">
                                     <input type="checkbox"/>Osaan
                                 </label>
                             </div>
@@ -250,7 +250,7 @@
                     </div>
 
                 </div>
-                <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" style="float: none">
+                <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">
                     <div class="progress">
                         <div class="progress-bar progress-bar-success" style="width: 35%">
                             <span class="sr-only">35% Complete (success)</span>
@@ -262,7 +262,7 @@
                             <span class="sr-only">10% Complete (danger)</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
