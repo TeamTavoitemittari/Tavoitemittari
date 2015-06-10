@@ -1,17 +1,22 @@
 
 package wadp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import wadp.Application;
@@ -32,7 +37,25 @@ public class UserServiceTest {
    
     @Autowired 
     UserRepository repo;
-   
+    
+    
+     private User loggedInUser;
+
+    @Before
+    public void setUp() {
+
+        loggedInUser = service.createUser("matti2@meikalainen.com", "salasana", "matti meikalainen", "teacher");
+        List<GrantedAuthority> grantedAuths = new ArrayList<>();
+        grantedAuths.add(new SimpleGrantedAuthority(loggedInUser.getUserRole()));
+        SecurityContextHolder.getContext().setAuthentication(
+                    new UsernamePasswordAuthenticationToken(loggedInUser.getEmail(), loggedInUser.getPassword(), grantedAuths));
+
+    }
+
+    @After
+    public void tearDown() {
+
+    }
 
     @Test
     public void testList() {
@@ -121,5 +144,22 @@ public class UserServiceTest {
         service.createUser("irving@meikalainen.com", "salasana", "irving meikalainen", "teacher");
         service.authenticate("irving@meikalainen.com", "salainensana");
     }
+    
+    @Test
+    public void getAuthenticateduserSuccess() {
+     
+         User user = service.getAuthenticatedUser();
+         assertTrue(user.getEmail().equals("matti2@meikalainen.com"));
+       
+   }
+    @Test
+    public void PasswordChangeSuccess() {
+          
+          service.ChangePassword("uusisalasana");
+          User user = service.getAuthenticatedUser();
+          assertTrue(user.passwordEquals("uusisalasana"));
+    
+       
+   }
     
 }

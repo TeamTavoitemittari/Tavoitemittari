@@ -33,23 +33,12 @@ import wadp.service.UserService;
 @Controller
 @RequestMapping("*")
 public class UserDetailsController {
-    @Autowired
-    private UserService UserService;
+    
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private CourseService courseService;
-
-    @Autowired
-    private GoalService goalService;
-
-    @Autowired
-    private ExerciseService exerciseService;
-
-    @Autowired
-    private SkillService skillService;
+   
     
    
 

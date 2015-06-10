@@ -90,7 +90,7 @@ public User createUser(String email, String password, String name, String userRo
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), auth.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authRequest);
-//        auth.setAuthenticated(false);
+        auth.setAuthenticated(false);
         return user;
      
      }
