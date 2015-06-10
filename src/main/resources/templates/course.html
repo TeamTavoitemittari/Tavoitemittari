@@ -24,7 +24,7 @@
                     <div class="panel panel-primary" th:each="skill : ${goal.skills}">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" th:href="'#' + ${goal.grade} + ${skill.description}" th:text="${skill.description}">
+                                <a data-toggle="collapse" th:href="'#' + ${skill.id}" th:text="${skill.description}">
                                     Ympyrä</a>
                             </h4>
                             <div class="clearfix">
@@ -33,10 +33,11 @@
                                 </label>
                             </div>
                         </div>
-                        <div th:id="${goal.grade} + ${skill.description}" class="panel-collapse collapse">
+                        <div th:id="${skill.id}" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <p>  <ul class="list-group">
-                                        <li class="list-group-item" th:each="exercise : ${skill.exercises}" th:utext="${'Tähän tulis, joku kuvas skillistä' + '&lt;br /&gt;' + exercise.description}"></li>
+                                        <li class="list-group-item" th:each="exercise : ${skill.exercises}" 
+                                            th:utext="${'Tähän tulis, joku kuvas skillistä' + '&lt;hr /&gt;' + '&lt;b &gt;' +'Tehtävät: '+ '&lt;/b&gt;' + exercise.description}"></li>
                                         <!-- <li class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
                                             sekä sektorin alasta</li>
                                         <li class="list-group-item">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
