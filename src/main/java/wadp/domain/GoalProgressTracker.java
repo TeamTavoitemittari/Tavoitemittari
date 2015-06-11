@@ -8,46 +8,46 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class GoalProgressTracker extends AbstractPersistable<Long>{
     
-    private Status status;
-    private HashMap<Skill, Status> skills;
+    private boolean ready;
+    private HashMap<Skill, Boolean> skills;
     
     public GoalProgressTracker(Goal goal){
-        this.status=Status.UNREADY;
-        skills=new HashMap<Skill, Status>();
+        this.ready=false;
+        skills=new HashMap<Skill, Boolean>();
         for (Skill skill : goal.getSkills()) {
-            skills.put(skill, Status.UNREADY);
+            skills.put(skill, false);
         }
     }
     
     public void setSkillReady(Skill skill){
-        skills.put(skill, Status.READY);
+        skills.put(skill, true);
         boolean allReady = true;
-        for(Status goalStatus : skills.values()){
-            if(goalStatus == Status.UNREADY){
+        for(boolean goalStatus : skills.values()){
+            if(!goalStatus){
                 allReady = false;
                 break;
             }
         }
-        if(allReady) this.status=Status.READY;
+        if(allReady) this.ready=true;
     }
     
     public void setSkillUnready(Skill skill){
-        skills.put(skill, Status.UNREADY);
+        skills.put(skill, false);
     }
 
-    public Status getStatus() {
-        return status;
+    public boolean getStatus() {
+        return ready;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(boolean status) {
+        this.ready = status;
     }
 
-    public HashMap<Skill, Status> getSkills() {
+    public HashMap<Skill, Boolean> getSkills() {
         return skills;
     }
 
-    public void setSkills(HashMap<Skill, Status> skills) {
+    public void setSkills(HashMap<Skill, Boolean> skills) {
         this.skills = skills;
     }
     
