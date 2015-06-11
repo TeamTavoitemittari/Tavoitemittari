@@ -13,10 +13,10 @@ public class Course extends AbstractPersistable<Long> {
     private String name;
     private String description;
     @OneToMany
-    private List<Goal> goals;
+    private List<GradeLevel> gradeLevels;
     
     public Course(){
-        this.goals=new ArrayList<Goal>();
+        this.gradeLevels=new ArrayList<GradeLevel>();
     }
     
     public String getName() {
@@ -27,12 +27,12 @@ public class Course extends AbstractPersistable<Long> {
         this.name = name;
     }
 
-     public List<Goal> getGoals() {
-        return this.goals;
+     public List<GradeLevel> getGradeLevels() {
+        return this.gradeLevels;
                 }
 
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
+    public void setGradeLevels(List<GradeLevel> levels) {
+        this.gradeLevels=levels;
     }
 
     public String getDescription() {

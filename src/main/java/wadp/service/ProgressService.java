@@ -1,6 +1,6 @@
-
 package wadp.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wadp.domain.Course;
@@ -11,16 +11,20 @@ import wadp.repository.CourseProgressRepository;
 
 @Service
 public class ProgressService {
-  
+
     @Autowired
     private CourseProgressRepository progressRepository;
-    
-    public CourseProgressTracker getProgress(User user, Course course){
-        return progressRepository.findByUserEmailAndCourse(user.getEmail(), course).get(0);
+
+    public CourseProgressTracker getProgress(User user, Course course) {
+        List<CourseProgressTracker> trackers = progressRepository.findByUserAndCourse(user, course);
+        if (trackers.isEmpty()) {
+            return null;
+        }
+        return progressRepository.findByUserAndCourse(user, course).get(0);
     }
-    
-    public void updateSkillStatus(CourseProgressTracker progressTracker, Skill skill, boolean status){
+
+    public void updateSkillStatus(CourseProgressTracker progressTracker, Skill skill, boolean status) {
         progressTracker.updateSkillStatus(skill, status);
     }
-    
+
 }

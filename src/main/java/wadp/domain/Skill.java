@@ -12,19 +12,18 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Skill extends AbstractPersistable<Long>{
     
+    private String name;
     private String description;
     
     @OneToMany
     private List<Exercise> exercises;
-
-    public Skill() {
+    
+    public Skill(){
+        this.exercises=new ArrayList<Exercise>();
     }
     
-    
-    
-    
     public Skill(String description){
-        this.description=description;
+        this.name=description;
         this.exercises=new ArrayList<Exercise>();
     }
     
@@ -36,6 +35,14 @@ public class Skill extends AbstractPersistable<Long>{
         return this.exercises;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String description) {
+        this.name = description;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -43,5 +50,7 @@ public class Skill extends AbstractPersistable<Long>{
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    
     
 }

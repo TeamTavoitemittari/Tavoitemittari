@@ -23,12 +23,12 @@ public class GoalTest {
      * Test of getGrade and setGrade method, of class Goal.
      */
     @Test
-    public void testSetAndGetGrade() {
+    public void testSetAndGetName() {
         System.out.println("getGrade");
         Goal tavoite = new Goal();
-        tavoite.setGrade("testi");
+        tavoite.setName("testi");
         String expResult = "testi";
-        String result = tavoite.getGrade();
+        String result = tavoite.getName();
         assertEquals(expResult, result);
        
        

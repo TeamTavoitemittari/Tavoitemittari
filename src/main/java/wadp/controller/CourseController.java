@@ -38,12 +38,12 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         
         if(course==null){
-            // TODO: throw new course not found exception
+            return "redirect:/mycourses";
         }
         model.addAttribute("course", course);
-//        User user = userService.getAuthenticatedUser();
-//        CourseProgressTracker tracker = progressService.getProgress(user, course);
-//        model.addAttribute("tracker", tracker);
+        User user = userService.getAuthenticatedUser();
+        CourseProgressTracker tracker = progressService.getProgress(user, course);
+        model.addAttribute("tracker", tracker);
         
         return "course";
     }

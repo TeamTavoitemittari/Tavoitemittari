@@ -9,21 +9,22 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
 
     private User user;
     private Course course;
-    private HashMap<Goal, GoalProgressTracker> goals;
+    private HashMap<GradeLevel, GradeProgressTracker> gradeLevels;
 
     public CourseProgressTracker(User user, Course course) {
         this.user = user;
-        goals = new HashMap<Goal, GoalProgressTracker>();
-        for (Goal goal : course.getGoals()) {
-            goals.put(goal, new GoalProgressTracker(goal));
+        this.gradeLevels = new HashMap<GradeLevel, GradeProgressTracker>();
+        for (GradeLevel gradeLevel : course.getGradeLevels()) {
+            gradeLevels.put(gradeLevel, new GradeProgressTracker(gradeLevel));
         }
     }
 
     public void updateSkillStatus(Skill skill, boolean status) {
-        for (GoalProgressTracker tracker : goals.values()) {
+        for (GradeProgressTracker tracker : gradeLevels.values()){
             boolean found = tracker.updateSkillStatus(skill, status);
             if(found) break;
         }
+        
     }
 
     public User getUser() {
@@ -42,12 +43,12 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
         this.course = course;
     }
 
-    public HashMap<Goal, GoalProgressTracker> getGoals() {
-        return goals;
+    public HashMap<GradeLevel, GradeProgressTracker> getGradeLevels() {
+        return gradeLevels;
     }
 
-    public void setGoals(HashMap<Goal, GoalProgressTracker> goals) {
-        this.goals = goals;
+    public void setGradeLevels(HashMap<GradeLevel, GradeProgressTracker> gradeLevels) {
+        this.gradeLevels = gradeLevels;
     }
 
 }

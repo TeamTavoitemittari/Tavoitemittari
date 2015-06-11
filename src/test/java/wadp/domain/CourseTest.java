@@ -44,13 +44,12 @@ public class CourseTest {
     public void testSetandGetGoals() {
         System.out.println("getGoals");
         Course kurssi = new Course();
-        Goal tavoite = new Goal(); 
-        tavoite.setGrade("10");
-        ArrayList<Goal> tavoitteet = new ArrayList();
-        tavoitteet.add(tavoite);
-        kurssi.setGoals(tavoitteet);       
-        assertEquals(1, kurssi.getGoals().size());
-     
+        GradeLevel level = new GradeLevel();
+        level.setGrade("9-10");
+        ArrayList<GradeLevel> levels = new ArrayList();
+        levels.add(level);
+        kurssi.setGradeLevels(levels);
+        assertEquals(1, kurssi.getGradeLevels().size());
        
     }
 

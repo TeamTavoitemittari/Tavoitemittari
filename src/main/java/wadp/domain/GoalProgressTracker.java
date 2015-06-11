@@ -18,20 +18,6 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         }
     }
 
-    public void setSkillReady(Skill skill) {
-        skills.put(skill, true);
-        boolean allReady = true;
-        for (boolean goalStatus : skills.values()) {
-            if (!goalStatus) {
-                allReady = false;
-                break;
-            }
-        }
-        if (allReady) {
-            this.ready = true;
-        }
-    }
-
     public boolean updateSkillStatus(Skill skill, boolean status) {
         if (skills.get(skill) != null) {
             skills.put(skill, status);
@@ -40,9 +26,6 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         return false;
     }
 
-    public void setSkillUnready(Skill skill) {
-        skills.put(skill, false);
-    }
 
     public boolean getStatus() {
         return ready;

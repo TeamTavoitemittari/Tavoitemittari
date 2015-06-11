@@ -11,22 +11,22 @@ import javax.persistence.OneToMany;
 @Entity
 public class Goal extends AbstractPersistable<Long>{
     
-    private String grade;
+    private String name;
     @OneToMany
     private List<Skill> skills;
     
     public Goal(){
         this.skills= new ArrayList<Skill>();
     }
-    
-    
-     public String getGrade() {
-        return this.grade;
+
+    public String getName() {
+        return name;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setName(String name) {
+        this.name = name;
     }
+    
         
      public List<Skill> getSkills() {
         return this.skills;
