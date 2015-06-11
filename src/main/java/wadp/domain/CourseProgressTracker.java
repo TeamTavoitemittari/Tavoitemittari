@@ -1,4 +1,3 @@
-
 package wadp.domain;
 
 import java.util.HashMap;
@@ -6,18 +5,24 @@ import javax.persistence.Entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class CourseProgressTracker extends AbstractPersistable<Long>{
-    
+public class CourseProgressTracker extends AbstractPersistable<Long> {
+
     private User user;
     private Course course;
     private HashMap<Goal, GoalProgressTracker> goals;
-    
-    
-    public CourseProgressTracker(User user, Course course){
-        this.user=user;
+
+    public CourseProgressTracker(User user, Course course) {
+        this.user = user;
         goals = new HashMap<Goal, GoalProgressTracker>();
         for (Goal goal : course.getGoals()) {
             goals.put(goal, new GoalProgressTracker(goal));
+        }
+    }
+
+    public void updateSkillStatus(Skill skill, boolean status) {
+        for (GoalProgressTracker tracker : goals.values()) {
+            boolean found = tracker.updateSkillStatus(skill, status);
+            if(found) break;
         }
     }
 
@@ -28,7 +33,6 @@ public class CourseProgressTracker extends AbstractPersistable<Long>{
     public void setUser(User user) {
         this.user = user;
     }
-    
 
     public Course getCourse() {
         return course;
@@ -45,5 +49,5 @@ public class CourseProgressTracker extends AbstractPersistable<Long>{
     public void setGoals(HashMap<Goal, GoalProgressTracker> goals) {
         this.goals = goals;
     }
-    
+
 }
