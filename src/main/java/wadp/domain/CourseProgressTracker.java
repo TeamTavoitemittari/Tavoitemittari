@@ -8,25 +8,25 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class CourseProgressTracker extends AbstractPersistable<Long>{
     
-    private String userEmail;
+    private User user;
     private Course course;
     private HashMap<Goal, GoalProgressTracker> goals;
     
     
     public CourseProgressTracker(User user, Course course){
-        userEmail = user.getEmail();
+        this.user=user;
         goals = new HashMap<Goal, GoalProgressTracker>();
         for (Goal goal : course.getGoals()) {
             goals.put(goal, new GoalProgressTracker(goal));
         }
     }
 
-    public String getEmail() {
-        return userEmail;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.userEmail = email;
+    public void setUser(User user) {
+        this.user = user;
     }
     
 
