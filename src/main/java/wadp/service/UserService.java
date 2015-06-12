@@ -82,10 +82,11 @@ public User createUser(String email, String password, String name, String userRo
          if (newPassword== null || newPassword.isEmpty()) {
             throw new IllegalArgumentException("newPassword must not be null or empty");
         }
-        User user = getAuthenticatedUser();
-         if (user==null) {
+       
+         if (SecurityContextHolder.getContext().getAuthentication()==null) {
             throw new AuthenticatedUserIsNullException();
         }
+        User user = getAuthenticatedUser();
         user.setPassword(newPassword);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), auth.getAuthorities());

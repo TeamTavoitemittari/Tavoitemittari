@@ -171,5 +171,15 @@ public class UserServiceTest {
         service.ChangePassword(null);
     }
     
+    @Test(expected=AuthenticatedUserIsNullException.class)
+    public void CurrentUserDoesntreturn() {
+        
+       SecurityContextHolder.clearContext();
+        service.ChangePassword("salasana");
+                
+ 
+    }
+    
+    
     
 }
