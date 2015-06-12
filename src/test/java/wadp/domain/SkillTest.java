@@ -40,10 +40,10 @@ public class SkillTest {
      * Test of description getters and setters, of class Skill.
      */
     @Test
-    public void nameTest(){
+    public void descriptionTest(){
         Skill skill = new Skill("descr");
-        assertEquals("descr", skill.getName());
-        skill.setName("second");
-        assertEquals("second", skill.getName());
+        assertEquals("descr", skill.getDescription());
+        skill.setDescription("second");
+        assertEquals("second", skill.getDescription());
     }
 }
