@@ -30,6 +30,17 @@
                                     <li><a href="#">Tietoturva</a></li>
                                 </ul>
                             </li>
+                             
+                             <li class="dropdown" sec:authorize="hasRole('teacher')">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Hallinnointi <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Kurssit</a></li>
+                                    <li><a href="#">Oppilaat</a></li>
+                                    <li><a href="#">Muuta</a></li>
+                                </ul>
+                            </li>
+                             
+                                 
                         </ul>
                         <form class="navbar-form navbar-left" role="search">
                             <div class="form-group">

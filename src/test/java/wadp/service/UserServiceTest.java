@@ -161,5 +161,15 @@ public class UserServiceTest {
     
        
    }
+    @Test(expected=IllegalArgumentException.class)
+    public void cannotChangetoEmptyPassword() {
+           service.ChangePassword("");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void cannotChangetoNullPassword() {
+        service.ChangePassword(null);
+    }
+    
     
 }
