@@ -19,8 +19,10 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
     }
 
     public boolean updateSkillStatus(Skill skill, boolean status) {
+        
         if (skills.get(skill) != null) {
             skills.put(skill, status);
+            if(status) checkIfReady();
             return true;
         }
         return false;
@@ -41,6 +43,15 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
 
     public void setSkills(HashMap<Skill, Boolean> skills) {
         this.skills = skills;
+    }
+
+    private void checkIfReady() {
+        boolean allReady = true;
+        for (boolean skillReady : skills.values()) {
+            if(!skillReady) allReady = false;
+            break;
+        }
+        this.ready = allReady;
     }
 
 }

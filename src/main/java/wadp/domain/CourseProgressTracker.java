@@ -13,18 +13,19 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
 
     public CourseProgressTracker(User user, Course course) {
         this.user = user;
+        this.course = course;
         this.gradeLevels = new HashMap<GradeLevel, GradeProgressTracker>();
         for (GradeLevel gradeLevel : course.getGradeLevels()) {
             gradeLevels.put(gradeLevel, new GradeProgressTracker(gradeLevel));
         }
     }
 
-    public void updateSkillStatus(Skill skill, boolean status) {
+    public boolean updateSkillStatus(Skill skill, boolean status) {
         for (GradeProgressTracker tracker : gradeLevels.values()){
             boolean found = tracker.updateSkillStatus(skill, status);
-            if(found) break;
+            if(found) return true;
         }
-        
+        return false;
     }
 
     public User getUser() {
