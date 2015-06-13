@@ -50,4 +50,17 @@ public class CourseServiceTest {
         assertEquals("todari", courseRepository.findAll().get(0).getName());
         assertEquals(1, courseRepository.findAll().size());
     }
+    
+    @Test
+    public void GetCourseById() {
+        course = new Course();
+        course.setName("kurssi1");
+        courseService.addCourse(course);
+        Long id = course.getId();
+        Course samecourse = courseService.getCourseById(id);
+        
+        
+        assertTrue(samecourse.getName().equals(course.getName()));
+        
+    }
 }
