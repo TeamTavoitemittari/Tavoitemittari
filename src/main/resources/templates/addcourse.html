@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Luo uusi kurssi</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.dropotron.min.js"></script>
+        <script src="/js/init.js"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/components :: course-navbar">navbar</div>
+
+     
+      
+
+       
+
+        
+            <div class="row  center-block col-xs-24 col-sm-10 col-md-8 col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span>Luo uusi kurssi</span></h3>
+                    </div> <form th:action="@{/course}" method="post">
+                        <div class="panel-body">
+                            
+                      
+                       
+                    <b th:if="${#fields.hasErrors('addcourse')}" th:errors="*{addcourse}">Error message</b>
+                    <br></br>
+                    <b th:if="${#fields.hasErrors('addcourse.name')}" th:errors="*{addcourse.name}">Error message</b>
+                    <div class="form-group">
+                        <label for="text">Nimi</label>
+                        <input type="text" name="name" class="form-control" id="name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Kurssin kuvaus</label>
+                        <textArea name="description" class="form-control" id="description"></textArea>
+                    </div>
+                    </div>
+                  
+                
+                        
+                        
+                        
+                    <div class="panel-footer">
+                      <button class="btn btn-success" role="button">Lisää</button>
+                    </div>
+                    </form>           
+                    
+                </div>
+            </div>
+        
+
+
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/jquery.min.js"></script>
+    </body>
+
+</html>
