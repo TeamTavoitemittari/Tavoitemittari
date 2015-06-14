@@ -17,6 +17,8 @@
     </head>
 
     <body>
+        <div th:replace="fragments/components :: course-navbar">navbar</div>
+    
         <div class="container">
             <div class="row" th:if="${course != null}">
                 <button class="btn btn-success" style="padding:10px">Tallenna</button>
