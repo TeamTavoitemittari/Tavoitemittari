@@ -1,3 +1,5 @@
+//At the moment this is a redundant test.
+
 /*
 import wadp.*
 import wadp.domain.*
