@@ -48,7 +48,10 @@ public class UserDetailsController {
     @RequestMapping(value = "/userdetails", method = RequestMethod.GET)
     public String ShowUserDetails(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
-        model.addAttribute("newpassword", new ProperPasswordForm());
+        
+        if (!model.containsAttribute("newpassword")) {
+         model.addAttribute("newpassword", new ProperPasswordForm());
+        }
         return "userdetails";
     }
     
@@ -68,8 +71,12 @@ public class UserDetailsController {
     @RequestMapping(value = "/userdetails", method = RequestMethod.POST)
     public String ChangeUserPassword(RedirectAttributes redirectAttributes, @ModelAttribute("newpassword") @Valid ProperPasswordForm newpassword, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            
+        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newpassword", bindingResult);
+        redirectAttributes.addFlashAttribute("newpassword", newpassword);
+        return "redirect:/userdetails";
                   
-        return "userdetails";
+        
         }
         
         try {

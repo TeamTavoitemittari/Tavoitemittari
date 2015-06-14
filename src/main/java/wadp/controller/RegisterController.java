@@ -36,7 +36,15 @@ public class RegisterController {
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            
+            
+           
+       redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+       redirectAttributes.addFlashAttribute("user", user);
+       return "redirect:/register";
+
+            
+          
         }
 
         try {
@@ -52,7 +60,9 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String Register(Model model) {
-        model.addAttribute("user", new UserForm());
+        if (!model.containsAttribute("user")) {
+          model.addAttribute("user", new UserForm());
+        }
         return "register";
     }
 
