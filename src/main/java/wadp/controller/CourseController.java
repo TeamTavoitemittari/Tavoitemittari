@@ -75,10 +75,10 @@ public class CourseController {
             return "redirect:/mycourses";
         }
         model.addAttribute("course", course);
-        //TODO using progress tracker properly
-        //User user = userService.getAuthenticatedUser();
+        User user = userService.getAuthenticatedUser();
+        //TODO create pgrogresstracker
         //CourseProgressTracker tracker = progressService.getProgress(user, course);
-        model.addAttribute("tracker", tracker);
+        //model.addAttribute("tracker", tracker);
         
         return "course";
     }
