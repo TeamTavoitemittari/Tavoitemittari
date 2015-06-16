@@ -65,7 +65,8 @@ public class CourseController {
 //    public void createCourse(){
 //        //TODO: code for creation of new course
 //    }
-    
+
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getCourse(Model model, @PathVariable Long id){
         Course course = courseService.getCourseById(id);
@@ -74,8 +75,9 @@ public class CourseController {
             return "redirect:/mycourses";
         }
         model.addAttribute("course", course);
-        User user = userService.getAuthenticatedUser();
-        CourseProgressTracker tracker = progressService.getProgress(user, course);
+        //TODO using progress tracker properly
+        //User user = userService.getAuthenticatedUser();
+        //CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
         
         return "course";
