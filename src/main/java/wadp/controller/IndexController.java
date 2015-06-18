@@ -12,10 +12,12 @@ import wadp.domain.Exercise;
 import wadp.domain.Goal;
 import wadp.domain.GradeLevel;
 import wadp.domain.Skill;
+import wadp.domain.User;
 import wadp.service.CourseService;
 import wadp.service.ExerciseService;
 import wadp.service.GoalService;
 import wadp.service.GradeLevelService;
+import wadp.service.ProgressService;
 import wadp.service.SkillService;
 import wadp.service.UserService;
 
@@ -42,6 +44,8 @@ public class IndexController {
     @Autowired
     private SkillService skillService;
 
+    @Autowired
+    private ProgressService progressService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex() {
@@ -285,6 +289,10 @@ public class IndexController {
         
         course.setGradeLevels(levels);
         courseService.addCourse(course);
-
+        
+        User user = userService.findUserByEmail("oppilas@a.com");
+        if(progressService.getProgress(user, course)==null){
+                    progressService.createProgressTracker(user, course);
+        }
     }
 }

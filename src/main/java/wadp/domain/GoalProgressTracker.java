@@ -28,7 +28,6 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         return false;
     }
 
-
     public boolean getStatus() {
         return ready;
     }

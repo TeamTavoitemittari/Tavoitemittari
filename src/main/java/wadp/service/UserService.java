@@ -95,6 +95,10 @@ public User createUser(String email, String password, String name, String userRo
         return user;
      
      }
+     
+     public User findUserByEmail(String email){
+         return userRepository.findByEmail(email);
+     }
 
       public void clearUsers(){
           userRepository.deleteAll();

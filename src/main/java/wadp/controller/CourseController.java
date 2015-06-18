@@ -76,9 +76,8 @@ public class CourseController {
         }
         model.addAttribute("course", course);
         User user = userService.getAuthenticatedUser();
-        //TODO create pgrogresstracker
-        //CourseProgressTracker tracker = progressService.getProgress(user, course);
-        //model.addAttribute("tracker", tracker);
+        CourseProgressTracker tracker = progressService.getProgress(user, course);
+        model.addAttribute("tracker", tracker);
         
         return "course";
     }
