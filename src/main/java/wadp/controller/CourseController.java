@@ -58,14 +58,6 @@ public class CourseController {
         return "redirect:mycourses";
     }
 
-  
-    
-    
-//    @RequestMapping(method = RequestMethod.POST)
-//    public void createCourse(){
-//        //TODO: code for creation of new course
-//    }
-
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getCourse(Model model, @PathVariable Long id){
