@@ -2,14 +2,26 @@
 package wadp.domain;
 
 import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class GradeProgressTracker extends AbstractPersistable<Long> {
     
     private boolean ready;
-    private HashMap<Goal, GoalProgressTracker> goals;
+    
+    @ElementCollection
+    @CollectionTable(name = "goal_progress_trackers")
+    private Map<Goal, GoalProgressTracker> goals;
+    
+    public GradeProgressTracker(){
+        this.goals=new HashMap<Goal, GoalProgressTracker>();
+    }
     
     public GradeProgressTracker(GradeLevel level){
         this.ready=false;
@@ -31,12 +43,16 @@ public class GradeProgressTracker extends AbstractPersistable<Long> {
     public boolean isReady() {
         return ready;
     }
+    
+    public boolean getReadt(){
+        return this.ready;
+    }
 
     public void setReady(boolean ready) {
         this.ready = ready;
     }
 
-    public HashMap<Goal, GoalProgressTracker> getGoals() {
+    public Map<Goal, GoalProgressTracker> getGoals() {
         return goals;
     }
 

@@ -1,16 +1,29 @@
 package wadp.domain;
 
 import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class CourseProgressTracker extends AbstractPersistable<Long> {
 
+    @OneToOne
     private User user;
+    @OneToOne
     private Course course;
-    private HashMap<GradeLevel, GradeProgressTracker> gradeLevels;
+    @ElementCollection
+    @CollectionTable(name = "grade_level_progress")
+    private Map<GradeLevel, GradeProgressTracker> gradeLevels;
 
+    public CourseProgressTracker(){
+        this.gradeLevels=new HashMap<GradeLevel, GradeProgressTracker>();
+    }
+    
     public CourseProgressTracker(User user, Course course) {
         this.user = user;
         this.course = course;
@@ -44,7 +57,7 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
         this.course = course;
     }
 
-    public HashMap<GradeLevel, GradeProgressTracker> getGradeLevels() {
+    public Map<GradeLevel, GradeProgressTracker> getGradeLevels() {
         return gradeLevels;
     }
 
