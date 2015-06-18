@@ -35,6 +35,7 @@ public class ProgressService {
         return progressRepository.findByUserAndCourse(user, course).get(0);
     }
 
+    @Transactional
     public void updateSkillStatus(CourseProgressTracker progressTracker, Skill skill, boolean status) {
         progressTracker.updateSkillStatus(skill, status);
     }
