@@ -30,7 +30,7 @@ import wadp.repository.UserRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@IntegrationTest({"server.port=8080/index"})
+@IntegrationTest({"server.port=8080"})
 public class ChangePasswordTest {
     
     private String password;
@@ -43,27 +43,13 @@ public class ChangePasswordTest {
    
     @Autowired 
     UserRepository repo;
-
-    @Autowired
-    private CourseService courseService;
-    
-    @Autowired
-    private GradeLevelService gradeService;
-
-    @Autowired
-    private GoalService goalService;
-
-    @Autowired
-    private ExerciseService exerciseService;
-
-    @Autowired
-    private SkillService skillService;
     
     public ChangePasswordTest() {
     }
 
     @Before
     public void setUp() {
+        repo.deleteAll();
         name = "test1";
         password = "Testpassword1";
         createUser();
@@ -73,22 +59,15 @@ public class ChangePasswordTest {
     public void canChangePasswordAfterLogin() {
         login(name, password);
         getUserdetailsPage();
-        passwordChange(password, "Testpassword2");
-        assertEquals(repo.findByEmail(name + "gmail.com").getPassword(), "Testpassword2");
-        
-//
-//        when().
-//                get("/userdetails").
-//        then().
-//                body("name", Matchers.is("Mickey Mouse")).
-//                body("id", Matchers.is(mickeyId));
+        passwordChange("Testpassword2", "Testpassword2");
+        assertTrue(hasMessage("Salasana vaihdettu."));
     }
     
     
         
     private void createUser() {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/index");
+        driver.get("http://localhost:8080/");
         element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy!')]"));
         element.click();
 
@@ -108,18 +87,16 @@ public class ChangePasswordTest {
     
     private void login(String name, String password) {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/index");
+        driver.get("http://localhost:8080/");
         element = driver.findElementByName("email");
         element.sendKeys(name + "@gmail.com");
         element = driver.findElement(By.id("password"));
         element.sendKeys(password);
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
-
         element.click();
     }
     
     private void getUserdetailsPage() {
-        driver.getPageSource();
         element = driver.findElement(By.id("dropdown-toggle-menu"));
         element.click();
         element = driver.findElement(By.id("dd-a"));
@@ -134,7 +111,6 @@ public class ChangePasswordTest {
         element.sendKeys(confirmPassword);
         element = driver.findElement(By.xpath("//button[contains(.,'Vaihda salasana')]"));
         element.submit();
-
     }
 
     private boolean hasMessage(String message) {

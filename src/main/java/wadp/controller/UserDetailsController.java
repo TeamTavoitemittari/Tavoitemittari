@@ -3,7 +3,6 @@ package wadp.controller;
 import java.util.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import static org.apache.maven.wagon.PathUtils.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
