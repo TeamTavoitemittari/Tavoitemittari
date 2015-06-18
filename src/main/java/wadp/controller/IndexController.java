@@ -1,6 +1,7 @@
 package wadp.controller;
 
 import java.util.*;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wadp.domain.Course;
+import wadp.domain.CourseProgressTracker;
 import wadp.domain.Exercise;
 import wadp.domain.Goal;
+import wadp.domain.GoalProgressTracker;
 import wadp.domain.GradeLevel;
+import wadp.domain.GradeProgressTracker;
 import wadp.domain.Skill;
 import wadp.domain.User;
 import wadp.service.CourseService;
@@ -80,6 +84,7 @@ public class IndexController {
         return "addCourse";
     }
 
+    @Transactional
     private void createDummyCourse() {
         
         if(courseService.getCourses().size()>0) return;
@@ -291,8 +296,16 @@ public class IndexController {
         courseService.addCourse(course);
         
         User user = userService.findUserByEmail("oppilas@a.com");
-        if(progressService.getProgress(user, course)==null){
-                    progressService.createProgressTracker(user, course);
+        
+        CourseProgressTracker tracker = new CourseProgressTracker(user, course);
+        
+        for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
+            for (GoalProgressTracker goalTracker : gradeTracker.getGoals().values()) {
+                progressService.saveGoalTracker(goalTracker);
+            }
+            progressService.saveGradeTracker(gradeTracker);
         }
+        progressService.saveCourseTracker(tracker);
+        
     }
 }

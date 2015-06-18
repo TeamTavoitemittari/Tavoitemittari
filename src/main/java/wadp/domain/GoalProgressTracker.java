@@ -1,14 +1,24 @@
 package wadp.domain;
 
 import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class GoalProgressTracker extends AbstractPersistable<Long> {
 
     private boolean ready;
-    private HashMap<Skill, Boolean> skills;
+    @ElementCollection
+    @CollectionTable(name = "skill_statuses")
+    private Map<Skill, Boolean> skills;
+    
+    public GoalProgressTracker(){
+        skills = new HashMap<Skill, Boolean>();
+    }
 
     public GoalProgressTracker(Goal goal) {
         this.ready = false;
@@ -36,7 +46,7 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         this.ready = status;
     }
 
-    public HashMap<Skill, Boolean> getSkills() {
+    public Map<Skill, Boolean> getSkills() {
         return skills;
     }
 
