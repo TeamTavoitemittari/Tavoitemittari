@@ -159,6 +159,12 @@
                             <exclude>wadp/repository/GoalRepository.class</exclude>
                             <exclude>wadp/repository/SkillRepository.class</exclude>
                             <exclude>wadp/repository/UserRepository.class</exclude>
+                            <!-- Controllers -->
+                            <exclude>wadp/controller/CourseController.class</exclude>
+                            <exclude>wadp/controller/CoursesController.class</exclude>
+                            <exclude>wadp/controller/IndexController.class</exclude>
+                            <exclude>wadp/controller/RegisterController.class</exclude>
+                            <exclude>wadp/controller/UserDetailsController.class</exclude>
                             <!-- Entities -->
                             <exclude>wadp/domain/form/UserForm.class</exclude>
                             <exclude>wadp/auth/UserAuthenticationProvider.class</exclude>
