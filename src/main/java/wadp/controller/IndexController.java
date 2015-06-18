@@ -35,7 +35,7 @@ public class IndexController {
 
     @Autowired
     private CourseService courseService;
-    
+
     @Autowired
     private GradeLevelService gradeService;
 
@@ -86,8 +86,10 @@ public class IndexController {
 
     @Transactional
     private void createDummyCourse() {
-        
-        if(courseService.getCourses().size()>0) return;
+
+        if (courseService.getCourses().size() > 0) {
+            return;
+        }
 
         Course course = new Course();
         course.setName("Tähtitiede 1");
@@ -212,15 +214,15 @@ public class IndexController {
         goal2.setSkills(skills2);
 
         goalService.addGoal(goal2);
-        
+
         ArrayList<Goal> goals1 = new ArrayList<Goal>();
         goals1.add(goal1);
         goals1.add(goal2);
-        
+
         level1.setGoals(goals1);
-        
+
         gradeService.addGradeLevel(level1);
-       
+
         GradeLevel level2 = new GradeLevel();
         level2.setGrade("7-8");
 
@@ -231,7 +233,6 @@ public class IndexController {
 
         Exercise exer23 = new Exercise("83");
         Exercise exer24 = new Exercise("10");
-        
 
         exerciseService.addExercise(exer23);
         exerciseService.addExercise(exer24);
@@ -254,58 +255,62 @@ public class IndexController {
 
         GradeLevel level3 = new GradeLevel();
         level3.setGrade("9-10");
-        
+
         Goal goal4 = new Goal();
         goal4.setName("Astrofysiikka");
-        
+
         Skill skill6 = new Skill();
-        
+
         Exercise exer25 = new Exercise("Laske auringon massa.");
         Exercise exer26 = new Exercise("893");
         Exercise exer27 = new Exercise("Lue Carl Saganin Kosmos ja kirjoita siitä neljän sivun referaatti.");
-        
+
         exerciseService.addExercise(exer25);
         exerciseService.addExercise(exer26);
         exerciseService.addExercise(exer27);
-        
+
         skill6.addExercise(exer25);
         skill6.addExercise(exer26);
         skill6.addExercise(exer27);
-        
+
         skillService.addSkill(skill6);
-        
+
         ArrayList<Skill> skills4 = new ArrayList<Skill>();
         skills4.add(skill6);
         goal4.setSkills(skills4);
-        
+
         goalService.addGoal(goal4);
-        
+
         ArrayList<Goal> goals4 = new ArrayList<Goal>();
         goals4.add(goal4);
-        
+
         level3.setGoals(goals4);
-        
+
         gradeService.addGradeLevel(level3);
-        
+
         ArrayList<GradeLevel> levels = new ArrayList<GradeLevel>();
         levels.add(level1);
         levels.add(level2);
         levels.add(level3);
-        
+
         course.setGradeLevels(levels);
         courseService.addCourse(course);
-        
+
         User user = userService.findUserByEmail("oppilas@a.com");
-        
+
         CourseProgressTracker tracker = new CourseProgressTracker(user, course);
-        
+
         for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
             for (GoalProgressTracker goalTracker : gradeTracker.getGoals().values()) {
                 progressService.saveGoalTracker(goalTracker);
             }
             progressService.saveGradeTracker(gradeTracker);
         }
+        
         progressService.saveCourseTracker(tracker);
         
+        progressService.updateSkillStatus(tracker, skill6, true);
+        progressService.updateSkillStatus(tracker, skill2, true);
+
     }
 }
