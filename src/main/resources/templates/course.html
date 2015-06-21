@@ -54,28 +54,30 @@
                             <hr/>
                         </div>
                     </div>
-                    
+
                     <!-- Comments tab where students comment on a specific goal -->
                     <div id="comments" class="tab-pane fade">
                         <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
                             <h1 th:text="${gradeLevel.grade}">4-10</h1>
-                            <div class="panel panel-primary" th:each="goal : ${gradeLevel.goals}">
+                            <div class="panel panel-success" th:each="goal : ${gradeLevel.goals}">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                        <a th:text="${goal.name}">Ympyrä</a>
                                     </h4>
                                 </div>
-                                <div th:id="${goal.id}" class="panel">
+                                <div class="panel">
                                     <div style="padding: 10px" th:each="skill : ${goal.skills}">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
                                             </div>
                                             <div class="panel-footer">
-                                                <form class="form-horizontal" role="form" action="#">
-                                                    <textarea class="form-control" rows="3" id="comment"></textarea>
-                                                    <button class="btn btn-success" type="submit" style="padding: 10px">Tallenna</button>
+                                                <!-- probably wont work yet, fix -->
+                                                <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${skill.id}}" method="post">
+                                                    <textarea th:id="comment+ ${skill.id}" class="form-control" rows="3" ></textarea>
+                                                    <button class="btn btn-success" th:id="'save'+${skill.id}" type="submit">Tallenna</button>
                                                 </form>
+                                                <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-default" th:id="'edit'+${skill.id}" >Muokkaa</button>
                                             </div>
                                         </div>
                                     </div>
@@ -101,4 +103,19 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            function enableEdit(id) {
+                echo("here");
+
+                var field = document.getElementById("comment" + id);
+                field.disabled = false;
+
+                var editButton = document.getElementById("edit" + id);
+                editButton.style.visibility = "hidden";
+
+                var saveButton = document.getElementById("save" + id);
+                saveButton.style.visibility = "visible";
+
+            }
+        </script>
     </body></html>

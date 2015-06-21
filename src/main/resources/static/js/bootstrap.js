@@ -2274,3 +2274,25 @@ if (typeof jQuery === 'undefined') {
   })
 
 }(jQuery);
+
+
+//Custom methods
+
+
+function enableEdit(id){
+    
+    var field = document.getElementById("comment"+id);
+    field.disabled = false;
+    
+    var editButton = document.getElementById("edit"+id);
+    editButton.style.visibility = "hidden";
+    
+    var saveButton = document.getElementByID("save"+id);
+    saveButton.style.visibility = "visible";
+    
+}
+
+function disableAll(){
+    
+}
+

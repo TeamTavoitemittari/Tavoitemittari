@@ -32,9 +32,9 @@ public class CourseController {
     @Autowired
     private ProgressService progressService;
     
-    
     @Autowired
     private CourseService CourseService;
+    
     
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
@@ -66,6 +66,7 @@ public class CourseController {
         if(course==null){
             return "redirect:/mycourses";
         }
+        
         model.addAttribute("course", course);
         User user = userService.getAuthenticatedUser();
         CourseProgressTracker tracker = progressService.getProgress(user, course);
