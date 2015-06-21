@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.Course;
 import wadp.domain.CourseProgressTracker;
 import wadp.domain.User;
@@ -43,20 +44,35 @@ public class CourseController {
         return "addcourse";
     }
     
+    
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.POST)
-    public String createCourse(@ModelAttribute("addcourse") @Valid CourseForm addcourse, BindingResult bindingResult) {
-        
-        if(bindingResult.hasErrors()){
-            return "addcourse";
-        }
-        
-            Course newCourse = new Course();
-            newCourse.setName(addcourse.getName());
-            newCourse.setDescription(addcourse.getDescription());
-            CourseService.addCourse(newCourse);
-        return "redirect:mycourses";
+    public String createCourse(RedirectAttributes redirectAttributes, @ModelAttribute Course course){
+   
+    ///temp solution    
+    if (course.getGradeLevels().size() == 3){    
+     course.getGradeLevels().get(0).setGrade("9-10");
+     course.getGradeLevels().get(1).setGrade("7-8");
+     course.getGradeLevels().get(2).setGrade("5-6");  
     }
+    CourseService.addCourse(course);
+    return "redirect:mycourses";
+    }
+    
+//    @PreAuthorize("hasAuthority('teacher')")
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String createCourse(@ModelAttribute("addcourse") @Valid CourseForm addcourse, BindingResult bindingResult) {
+//        
+//        if(bindingResult.hasErrors()){
+//            return "addcourse";
+//        }
+//        
+//            Course newCourse = new Course();
+//            newCourse.setName(addcourse.getName());
+//            newCourse.setDescription(addcourse.getDescription());
+//            CourseService.addCourse(newCourse);
+//        return "redirect:mycourses";
+//    }
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

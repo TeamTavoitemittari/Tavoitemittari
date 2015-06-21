@@ -10,58 +10,109 @@
         <link rel="stylesheet" type="text/css" href="/css/general.css"/>
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
         <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/jquery.dropotron.min.js"></script>
-        <script src="/js/init.js"></script>
-    </head>
-    <body>
-        <div th:replace="fragments/components :: course-navbar">navbar</div>
-
-     
-      
-
-       
-
         
-            <div class="row  center-block col-xs-24 col-sm-10 col-md-8 col-lg-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span>Luo uusi kurssi</span></h3>
-                    </div> <form th:action="@{/course}" method="post">
-                        <div class="panel-body">
-                            
-                      
-                       
-                    <b th:if="${#fields.hasErrors('addcourse')}" th:errors="*{addcourse}">Error message</b>
+        
+       
+        <script src="/js/init.js"></script>
+       <script src="/js/jquery.min.js"></script>
+   
+    <script src="/js/dynamicform.js"></script>
+      <script src="/js/bootstrap.js"></script>
+    
+   
+
+</head>
+    <body>
+        
+       
+            <div th:replace="fragments/components :: course-navbar">navbar</div>
+
+            <div class="container">
+              
+              
+                    <form th:action="@{/course}"  method="post">
+                        
+            
+                   
+                    <hr></hr>
+                 
+                     <b>Kurssin nimi:</b>
+                     <input type="text" name="name" class="form-control" id="name"/>
+                    
                     <br></br>
-                    <b th:if="${#fields.hasErrors('addcourse.name')}" th:errors="*{addcourse.name}">Error message</b>
-                    <div class="form-group">
-                        <label for="text">Nimi</label>
-                        <input type="text" name="name" class="form-control" id="name"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="text">Kurssin kuvaus</label>
-                        <textArea name="description" class="form-control" id="description"></textArea>
-                    </div>
-                    </div>
+                    
+                    
+                    <b>Kurssin kuvaus:</b>
+                    <input type="text" name="description" class="form-control" id="description"/>
+                   
+                    <br></br>
+                    <b>Asteikko 9-10</b>
+                    <br></br>
+                    
+                   
+                    
+                     <div class="goalsWrap1">
+                    
+                    
+                   
+                       <br></br>
+
+                    
+                      </div>
+                      <button  type="button" class="btn btn-default" id="addGoal1">Lisää Tavoite</button>  
+                      <button type="button" class="btn btn-default" id="removeGoal1">Vähennä Tavoitteita</button>
+                    <hr></hr>
+                    
+                     <br></br>
+                    <b>Asteikko 7-8</b>
+                    <br></br>
+                    
+                   
+                    
+                     <div class="goalsWrap2">
+                    
+                    
+                   
+                       <br></br>
+
+                    
+                      </div>
+                      <button  type="button" class="btn btn-default" id="addGoal2">Lisää Tavoite</button>  
+                      <button type="button" class="btn btn-default" id="removeGoal2">Vähennä Tavoitteita</button>
+                    <hr></hr>
+                    
+                    
+                     <br></br>
+                    <b>Asteikko 5-6</b>
+                    <br></br>
+                    
+                   
+                    
+                     <div class="goalsWrap3">
+                    
+                    
+                   
+                       <br></br>
+
+                    
+                      </div>
+                      <button  type="button" class="btn btn-default" id="addGoal3">Lisää Tavoite</button>  
+                      <button type="button" class="btn btn-default" id="removeGoal3">Vähennä Tavoitteita</button>
+                    <hr></hr>
+                     
+                    
+                    
                   
                 
-                        
-                        
-                        
-                    <div class="panel-footer">
-                      <button class="btn btn-success" role="button" type="submit">Lisää</button>
-                    </div>
-                    </form>           
-                    
-                </div>
-            </div>
         
+                        
+                    <button class="btn btn-primary btn-lg center-block" type="submit">Lisää kurssi</button>
 
-
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
-    </body>
-
+    
+                        </form>
+                
+                </div>
+            
+</body>
 </html>
+ 
