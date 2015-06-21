@@ -2,6 +2,7 @@
 package wadp.domain;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class GradeLevel extends AbstractPersistable<Long>{
     
     private String grade;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Goal> goals;
 
     public String getLevel() {
