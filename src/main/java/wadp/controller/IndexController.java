@@ -159,7 +159,7 @@ public class IndexController {
         Goal goal2 = new Goal();
         goal2.setName("Painovoima");
 
-        Skill skill3 = new Skill("");
+        Skill skill3 = new Skill("Oppilas osaa selittää painovoiman vaikutuksen hänen fyysiseen ympäristöönsä");
 
         Exercise exer12 = new Exercise("101b");
         Exercise exer13 = new Exercise("76");
@@ -260,6 +260,8 @@ public class IndexController {
         goal4.setName("Astrofysiikka");
 
         Skill skill6 = new Skill();
+        
+        skill6.setDescription("Oppilas taitaa astrofysiikan salat");
 
         Exercise exer25 = new Exercise("Laske auringon massa.");
         Exercise exer26 = new Exercise("893");
