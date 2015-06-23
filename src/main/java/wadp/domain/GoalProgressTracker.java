@@ -15,8 +15,8 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
     @ElementCollection
     @CollectionTable(name = "skill_statuses")
     private Map<Skill, Boolean> skills;
-    
-    public GoalProgressTracker(){
+
+    public GoalProgressTracker() {
         skills = new HashMap<Skill, Boolean>();
     }
 
@@ -28,22 +28,27 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         }
     }
 
-    public boolean updateSkillStatus(Skill skill, boolean status) {
-        
+    public boolean updateSkillStatus(Skill skill, boolean ready) {
+
         if (skills.get(skill) != null) {
-            skills.put(skill, status);
-            if(status) checkIfReady();
+            skills.put(skill, ready);
+            if (ready) {
+                checkIfReady();
+            } else if (this.ready) {
+                this.ready=false;
+            }
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
-    public boolean getStatus() {
+    public boolean getReady() {
         return ready;
     }
 
-    public void setStatus(boolean status) {
-        this.ready = status;
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     public Map<Skill, Boolean> getSkills() {
@@ -57,7 +62,9 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
     private void checkIfReady() {
         boolean allReady = true;
         for (boolean skillReady : skills.values()) {
-            if(!skillReady) allReady = false;
+            if (!skillReady) {
+                allReady = false;
+            }
             break;
         }
         this.ready = allReady;
