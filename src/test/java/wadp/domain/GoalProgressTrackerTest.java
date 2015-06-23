@@ -34,11 +34,11 @@ public class GoalProgressTrackerTest {
     }
 
     @Test
-    public void testStatus() {
-        boolean status = tracker.getStatus();
+    public void testReady() {
+        boolean status = tracker.getReady();
         assertFalse(status);
         tracker.updateSkillStatus(skill, true);
-        assertTrue(tracker.getStatus());
+        assertTrue(tracker.getReady());
     }
 
 
