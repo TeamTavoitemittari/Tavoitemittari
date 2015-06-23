@@ -1,7 +1,14 @@
 # Tavoitemittari
 [Tavoitemittari](http://tavoitemittari.herokuapp.com/login)
 
-Application for tracking and assessing mathematics learning of school children
+Application for tracking the learning of elementary and high school children. 
+
+The upcoming national core curriculum (OPS2016) emphasizes the importance of constant feedback and assessment of the student. This is contrary to the tradicitonal model of assessing a student's performance only at the end, using a test or  course essay.
+This is a web application in which students (and teachers) can report and receive feedback on their progress during the entire course. The application allows students to register to the system, be signed up for courses and then input information on which course content they feel they have learned and which things they have yet to learn.
+The application has or will have features for teachers including but not limited to the creation of a course and its goals, required skills and exercises.
+
+The application is programmed in Java, HTML and JavaScript.
+
 
 #Development information
 
