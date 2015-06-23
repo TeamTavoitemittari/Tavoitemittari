@@ -63,6 +63,21 @@ public class ChangePasswordTest {
         assertTrue(hasMessage("Salasana vaihdettu."));
     }
     
+    @Test
+    public void cannotChangePasswordWithoutMatchingPasswords() {
+        login(name, password);
+        getUserdetailsPage();
+        passwordChange("Testipassword2", "Testpassword3");
+        assertTrue(hasMessage("Salasanojen pitää olla samoja!"));
+    }
+    
+    @Test
+    public void cannotChangeTooShortPassword() {
+        login(name, password);
+        getUserdetailsPage();
+        passwordChange("aasi", "aasi");
+        assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
+    }
     
         
     private void createUser() {
@@ -117,4 +132,8 @@ public class ChangePasswordTest {
         return driver.getPageSource().contains(message);
     }
 
+    @After
+    public void tearDown() {
+        repo.deleteAll();
+    }
 }
