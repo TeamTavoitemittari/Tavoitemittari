@@ -26,7 +26,16 @@ $(document).ready(function() {
         if(goalCounter < maxFields){ 
            
             var displayCurrent=goalCounter+1;
-            $(wrapper).append('<div id="goal1'+goalCounter+'" class="panel panel-primary"><div class="panel-body"><label for="text">Tavoitteen ' + displayCurrent + ' nimi</label> <input type="text" name="gradeLevels[0].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[0].goals[' + goalCounter + '].name"/><a href="#" id="addSkill1'+goalCounter+'">[Lisää taitoja]</a>  <a href="#" id="removeSkill1'+goalCounter+'">[Vähennä taitoja]</a></br><br></div></div>'); 
+            $(wrapper).append('<div id="goal1'+goalCounter+'" class="panel panel-primary">\n\
+                                    <div class="panel-body">\n\
+                                        <label for="text">Tavoitteen ' + displayCurrent + ' nimi</label>\n\
+                                        <input type="text" name="gradeLevels[0].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[0].goals[' + goalCounter + '].name"/>\n\
+                                        <div id="goal1'+goalCounter+'skills">\n\
+                                        </div>\n\
+                                        <a href="#" id="addSkill1'+goalCounter+'">[Lisää taitoja]</a>\n\
+                                        <a href="#" id="removeSkill1'+goalCounter+'">[Vähennä taitoja]</a></br><br>\n\
+                                    </div>\n\
+                                </div>'); 
             addSkill1(goalCounter);
             goalCounter++;
         }
@@ -36,13 +45,12 @@ $(document).ready(function() {
      e.preventDefault();
        
           
-     if (goalCounter >= 0){
+     if (goalCounter > 1){
        var remIndex = goalCounter-1
        $("#goal1"+remIndex).remove(); 
-       
-       if(goalCounter>0){
+
           goalCounter--;
-       }
+       
      } 
 
     })
@@ -50,7 +58,7 @@ $(document).ready(function() {
 
    function addSkill1(goalIndex){
     var maxFields      = 10; 
-    var wrapper         = $("#goal1"+goalIndex); 
+    var wrapper         = $("#goal1"+goalIndex+"skills"); 
     var add             = $("#addSkill1"+goalIndex); 
     var remove          = $("#removeSkill1"+goalIndex); 
    
@@ -70,13 +78,12 @@ $(document).ready(function() {
         e.preventDefault();
        
           
-      if (skillCounter >= 0){
+      if (skillCounter >0){
        var remIndex = skillCounter-1
        $("#skill1"+remIndex+goalIndex).remove(); 
-       
-       if(skillCounter>0){
+
           skillCounter--;
-       }
+       
      }  
 
      
@@ -98,7 +105,16 @@ $(document).ready(function() {
         if(goalCounter < maxFields){ 
            
             var displayCurrent=goalCounter+1;
-            $(wrapper).append('<div id="goal2'+goalCounter+'" class="panel panel-primary"><div class="panel-body"><label for="text">Tavoitteen ' + displayCurrent + ' nimi</label> <input type="text" name="gradeLevels[1].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[1].goals[' + goalCounter + '].name"/><a href="#" id="addSkill2'+goalCounter+'">[Lisää taitoja]</a>  <a href="#" id="removeSkill2'+goalCounter+'">[Vähennä taitoja]</a></br><br></div></div>'); 
+            $(wrapper).append('<div  id="goal1'+goalCounter+'"class="panel panel-primary">\n\
+                                    <div class="panel-body">\n\
+                                        <label for="text">Tavoitteen ' + displayCurrent + ' nimi</label>\n\
+                                        <input type="text" name="gradeLevels[1].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[1].goals[' + goalCounter + '].name"/>\n\
+                                        <div id="goal2'+goalCounter+'skills">\n\
+                                        </div>\n\
+                                        <a href="#" id="addSkill2'+goalCounter+'">[Lisää taitoja]</a>\n\
+                                        <a href="#" id="removeSkill2'+goalCounter+'">[Vähennä taitoja]</a></br><br>\n\
+                                    </div>\n\
+                                </div>'); 
             addSkill2(goalCounter);
             goalCounter++;
         }
@@ -108,13 +124,12 @@ $(document).ready(function() {
      e.preventDefault();
        
           
-     if (goalCounter >= 0){
+     if (goalCounter > 1){
        var remIndex = goalCounter-1
        $("#goal2"+remIndex).remove(); 
-       
-       if(goalCounter>0){
+
           goalCounter--;
-       }
+       
      } 
 
     })
@@ -122,7 +137,7 @@ $(document).ready(function() {
 
    function addSkill2(goalIndex){
     var maxFields      = 10; 
-    var wrapper         = $("#goal2"+goalIndex); 
+    var wrapper         = $("#goal2"+goalIndex+"skills"); 
     var add             = $("#addSkill2"+goalIndex); 
     var remove          = $("#removeSkill2"+goalIndex); 
    
@@ -142,13 +157,12 @@ $(document).ready(function() {
         e.preventDefault();
        
           
-      if (skillCounter >= 0){
+      if (skillCounter > 0){
        var remIndex = skillCounter-1
        $("#skill2"+remIndex+goalIndex).remove(); 
-       
-       if(skillCounter>0){
+
           skillCounter--;
-       }
+       
      }  
 
      
@@ -169,7 +183,16 @@ $(document).ready(function() {
         if(goalCounter < maxFields){ 
            
             var displayCurrent=goalCounter+1;
-            $(wrapper).append('<div id="goal3'+goalCounter+'" class="panel panel-primary"><div class="panel-body"><label for="text">Tavoitteen ' + displayCurrent + ' nimi</label> <input type="text" name="gradeLevels[2].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[2].goals[' + goalCounter + '].name"/><a href="#" id="addSkill3'+goalCounter+'">[Lisää taitoja]</a>  <a href="#" id="removeSkill3'+goalCounter+'">[Vähennä taitoja]</a><br></br></div></div>'); 
+            $(wrapper).append('<div  id="goal1'+goalCounter+'" class="panel panel-primary">\n\
+                                    <div class="panel-body">\n\
+                                        <label for="text">Tavoitteen ' + displayCurrent + ' nimi</label>\n\
+                                        <input type="text" name="gradeLevels[2].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[2].goals[' + goalCounter + '].name"/>\n\
+                                        <div id="goal3'+goalCounter+'skills">\n\
+                                        </div>\n\
+                                        <a href="#" id="addSkill3'+goalCounter+'">[Lisää taitoja]</a>\n\
+                                        <a href="#" id="removeSkill3'+goalCounter+'">[Vähennä taitoja]</a></br><br>\n\
+                                    </div>\n\
+                                </div>'); 
             addSkill3(goalCounter);
             goalCounter++;
         }
@@ -179,13 +202,13 @@ $(document).ready(function() {
      e.preventDefault();
        
           
-     if (goalCounter >= 0){
+     if (goalCounter > 1){
        var remIndex = goalCounter-1
        $("#goal3"+remIndex).remove(); 
        
-       if(goalCounter>0){
+
           goalCounter--;
-       }
+       
      } 
 
     })
@@ -193,7 +216,7 @@ $(document).ready(function() {
 
    function addSkill3(goalIndex){
     var maxFields      = 10; 
-    var wrapper         = $("#goal3"+goalIndex); 
+    var wrapper         = $("#goal3"+goalIndex+"skills"); 
     var add             = $("#addSkill3"+goalIndex); 
     var remove          = $("#removeSkill3"+goalIndex); 
    
@@ -213,13 +236,13 @@ $(document).ready(function() {
         e.preventDefault();
        
           
-      if (skillCounter >= 0){
+      if (skillCounter > 0){
        var remIndex = skillCounter-1
        $("#skill3"+remIndex+goalIndex).remove(); 
        
-       if(skillCounter>0){
+
           skillCounter--;
-       }
+       
      }  
 
      
