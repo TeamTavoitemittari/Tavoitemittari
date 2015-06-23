@@ -105,7 +105,7 @@ $(document).ready(function() {
         if(goalCounter < maxFields){ 
            
             var displayCurrent=goalCounter+1;
-            $(wrapper).append('<div  id="goal1'+goalCounter+'"class="panel panel-primary">\n\
+            $(wrapper).append('<div  id="goal2'+goalCounter+'"class="panel panel-primary">\n\
                                     <div class="panel-body">\n\
                                         <label for="text">Tavoitteen ' + displayCurrent + ' nimi</label>\n\
                                         <input type="text" name="gradeLevels[1].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[1].goals[' + goalCounter + '].name"/>\n\
@@ -183,7 +183,7 @@ $(document).ready(function() {
         if(goalCounter < maxFields){ 
            
             var displayCurrent=goalCounter+1;
-            $(wrapper).append('<div  id="goal1'+goalCounter+'" class="panel panel-primary">\n\
+            $(wrapper).append('<div  id="goal3'+goalCounter+'" class="panel panel-primary">\n\
                                     <div class="panel-body">\n\
                                         <label for="text">Tavoitteen ' + displayCurrent + ' nimi</label>\n\
                                         <input type="text" name="gradeLevels[2].goals[' + goalCounter + '].name" class="form-control" id="gradeLevels[2].goals[' + goalCounter + '].name"/>\n\
