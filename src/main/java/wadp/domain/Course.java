@@ -7,12 +7,21 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Course extends AbstractPersistable<Long> {
     
+    @NotNull(message="Kurssin nimeä ei voi jättää tyhjäksi!")
+    @NotBlank(message="Kurssin nimeä ei voi jättää tyhjäksi!")
     private String name;
+    @NotNull(message="Kurssin kuvausta ei voi jättää tyhjäksi!")
+    @NotBlank(message="Kurssin kuvausta ei voi jättää tyhjäksi!")
     private String description;
+    
+    @Valid
     @OneToMany(cascade = CascadeType.ALL)
     private List<GradeLevel> gradeLevels;
     

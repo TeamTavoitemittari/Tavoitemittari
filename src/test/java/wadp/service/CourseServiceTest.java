@@ -36,6 +36,7 @@ public class CourseServiceTest {
     public void testGetCourses() {
         course = new Course();
         course.setName("todari");
+        course.setDescription("todari");
         courseRepository.save(course);
         assertEquals("todari", courseService.getCourses().get(0).getName());
         assertEquals(1, courseService.getCourses().size());
@@ -45,6 +46,7 @@ public class CourseServiceTest {
     public void testAddCourse() {
         course = new Course();
         course.setName("todari");
+        course.setDescription("todari2");
         courseService.addCourse(course);
         
         assertEquals("todari", courseRepository.findAll().get(0).getName());
@@ -55,6 +57,7 @@ public class CourseServiceTest {
     public void GetCourseById() {
         course = new Course();
         course.setName("kurssi1");
+        course.setDescription("kurssi taas");
         courseService.addCourse(course);
         Long id = course.getId();
         Course samecourse = courseService.getCourseById(id);

@@ -40,39 +40,31 @@ public class CourseController {
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
     public String ShowCreateCoursePage(Model model) {
-        model.addAttribute("addcourse", new CourseForm());
+        if (!model.containsAttribute("course")) {
+          model.addAttribute("course", new Course());
+        }  
         return "addcourse";
     }
     
     
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.POST)
-    public String createCourse(RedirectAttributes redirectAttributes, @ModelAttribute Course course){
-   
-    ///temp solution    
-    if (course.getGradeLevels().size() == 3){    
-     course.getGradeLevels().get(0).setGrade("9-10");
-     course.getGradeLevels().get(1).setGrade("7-8");
-     course.getGradeLevels().get(2).setGrade("5-6");  
-    }
+    public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult){
+       if (bindingResult.hasErrors()) {
+            
+            
+           
+         redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
+         redirectAttributes.addFlashAttribute("course", course);
+         return "redirect:/addcourse";
+              
+        }
+
     CourseService.addCourse(course);
     return "redirect:mycourses";
     }
     
-//    @PreAuthorize("hasAuthority('teacher')")
-//    @RequestMapping(method = RequestMethod.POST)
-//    public String createCourse(@ModelAttribute("addcourse") @Valid CourseForm addcourse, BindingResult bindingResult) {
-//        
-//        if(bindingResult.hasErrors()){
-//            return "addcourse";
-//        }
-//        
-//            Course newCourse = new Course();
-//            newCourse.setName(addcourse.getName());
-//            newCourse.setDescription(addcourse.getDescription());
-//            CourseService.addCourse(newCourse);
-//        return "redirect:mycourses";
-//    }
+
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
