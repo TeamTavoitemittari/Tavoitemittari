@@ -9,16 +9,19 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Course extends AbstractPersistable<Long> {
     
-    @NotNull(message="Kurssin nimeä ei voi jättää tyhjäksi!")
-    @NotBlank(message="Kurssin nimeä ei voi jättää tyhjäksi!")
+    @NotNull(message="Kurssin nimeä ei voi jättää tyhjäksi.")
+    @NotBlank(message="Kurssin nimeä ei voi jättää tyhjäksi.")
+    @Length(max=255, message="Kurssin nimi korkeintaan 255 kirjainta.")
     private String name;
-    @NotNull(message="Kurssin kuvausta ei voi jättää tyhjäksi!")
-    @NotBlank(message="Kurssin kuvausta ei voi jättää tyhjäksi!")
+    @NotNull(message="Kurssin kuvausta ei voi jättää tyhjäksi.")
+    @NotBlank(message="Kurssin kuvausta ei voi jättää tyhjäksi.")
+    @Length(max=255, message="Kurssin kuvaus korkeintaan 255 kirjainta.")
     private String description;
     
     @Valid

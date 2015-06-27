@@ -8,15 +8,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Goal extends AbstractPersistable<Long>{
-    @NotNull(message="Tavoitteen nimeä ei voi jättää tyhjäksi!")
-    @NotBlank(message="Tavoitteen nimeä ei voi jättää tyhjäksi!")
+    @NotNull(message="Tavoitteen nimeä ei voi jättää tyhjäksi.")
+    @NotBlank(message="Tavoitteen nimeä ei voi jättää tyhjäksi.")
+    @Length(max=255, message="Tavoitteen nimi korkeintaan 255 kirjainta.")
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
+    @Valid
     private List<Skill> skills;
     
     public Goal(){
