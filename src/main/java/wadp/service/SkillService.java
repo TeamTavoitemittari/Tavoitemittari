@@ -23,4 +23,8 @@ public class SkillService {
         skillRepository.save(skill);
     }
     
+    public Skill findSkill(Long skillId){
+        return skillRepository.findOne(skillId);
+    }
+    
 }
