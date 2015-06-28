@@ -2282,17 +2282,12 @@ if (typeof jQuery === 'undefined') {
 function enableEdit(id){
     
     var field = document.getElementById("comment"+id);
-    field.disabled = false;
+    field.readOnly = false;
     
     var editButton = document.getElementById("edit"+id);
     editButton.style.visibility = "hidden";
     
-    var saveButton = document.getElementByID("save"+id);
+    var saveButton = document.getElementById("save"+id);
     saveButton.style.visibility = "visible";
     
 }
-
-function disableAll(){
-    
-}
-

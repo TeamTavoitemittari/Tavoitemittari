@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.js"></script>
         <title>Tavoitemittari</title>
     </head>
 
@@ -72,13 +73,13 @@
                                                 <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
                                             </div>
                                             <div class="panel-footer">
-                                                <!-- probably wont work yet, fix -->
                                                 <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${skill.id}}" method="post">
-                                                    <textarea th:id="comment+ ${skill.id}" class="form-control" rows="3" ></textarea>
-                                                    <button class="btn btn-success" th:id="'save'+${skill.id}" type="submit">Tallenna</button>
+                                                    <textarea th:id="'comment'+ ${skill.id}" class="form-control" style="resize: vertical" th:readonly="true"></textarea>
+                                                    <br/>
+                                                    <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
+                                                    <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
                                                 </form>
-                                                <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-default" th:id="'edit'+${skill.id}" >Muokkaa</button>
-                                            </div>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
@@ -102,20 +103,4 @@
                 </div> -->
             </div>
         </div>
-
-        <script type="text/javascript">
-            function enableEdit(id) {
-                echo("here");
-
-                var field = document.getElementById("comment" + id);
-                field.disabled = false;
-
-                var editButton = document.getElementById("edit" + id);
-                editButton.style.visibility = "hidden";
-
-                var saveButton = document.getElementById("save" + id);
-                saveButton.style.visibility = "visible";
-
-            }
-        </script>
     </body></html>
