@@ -58,23 +58,23 @@
 
                     <!-- Comments tab where students comment on a specific goal -->
                     <div id="comments" class="tab-pane fade">
-                        <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
-                            <h1 th:text="${gradeLevel.grade}">4-10</h1>
-                            <div class="panel panel-success" th:each="goal : ${gradeLevel.goals}">
+                        <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
+                            <h1 th:text="${gradeLevel.key.grade}">4-10</h1>
+                            <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a th:text="${goal.name}">Ympyrä</a>
+                                        <a th:text="${goal.key.name}">Ympyrä</a>
                                     </h4>
                                 </div>
                                 <div class="panel">
-                                    <div style="padding: 10px" th:each="skill : ${goal.skills}">
+                                    <div style="padding: 10px" th:each="skill : ${goal.key.skills}">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
                                             </div>
                                             <div class="panel-footer">
-                                                <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${skill.id}}" method="post">
-                                                    <textarea  class="form-control" th:id="'comment'+ ${skill.id}" style="resize: vertical; margin: 8px" th:readonly="true"></textarea>
+                                                <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
+                                                    <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" style="resize: vertical; margin: 8px" th:readonly="true"></textarea>
                                                     <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
                                                     <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
                                                 </form>

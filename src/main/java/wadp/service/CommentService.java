@@ -23,8 +23,15 @@ public class CommentService {
     }
     
     @Transactional
+    public Comment addComment(User user, Skill skill){
+        Comment comment = new Comment(user, skill);
+        return commentRepository.save(comment);
+    }
+    
+    @Transactional
     public void updateComment(Comment comment, String newCommentText){
         Comment databaseComment = commentRepository.findOne(comment.getId());
         databaseComment.setComment(newCommentText);
+        commentRepository.save(databaseComment);
     }
 }

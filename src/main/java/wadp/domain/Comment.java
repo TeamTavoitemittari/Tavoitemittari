@@ -10,7 +10,7 @@ public class Comment extends AbstractPersistable<Long>{
     
     private String comment;
     @OneToOne
-    private User user; 
+    private User user;
     @OneToOne
     private Skill skill;
     

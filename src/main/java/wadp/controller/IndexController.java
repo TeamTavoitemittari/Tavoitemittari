@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import wadp.domain.Comment;
 import wadp.domain.Course;
 import wadp.domain.CourseProgressTracker;
 import wadp.domain.Exercise;
@@ -17,6 +18,7 @@ import wadp.domain.GradeLevel;
 import wadp.domain.GradeProgressTracker;
 import wadp.domain.Skill;
 import wadp.domain.User;
+import wadp.service.CommentService;
 import wadp.service.CourseService;
 import wadp.service.ExerciseService;
 import wadp.service.GoalService;
@@ -50,6 +52,9 @@ public class IndexController {
 
     @Autowired
     private ProgressService progressService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex() {
@@ -260,7 +265,7 @@ public class IndexController {
         goal4.setName("Astrofysiikka");
 
         Skill skill6 = new Skill();
-        
+
         skill6.setDescription("Oppilas taitaa astrofysiikan salat");
 
         Exercise exer25 = new Exercise("Laske auringon massa.");
@@ -305,12 +310,26 @@ public class IndexController {
         for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
             for (GoalProgressTracker goalTracker : gradeTracker.getGoals().values()) {
                 progressService.saveGoalTracker(goalTracker);
+                HashMap<Skill, Comment> comments = new HashMap<Skill, Comment>();
+                for (Skill skill : goalTracker.getSkills().keySet()) {
+                    Comment comment = commentService.addComment(user, skill);
+                    comments.put(skill, comment);
+                }
+                goalTracker.setComments(comments);
             }
             progressService.saveGradeTracker(gradeTracker);
         }
-        
+
+        Comment comment1 = commentService.findComment(user, skill2);
+        commentService.updateComment(comment1, "Tämä oli hyvin kiinnostava osa-alue"
+                + " mutta materiaali oli aika vaikeaselkoista. Video auttoi paljon. /Teemu");
+
+        Comment comment2 = commentService.findComment(user, skill4);
+        commentService.updateComment(comment2, "Teit tänään kovasti töitä ja autoit myös muita oppilaita. "
+                + "Jatka samaan malliin! /Ope");
+
         progressService.saveCourseTracker(tracker);
-        
+
         progressService.updateSkillStatus(tracker, skill6, true);
         progressService.updateSkillStatus(tracker, skill2, true);
 
