@@ -12,6 +12,7 @@ import wadp.service.*;
 import wadp.domain.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -45,32 +46,33 @@ public class CreateaNewAccountTest{
     }
     
     @Test
-    public void canCreateUserWithValidUsernameAndPassword() {
+    public void studentCanCreateUserWithValidUsernameAndPassword() {
         registerSetup();
-        createUser(name, "passWord1");
+        createUser(name, "passWord1", "student");
         assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
     }
     
     @Test
-    public void canCreateUserWithValidUsernameAndPasswordAndLogin() {
+    public void studentCanCreateUserWithValidUsernameAndPasswordAndLogin() {
         registerSetup();
-        createUser("test3", "passWord1");
+        createUser("test3", "passWord1", "student");
         assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
         login("test3", "passWord1");
         assertTrue(hasMessage("Minun kurssini"));
+        assertFalse(hasMessage("Hallinnointi"));
     }
     
     @Test
-    public void cannotCreateUserWithoutValidPassword() {
+    public void studentCannotCreateUserWithoutValidPassword() {
         registerSetup();
-        createUser("test4", "pass");
+        createUser("test4", "pass", "student");
         assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
         login("test4", "pass");
         assertTrue(hasMessage("Tarkista syöttämäsi tiedot!"));
     }
     
     @Test
-    public void cannotCreateUserWithoutValidEmail() {
+    public void studentCannotCreateUserWithoutValidEmail() {
         registerSetup();
         
         element = driver.findElement(By.id("name"));
@@ -87,12 +89,48 @@ public class CreateaNewAccountTest{
     }
     
     @Test
-    public void cannotCreateUserWithAlreadyTakenEmail() {
+    public void studentCannotCreateUserWithAlreadyTakenEmail() {
         registerSetup();
-        createUser(name, "TestPassword0");
+        createUser(name, "TestPassword0", "student");
 
         registerSetup();
-        createUser(name, "Wrongpass0");
+        createUser(name, "Wrongpass0", "student");
+        assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
+    }
+    
+    @Test
+    public void teacherCanCreateUserWithValidUsernameAndPassword() {
+        registerSetup();
+        createUser(name, "passWord1", "student");
+        assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
+    }
+    
+    @Test
+    public void teacherCanCreateUserWithValidUsernameAndPasswordAndLogin() {
+        registerSetup();
+        createUser("test3", "passWord1", "teacher");
+        assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
+        login("test3", "passWord1");
+        assertTrue(hasMessage("Minun kurssini"));
+        assertTrue(hasMessage("Hallinnointi"));
+    }
+    
+    @Test
+    public void teacherCannotCreateUserWithoutValidPassword() {
+        registerSetup();
+        createUser("test4", "pass", "teacher");
+        assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
+        login("test4", "pass");
+        assertTrue(hasMessage("Tarkista syöttämäsi tiedot!"));
+    }
+    
+    @Test
+    public void teacherCannotCreateUserWithAlreadyTakenEmail() {
+        registerSetup();
+        createUser(name, "TestPassword0", "teacher");
+
+        registerSetup();
+        createUser(name, "Wrongpass0", "teacher");
         assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
     }
     
@@ -104,14 +142,18 @@ public class CreateaNewAccountTest{
         element.click();
     }
 
-    private void createUser(String mailName, String password) {
+    private void createUser(String mailName, String password, String role) {
+        driver.get("http://localhost:8080/index");
+        element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy!')]"));
+        element.click();
         element = driver.findElement(By.id("name"));
-        element.sendKeys("esimerkki");
+        element.sendKeys(mailName);
         element = driver.findElementByName("email");
         element.sendKeys(mailName + "@gmail.com");
         element = driver.findElementByName("confirmemail");
         element.sendKeys(mailName + "@gmail.com");
-
+        Select select = new Select(driver.findElement(By.name("userRole")));
+        select.selectByVisibleText(role);
         element = driver.findElement(By.id("password"));
         element.sendKeys(password);
         element = driver.findElement(By.id("confirmpassword"));
