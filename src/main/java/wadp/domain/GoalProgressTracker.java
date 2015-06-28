@@ -15,9 +15,14 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
     @ElementCollection
     @CollectionTable(name = "skill_statuses")
     private Map<Skill, Boolean> skills;
+    
+    @ElementCollection
+    @CollectionTable(name = "skill_comments")
+    private Map<Skill, Comment> comments;
 
     public GoalProgressTracker() {
-        skills = new HashMap<Skill, Boolean>();
+        this.skills = new HashMap<Skill, Boolean>();
+        this.comments = new HashMap<Skill, Comment>();
     }
 
     public GoalProgressTracker(Goal goal) {
@@ -68,6 +73,18 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
             break;
         }
         this.ready = allReady;
+    }
+
+    public Map<Skill, Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Map<Skill, Comment> comments) {
+        this.comments = comments;
+    }
+    
+    public void updateComment(Skill skill, String newComment){
+        this.comments.get(skill).setComment(newComment);
     }
 
 }
