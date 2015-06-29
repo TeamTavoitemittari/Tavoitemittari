@@ -69,8 +69,8 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         for (boolean skillReady : skills.values()) {
             if (!skillReady) {
                 allReady = false;
+                break;
             }
-            break;
         }
         this.ready = allReady;
     }
