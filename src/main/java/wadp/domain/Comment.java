@@ -3,6 +3,8 @@ package wadp.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -10,6 +12,7 @@ public class Comment extends AbstractPersistable<Long>{
     
     private String comment;
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     @OneToOne
     private Skill skill;
