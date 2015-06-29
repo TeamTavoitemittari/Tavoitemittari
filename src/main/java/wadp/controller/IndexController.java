@@ -312,7 +312,7 @@ public class IndexController {
                 progressService.saveGoalTracker(goalTracker);
                 HashMap<Skill, Comment> comments = new HashMap<Skill, Comment>();
                 for (Skill skill : goalTracker.getSkills().keySet()) {
-                    Comment comment = commentService.addComment(user, skill);
+                    Comment comment = commentService.addComment(skill);
                     comments.put(skill, comment);
                 }
                 goalTracker.setComments(comments);
@@ -320,11 +320,11 @@ public class IndexController {
             progressService.saveGradeTracker(gradeTracker);
         }
 
-        Comment comment1 = commentService.findComment(user, skill2);
+        Comment comment1 = tracker.getGradeLevels().get(level3).getGoals().get(goal4).getComments().get(skill6);
         commentService.updateComment(comment1, "Tämä oli hyvin kiinnostava osa-alue"
                 + " mutta materiaali oli aika vaikeaselkoista. Video auttoi paljon. /Teemu");
 
-        Comment comment2 = commentService.findComment(user, skill4);
+        Comment comment2 = tracker.getGradeLevels().get(level1).getGoals().get(goal1).getComments().get(skill1);
         commentService.updateComment(comment2, "Teit tänään kovasti töitä ja autoit myös muita oppilaita. "
                 + "Jatka samaan malliin! /Ope");
 

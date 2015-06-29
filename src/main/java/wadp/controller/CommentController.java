@@ -31,11 +31,9 @@ public class CommentController {
     private SkillService skillService;
     
     
-    @RequestMapping(value="/{courseId}/{skillId}", method=RequestMethod.POST)
-    public String postOrUpdateComment(@PathVariable long courseId, @PathVariable long skillId, @RequestParam String comment){
-        User user = userService.getAuthenticatedUser();
-        Skill skill = skillService.findSkill(skillId);
-        Comment com = commentService.findComment(user, skill);
+    @RequestMapping(value="/{courseId}/{commentId}", method=RequestMethod.POST)
+    public String postOrUpdateComment(@PathVariable long courseId, @PathVariable long commentId, @RequestParam String comment){
+        Comment com = commentService.findCommentById(commentId);
         commentService.updateComment(com, comment);
         return "redirect:/course/"+courseId;
     }

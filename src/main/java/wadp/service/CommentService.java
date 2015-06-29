@@ -16,15 +16,15 @@ public class CommentService {
     
     @Autowired
     private CommentRepository commentRepository;
+   
     
-    public Comment findComment(User user, Skill skill){
-        List<Comment> commentList = commentRepository.findByUserAndSkill(user, skill);
-        return commentList.get(0);
+    public Comment findCommentById(long id){
+        return commentRepository.findOne(id);
     }
     
     @Transactional
-    public Comment addComment(User user, Skill skill){
-        Comment comment = new Comment(user, skill);
+    public Comment addComment(Skill skill){
+        Comment comment = new Comment(skill);
         return commentRepository.save(comment);
     }
     

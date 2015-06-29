@@ -12,16 +12,12 @@ public class Comment extends AbstractPersistable<Long>{
     
     private String comment;
     @OneToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
-    @OneToOne
     private Skill skill;
     
     public Comment(){
     }
     
-    public Comment(User user, Skill skill){
-        this.user=user;
+    public Comment(Skill skill){
         this.skill=skill;
         this.comment="";
     }
@@ -32,14 +28,6 @@ public class Comment extends AbstractPersistable<Long>{
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Skill getSkill() {
