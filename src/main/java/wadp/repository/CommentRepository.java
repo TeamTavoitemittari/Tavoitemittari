@@ -9,5 +9,4 @@ import wadp.domain.User;
 
 
 public interface CommentRepository extends JpaRepository<Comment, Long>{
-    List<Comment> findByUserAndSkill(User user, Skill skill);
 }

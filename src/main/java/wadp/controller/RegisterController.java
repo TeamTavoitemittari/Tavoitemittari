@@ -15,7 +15,6 @@ import wadp.service.EmailAlreadyRegisteredException;
 
 import javax.validation.Valid;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import wadp.service.DeletionService;
 
 @Controller
 @RequestMapping("/register")
@@ -24,14 +23,12 @@ public class RegisterController {
     @Autowired
     private UserService UserService;
     
-    @Autowired
-    private DeletionService deletionService;
     
     //testausta varten
    @PostConstruct
    private void init(){
        //poistetaan vanhat herokua varten
-       deletionService.deleteEverything();
+       UserService.clearUsers();
        UserService.createUser("oppilas@a.com","oppilas","Matti Meikalainen","student");
        UserService.createUser("ope@a.com","ope","Olli Opettaja", "teacher");
     }
