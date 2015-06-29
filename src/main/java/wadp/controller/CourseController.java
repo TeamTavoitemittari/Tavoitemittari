@@ -70,7 +70,8 @@ public class CourseController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getCourse(Model model, @PathVariable Long id){
         Course course = courseService.getCourseById(id);
-        
+        courseService.sortCourseGrades(course);
+
         if(course==null){
             return "redirect:/mycourses";
         }

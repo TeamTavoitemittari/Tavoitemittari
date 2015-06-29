@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 
 @Entity
-public class GradeLevel extends AbstractPersistable<Long>{
+public class GradeLevel extends AbstractPersistable<Long> implements Comparable<GradeLevel> {
     
     private String grade;
     @Valid
@@ -40,7 +40,9 @@ public class GradeLevel extends AbstractPersistable<Long>{
     public void setGrade(String grade) {
         this.grade = grade;
     }
-    
-    
-    
+
+    @Override
+    public int compareTo(GradeLevel o) {
+        return  o.getGrade().compareTo(getGrade());
+    }
 }

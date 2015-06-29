@@ -1,6 +1,7 @@
 
 package wadp.service;
 
+import java.util.Collections;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class CourseService {
     
     public Course getCourseById(Long id){
         return courseRepository.findOne(id);
+    }
+
+    public void sortCourseGrades(Course course) {
+        Collections.sort(course.getGradeLevels());
     }
     
 }
