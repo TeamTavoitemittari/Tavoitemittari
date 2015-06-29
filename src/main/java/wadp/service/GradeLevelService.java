@@ -19,5 +19,9 @@ public class GradeLevelService {
     public void addGradeLevel(GradeLevel level){
         levelRepository.save(level);
     }
+
+    public GradeLevel findGradeLevelById(Long id) {
+        return levelRepository.findOne(id);
+    }
     
 }

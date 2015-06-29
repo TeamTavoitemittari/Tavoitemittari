@@ -4,12 +4,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wadp.domain.Course;
-import wadp.domain.CourseProgressTracker;
-import wadp.domain.GoalProgressTracker;
-import wadp.domain.GradeProgressTracker;
-import wadp.domain.Skill;
-import wadp.domain.User;
+import wadp.domain.*;
 import wadp.repository.CourseProgressRepository;
 import wadp.repository.GoalProgressRepository;
 import wadp.repository.GradeLevelRepository;
@@ -38,6 +33,18 @@ public class ProgressService {
     @Transactional
     public void updateSkillStatus(CourseProgressTracker progressTracker, Skill skill, boolean status) {
         progressTracker.updateSkillStatus(skill, status);
+    }
+
+    @Transactional
+    public void swapSkillsStatus(CourseProgressTracker progressTracker, GradeLevel gradeLevel, Goal goal, Skill skill) {
+        GoalProgressTracker gTracker = progressTracker.getGradeLevels().get(gradeLevel).getGoals().get(goal);
+        boolean skillIsLearned = gTracker.getSkills().get(skill);
+
+        if (skillIsLearned) {
+            gTracker.updateSkillStatus(skill, false);
+        } else {
+            gTracker.updateSkillStatus(skill, true);
+        }
     }
     
     @Transactional

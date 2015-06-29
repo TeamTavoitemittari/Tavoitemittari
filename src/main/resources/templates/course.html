@@ -43,7 +43,11 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                                    <label class="checkbox-inline"><input type="checkbox">Osaan</input></label>
+                                                    <form method="post"
+                                                          th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                          style="display: inline-block; float: right;">
+                                                        <button type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                    </form>
                                                 </div>
                                                 <div class="panel-footer">
                                                     <b>Tehtävät:</b>
@@ -64,7 +68,11 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                                    <label class="checkbox-inline"><input type="checkbox">Osaan</input></label>
+                                                    <form method="post"
+                                                          th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                          style="display: inline-block; float: right;">
+                                                        <button type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                    </form>
                                                 </div>
                                                 <div class="panel-footer">
                                                     <b>Tehtävät:</b>
@@ -101,7 +109,7 @@
                                                     <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
                                                     <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
                                                 </form>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

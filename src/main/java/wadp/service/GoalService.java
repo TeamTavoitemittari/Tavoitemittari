@@ -17,6 +17,10 @@ public class GoalService {
     public List<Goal> getGoals(){
         return goalRepository.findAll();
     }
+
+    public Goal findGoalById(Long id) {
+        return goalRepository.findOne(id);
+    }
     
     @Transactional
     public void addGoal(Goal goal){

@@ -12,58 +12,60 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import wadp.domain.Course;
-import wadp.domain.CourseProgressTracker;
-import wadp.domain.User;
+import wadp.domain.*;
 import wadp.domain.form.CourseForm;
-import wadp.service.CourseService;
-import wadp.service.ProgressService;
-import wadp.service.UserService;
+import wadp.service.*;
 
 @Controller
 @RequestMapping(value = "/course")
 public class CourseController {
-    
+
     @Autowired
     private CourseService courseService;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private ProgressService progressService;
-    
+
     @Autowired
-    private CourseService CourseService;
-    
-    
+    private SkillService skillService;
+
+    @Autowired
+    GradeLevelService gradeLevelService;
+
+    @Autowired
+    GoalService goalService;
+
+
+
+
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
     public String ShowCreateCoursePage(Model model) {
         if (!model.containsAttribute("course")) {
-          model.addAttribute("course", new Course());
-        }  
+            model.addAttribute("course", new Course());
+        }
         return "addcourse";
     }
-    
-    
+
+
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.POST)
     public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult){
-       if (bindingResult.hasErrors()) {
-            
-            
-           
-         redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
-         redirectAttributes.addFlashAttribute("course", course);
-         return "redirect:/addcourse";
-              
+        if (bindingResult.hasErrors()) {
+
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
+            redirectAttributes.addFlashAttribute("course", course);
+            return "redirect:/addcourse";
+
         }
 
-    CourseService.addCourse(course);
-    return "redirect:mycourses";
+        courseService.addCourse(course);
+        return "redirect:mycourses";
     }
-    
+
 
 
 
@@ -75,12 +77,29 @@ public class CourseController {
         if(course==null){
             return "redirect:/mycourses";
         }
-        
+
         model.addAttribute("course", course);
         User user = userService.getAuthenticatedUser();
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
-        
+
         return "course";
+    }
+
+    @RequestMapping(value = "/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
+    public String learnCourseSkill(
+            @PathVariable Long courseId,
+            @PathVariable Long levelId,
+            @PathVariable Long goalId,
+            @PathVariable Long skillId) {
+
+        Course course = courseService.getCourseById(courseId);
+        GradeLevel gradeLevel = gradeLevelService.findGradeLevelById(levelId);
+        Goal goal = goalService.findGoalById(goalId);
+        Skill skill = skillService.findSkill(skillId);
+        CourseProgressTracker tracker = progressService.getProgress(userService.getAuthenticatedUser(), course);
+        progressService.swapSkillsStatus(tracker, gradeLevel, goal, skill);
+
+        return "redirect:/course" + "/" + courseId;
     }
 }
