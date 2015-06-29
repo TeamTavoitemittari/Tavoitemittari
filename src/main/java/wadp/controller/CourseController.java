@@ -85,7 +85,7 @@ public class CourseController {
 
         return "course";
     }
-    
+
     @RequestMapping(value = "/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
     public String learnCourseSkill(
             @PathVariable Long courseId,

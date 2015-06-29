@@ -45,8 +45,10 @@
                                                     <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
                                                     <form method="post"
                                                           th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                          th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)}"
                                                           style="display: inline-block; float: right;">
-                                                        <button type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                        <button th:case="true" type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                        <button th:case="false" type="submit" class="btn btn-sm btn-default">Osaan</button>
                                                     </form>
                                                 </div>
                                                 <div class="panel-footer">
@@ -70,8 +72,10 @@
                                                     <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
                                                     <form method="post"
                                                           th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                          th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)}"
                                                           style="display: inline-block; float: right;">
-                                                        <button type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                        <button th:case="true" type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                        <button th:case="false" type="submit" class="btn btn-sm btn-default">Osaan</button>
                                                     </form>
                                                 </div>
                                                 <div class="panel-footer">
