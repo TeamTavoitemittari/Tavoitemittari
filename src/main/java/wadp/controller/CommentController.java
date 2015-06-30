@@ -35,7 +35,7 @@ public class CommentController {
     public String postOrUpdateComment(@PathVariable long courseId, @PathVariable long commentId, @RequestParam String comment){
         Comment com = commentService.findCommentById(commentId);
         commentService.updateComment(com, comment);
-        return "redirect:/course/"+courseId;
+        return "redirect:/course/"+courseId+"#comments";
     }
     
 }
