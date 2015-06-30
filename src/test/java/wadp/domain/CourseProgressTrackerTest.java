@@ -3,11 +3,11 @@ package wadp.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.util.TreeMap;
+
+import org.junit.*;
+import org.junit.rules.ExpectedException;
+
 import static org.junit.Assert.*;
 
 public class CourseProgressTrackerTest {
@@ -62,10 +62,9 @@ public class CourseProgressTrackerTest {
         assertTrue(tracker.getCourse()==course2);
     }
 
-
     @Test
     public void testGradeLevels() {
-        assertEquals(tracker.getGradeLevels().size(),1);
+        assertEquals(tracker.getGradeLevels().size(), 1);
         tracker.setGradeLevels(new HashMap<GradeLevel, GradeProgressTracker>());
         assertEquals(tracker.getGradeLevels().size(), 0);
     }

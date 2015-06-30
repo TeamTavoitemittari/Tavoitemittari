@@ -2,6 +2,7 @@ package wadp.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
     public CourseProgressTracker(){
         this.gradeLevels=new HashMap<GradeLevel, GradeProgressTracker>();
     }
-    
+
     public CourseProgressTracker(User user, Course course) {
         this.user = user;
         this.course = course;
@@ -58,10 +59,18 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
     }
 
     public Map<GradeLevel, GradeProgressTracker> getGradeLevels() {
-        return gradeLevels;
+
+        try {
+            TreeMap<GradeLevel, GradeProgressTracker> sortMap = new TreeMap<>(gradeLevels);
+            return sortMap;
+        } catch (NullPointerException e) {
+            return gradeLevels;
+        }
+
+
     }
 
-    public void setGradeLevels(HashMap<GradeLevel, GradeProgressTracker> gradeLevels) {
+    public void setGradeLevels(Map<GradeLevel, GradeProgressTracker> gradeLevels) {
         this.gradeLevels = gradeLevels;
     }
 
