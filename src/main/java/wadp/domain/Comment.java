@@ -10,8 +10,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Comment extends AbstractPersistable<Long>{
     
-    @Lob
-    @Column(length=10000, name="comment")
     private String comment;
     
     @OneToOne
