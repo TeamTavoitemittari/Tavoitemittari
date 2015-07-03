@@ -1,16 +1,19 @@
 
 package wadp.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Comment extends AbstractPersistable<Long>{
     
+    @Lob
+    @Column(length=10000, name="comment")
     private String comment;
+    
     @OneToOne
     private Skill skill;
     
