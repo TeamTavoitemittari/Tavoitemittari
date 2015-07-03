@@ -21,54 +21,46 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterController {
 
     @Autowired
-    private UserService UserService;
-    
-    
+    private UserService userService;
+
     //testausta varten
-   @PostConstruct
-   private void init(){
-       //poistetaan vanhat herokua varten
-       UserService.clearUsers();
-       UserService.createUser("oppilas@a.com","oppilas","Matti Meikalainen","student");
-       UserService.createUser("ope@a.com","ope","Olli Opettaja", "teacher");
+    @PostConstruct
+    private void init() {
+        //poistetaan vanhat herokua varten
+        if (userService.list().isEmpty()) {
+            userService.clearUsers();
+            userService.createUser("oppilas@a.com", "oppilas", "Matti Meikalainen", "student");
+            userService.createUser("ope@a.com", "ope", "Olli Opettaja", "teacher");
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            
-            
-           
-       redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
-       redirectAttributes.addFlashAttribute("user", user);
-       return "redirect:/register";
 
-            
-          
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+            redirectAttributes.addFlashAttribute("user", user);
+            return "redirect:/register";
+
         }
 
         try {
-            UserService.createUser(user.getEmail(), user.getPassword(), user.getName(), user.getUserRole());
+            userService.createUser(user.getEmail(), user.getPassword(), user.getName(), user.getUserRole());
         } catch (EmailAlreadyRegisteredException ex) {
             bindingResult.addError(new FieldError("user", "email", "Sähköpostiosoite on jo rekisteröity palveluun!"));
             return "register";
         }
         redirectAttributes.addFlashAttribute("registeredEmail", user.getEmail());
-        
+
         return "redirect:welcome";
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String Register(Model model) {
         if (!model.containsAttribute("user")) {
-          model.addAttribute("user", new UserForm());
+            model.addAttribute("user", new UserForm());
         }
         return "register";
     }
 
-    
-        
-    
-    
-    
 }
