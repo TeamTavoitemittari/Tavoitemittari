@@ -29,8 +29,8 @@ public class RegisterController {
         //poistetaan vanhat herokua varten
         if (userService.list().isEmpty()) {
             userService.clearUsers();
-            userService.createUser("oppilas@a.com", "oppilas", "Matti Meikalainen", "student");
             userService.createUser("ope@a.com", "ope", "Olli Opettaja", "teacher");
+            userService.createUser("oppilas@a.com", "oppilas", "Matti Meikalainen", "student");
         }
     }
 
