@@ -48,7 +48,7 @@
                     </div>
                     <div class="panel-footer">
                         <form th:method="GET" th:action="'/course/' + ${course.id}">
-                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" name="tavoitemittari">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                         </form>
                     </div>
 
