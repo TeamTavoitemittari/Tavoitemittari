@@ -47,6 +47,7 @@ public class CourseController {
         if (!model.containsAttribute("course")) {
             model.addAttribute("course", new Course());
         }
+        model.addAttribute("courses", courseService.getCourses());
         return "addcourse";
     }
 
@@ -101,5 +102,21 @@ public class CourseController {
         progressService.swapSkillsStatus(tracker, gradeLevel, goal, skill);
 
         return "redirect:/course" + "/" + courseId;
+    }
+    
+    @RequestMapping(value="/{courseId}/update", method=RequestMethod.GET)
+    public String getCourseForUpdate(Model model, @PathVariable Long courseId){
+        model.addAttribute("course", new Course());
+        model.addAttribute("courses", courseService.getCourses());
+        model.addAttribute("updateCourse", courseService.getCourseById(courseId));
+        return "addcourse";
+    }
+    
+    @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
+    public String updateCourse(Model model, @PathVariable Long courseId, @ModelAttribute Course course){
+        courseService.updateCourse(course, courseId);
+        model.addAttribute("updateSuccessMessage", "Kurssi päivitetty!");
+        model.addAttribute("course", courseService.getCourseById(courseId));
+        return "/addcourse/#update";
     }
 }

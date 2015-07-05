@@ -32,4 +32,9 @@ public class CourseService {
         Collections.sort(course.getGradeLevels());
     }
     
+    @Transactional
+    public void updateCourse(Course course, Long courseId){
+        //TODO: Add method for changing the course that is in store.
+    }
+    
 }
