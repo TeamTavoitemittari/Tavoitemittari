@@ -1,25 +1,65 @@
       
+var json;
 $(document).ready(function() {
     
     
-    // 3 different gradelevels, 9-10, 7-8 and 5-6
-   
+    
+   var course = JSON.parse(json);
+   if (jQuery.isEmptyObject(course)==false){
+       
     addGoal("0");
     addGoal("1");
     addGoal("2");
+    
+    document.getElementById("name").value = course.name;   
+    document.getElementById("description").value = course.description;
+
   
-  
-  
-   $("#addGoal0").click();
-   $("#addGoal1").click();
-   $("#addGoal2").click(); 
    
-   $("#addSkill00").click();
-   $("#addSkill10").click(); 
-   $("#addSkill20").click();
+     
+    for (gradeLevelIndex = 0; gradeLevelIndex < Object.keys(course.gradeLevels).length; gradeLevelIndex++) { 
+
+        
+         for (goalIndex = 0; goalIndex < Object.keys(course.gradeLevels[gradeLevelIndex].goals).length; goalIndex++) { 
+           
+            
+             $("#addGoal"+gradeLevelIndex).click();
+             document.getElementById("gradeLevels["+gradeLevelIndex+"].goals["+goalIndex+"].name").value = course.gradeLevels[gradeLevelIndex].goals[goalIndex].name;
+          
+              
+              for (skillIndex = 0; skillIndex < Object.keys(course.gradeLevels[gradeLevelIndex].goals[goalIndex].skills).length; skillIndex++) { 
+                $("#addSkill"+gradeLevelIndex+goalIndex).click();
+                
+               
+                document.getElementById("gradeLevels["+gradeLevelIndex+"].goals["+goalIndex+"].skills["+skillIndex+"].description").value = course.gradeLevels[gradeLevelIndex].goals[goalIndex].skills[skillIndex].description;
+                document.getElementById("gradeLevels["+gradeLevelIndex+"].goals["+goalIndex+"].skills["+skillIndex+"].exercises[0].description").value = course.gradeLevels[gradeLevelIndex].goals[goalIndex].skills[skillIndex].exercises[0].description;
+                
+                
+                }  
+
+            }
+        }  
+    }         
+    
+    if (jQuery.isEmptyObject(course)==true){
+    // 3 different gradelevels, 9-10, 7-8 and 5-6
+   
+     addGoal("0");
+     addGoal("1");
+     addGoal("2");
+  
+  
+  
+    $("#addGoal0").click();
+    $("#addGoal1").click();
+    $("#addGoal2").click(); 
+   
+    $("#addSkill00").click();
+    $("#addSkill10").click(); 
+    $("#addSkill20").click();
     
   
-
+    }
 
 
 

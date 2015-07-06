@@ -1,6 +1,8 @@
 
 package wadp.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,7 +61,7 @@ public class CourseController {
 
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
             redirectAttributes.addFlashAttribute("course", course);
-            return "redirect:/addcourse";
+            return "redirect:/course";
 
         }
 
@@ -104,13 +106,26 @@ public class CourseController {
         return "redirect:/course" + "/" + courseId;
     }
     
-    @RequestMapping(value="/{courseId}/update", method=RequestMethod.GET)
-    public String getCourseForUpdate(Model model, @PathVariable Long courseId){
-        model.addAttribute("course", new Course());
-        model.addAttribute("courses", courseService.getCourses());
-        model.addAttribute("updateCourse", courseService.getCourseById(courseId));
-        return "addcourse";
+     @PreAuthorize("hasAuthority('teacher')")
+     @RequestMapping(value="/{courseId}/update", method=RequestMethod.GET)
+     public String getCourseForUpdate(RedirectAttributes redirectAttributes, @PathVariable Long courseId) throws JsonProcessingException{
+        redirectAttributes.addFlashAttribute("course", new Course());
+        
+        ObjectMapper mapper = new ObjectMapper();
+        
+     
+        redirectAttributes.addFlashAttribute("json", mapper.writeValueAsString(courseService.getCourseById(courseId))); 
+        redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
+        return "redirect:/course#update";
+       
     }
+//    @RequestMapping(value="/{courseId}/update", method=RequestMethod.GET)
+//    public String getCourseForUpdate(Model model, @PathVariable Long courseId){
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("courses", courseService.getCourses());
+//        model.addAttribute("updateCourse", courseService.getCourseById(courseId));
+//        return "addcourse";
+//    }
     
     @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
     public String updateCourse(Model model, @PathVariable Long courseId, @ModelAttribute Course course){
