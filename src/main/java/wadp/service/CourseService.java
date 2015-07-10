@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wadp.domain.Course;
 import wadp.repository.CourseRepository;
+import wadp.repository.GradeLevelRepository;
 
 @Service
 public class CourseService {
     
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private GradeLevelRepository gradeLevelRepository;
     
     public List<Course> getCourses(){
         return courseRepository.findAll();
@@ -34,7 +37,21 @@ public class CourseService {
     
     @Transactional
     public void updateCourse(Course course, Long courseId){
-        //TODO: Add method for changing the course that is in store.
+        Course courseToBeUpdated = courseRepository.findOne(courseId);
+        courseToBeUpdated.setName(course.getName());
+        courseToBeUpdated.setDescription(course.getDescription());
+        
+        Long OldGradeLevel1Id = courseToBeUpdated.getGradeLevels().get(0).getId();
+        Long OldGradeLevel2Id = courseToBeUpdated.getGradeLevels().get(1).getId();
+        Long OldGradeLevel3Id = courseToBeUpdated.getGradeLevels().get(2).getId();
+       
+        courseToBeUpdated.setGradeLevels(course.getGradeLevels());
+      
+       
+
+        gradeLevelRepository.delete(OldGradeLevel1Id);
+        gradeLevelRepository.delete(OldGradeLevel2Id);
+        gradeLevelRepository.delete(OldGradeLevel3Id);
     }
     
 }

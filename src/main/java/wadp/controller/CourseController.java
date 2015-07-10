@@ -127,11 +127,15 @@ public class CourseController {
 //        return "addcourse";
 //    }
     
-    @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
-    public String updateCourse(Model model, @PathVariable Long courseId, @ModelAttribute Course course){
+
+    
+        @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
+    public String updateCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @ModelAttribute Course course){
         courseService.updateCourse(course, courseId);
-        model.addAttribute("updateSuccessMessage", "Kurssi päivitetty!");
-        model.addAttribute("course", courseService.getCourseById(courseId));
-        return "/addcourse/#update";
+    
+        redirectAttributes.addFlashAttribute("updateSuccessMessage", "Kurssi päivitetty!"); 
+        redirectAttributes.addFlashAttribute("course", courseService.getCourseById(courseId));
+        return "redirect:/course#update";
     }
 }
+

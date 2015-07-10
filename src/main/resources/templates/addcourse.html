@@ -233,18 +233,7 @@
                             <div class="alert alert-success" role="alert" th:text="${updateSuccessMessage}">.</div>
                         </div>
                         
-                        <div th:if="${updateCourse != null}">
-                            <h2 th:text="${updateCourse.name}">Course name</h2>
-                            
-                            <form th:actio="@{'/course/'+${updateCourse.id}+'/update'" method="post">
-                                <div th:each="gradeLevel : ${updateCourse.gradeLevels}">
-                                    
-                                </div>
-                                
-                            </form>
-                            
-                            
-                        </div>
+                     
                         
                     </div>
                 </div>
