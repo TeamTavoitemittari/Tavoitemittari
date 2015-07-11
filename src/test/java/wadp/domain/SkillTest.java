@@ -13,37 +13,27 @@ public class SkillTest {
     
 
     /**
-     * Test of addExercise method, of class Skill.
+     * Test of SetExercise and GetExercise method, of class Skill.
      */
     @Test
-    public void testAddExercise() {
-        System.out.println("addExercise");
-        Exercise exercise = new Exercise("Calculate the mass of the sun");
-        Skill skill = new Skill("Planetary calculation");
-        skill.addExercise(exercise);
-        assertEquals(1, skill.getExercises().size());
+    public void testGetandSetExercise() {
+        System.out.println("setExercise");
+        String Exercise = "Calculate the mass of the sun";
+        Skill skill = new Skill();
+        skill.setExercise(Exercise);
+        assertEquals(Exercise, skill.getExercise());
     }
 
-    /**
-     * Test of getExercises method, of class Skill.
-     */
-    @Test
-    public void testGetExercises() {
-        System.out.println("getExercises");
-        Skill skill = new Skill("Planetary calculation");
-        assertEquals(0, skill.getExercises().size());
-        skill.addExercise(new Exercise("Calculate the mass of the sun"));
-        assertEquals(1, skill.getExercises().size());
-    }
+
     
     /**
      * Test of description getters and setters, of class Skill.
      */
     @Test
     public void descriptionTest(){
-        Skill skill = new Skill("descr");
-        assertEquals("descr", skill.getDescription());
+        Skill skill = new Skill();
         skill.setDescription("second");
         assertEquals("second", skill.getDescription());
+      
     }
 }

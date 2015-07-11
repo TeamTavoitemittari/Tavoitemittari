@@ -17,26 +17,33 @@ public class Skill extends AbstractPersistable<Long>{
     @Length(max=255, message="Taitojen kuvauksiin korkeintaan 255 kirjainta.")
     private String description;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @Valid
-    private List<Exercise> exercises;
+   
     
-    public Skill(){
-        this.exercises=new ArrayList<Exercise>();
+    @Length(max=2000, message="Harjoituksiin korkeintaan 2000 kirjainta.")
+    @Column(length = 2000)
+    private String exercise;
+
+    public Skill() {
+    }
+
+    public Skill(String description, String exercise) {
+        this.description = description;
+        this.exercise = exercise;
     }
     
-    public Skill(String description){
-        this.description=description;
-        this.exercises=new ArrayList<Exercise>();
+
+    
+  
+
+    public String getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
     }
     
-    public void addExercise(Exercise exercise){
-        this.exercises.add(exercise);
-    }
-    
-    public List<Exercise> getExercises(){
-        return this.exercises;
-    }
+
 
     public String getDescription() {
         return description;
