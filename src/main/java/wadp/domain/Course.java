@@ -40,7 +40,7 @@ public class Course extends AbstractPersistable<Long> {
         this.name = name;
     }
 
-     public List<GradeLevel> getGradeLevels() {
+    public List<GradeLevel> getGradeLevels() {
         return this.gradeLevels;
                 }
 
