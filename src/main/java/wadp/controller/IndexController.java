@@ -265,7 +265,7 @@ public class IndexController {
         }
 
            Course course = new Course();
-        course.setName("Tähtitiede 1");
+        course.setName("Tähtitiede 2");
         course.setDescription("Kurssilla perehdytään erinäisiin taivankappaleisiina alkaen omasta aurinkokunnastamme"
                 + "ja edeten hiljalleen galaksin muihin osiin. Kurssin jälkeen tiedät mitä eroa on mustalla aukolla"
                 + "ja valkoisella kääpiöllä sekä tunnistat tähtitaivaalta eri tähtikuviot.");
