@@ -142,6 +142,11 @@
                                 <li th:each="oldCourse : ${courses}"><a th:href="'/course/'+${oldCourse.id}+'/update'" th:text="${oldCourse.name}">Kurssi1</a></li>
                             </ul>
                         </div>
+
+                        <div th:if="${notEmptyMessage != null}">
+                            <br/>
+                            <div class="alert alert-success" role="alert" th:text="${notEmptyMessage}">.</div>
+                        </div>
                         
                         
                   <div th:if="${json != null}">
@@ -223,7 +228,7 @@
 
 
 
-                        <button class="btn btn-primary btn-lg center-block" type="submit">Muokkaa kurssia</button>
+                        <button class="btn btn-primary btn-lg center-block" type="submit">Tallenna muutokset</button>
 
 
                     </form></div>
@@ -236,6 +241,7 @@
                      
                         
                     </div>
+                    <br/>
                 </div>
             </div>
                <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->

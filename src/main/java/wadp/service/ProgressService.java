@@ -69,4 +69,9 @@ public class ProgressService {
         goalRepository.save(tracker);
     }
 
+    public List<CourseProgressTracker> getProgressByCourse(Course course){
+        List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
+        return trackers;
+    }
+
 }

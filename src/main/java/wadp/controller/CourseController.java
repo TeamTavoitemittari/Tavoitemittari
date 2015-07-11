@@ -112,21 +112,20 @@ public class CourseController {
         redirectAttributes.addFlashAttribute("course", new Course());
         
         ObjectMapper mapper = new ObjectMapper();
-        
-     
+
+         Course updateCourse = courseService.getCourseById(courseId);
+         if(progressService.getProgressByCourse(updateCourse).size()>0){
+             redirectAttributes.addFlashAttribute("notEmptyMessage", "Tällä kurssilla on jo ilmoittautuneita oppilaita," +
+                     " joten et voi muokata sitä.");
+             return "redirect:/course#update";
+         }
+
+
         redirectAttributes.addFlashAttribute("json", mapper.writeValueAsString(courseService.getCourseById(courseId))); 
         redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
         return "redirect:/course#update";
        
     }
-//    @RequestMapping(value="/{courseId}/update", method=RequestMethod.GET)
-//    public String getCourseForUpdate(Model model, @PathVariable Long courseId){
-//        model.addAttribute("course", new Course());
-//        model.addAttribute("courses", courseService.getCourses());
-//        model.addAttribute("updateCourse", courseService.getCourseById(courseId));
-//        return "addcourse";
-//    }
-    
 
     
         @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
