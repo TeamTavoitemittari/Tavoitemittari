@@ -43,9 +43,9 @@ public class GoalTest {
         System.out.println("getSkills");
         
         Goal tavoite = new Goal();        
-        Skill taito = new Skill("Taito");
-        Exercise harjoitus = new Exercise("Harjoitus");
-        taito.addExercise(harjoitus);
+        Skill taito = new Skill("Taito", "harjoitus");
+        
+        
         ArrayList<Skill> taidot = new ArrayList();
         taidot.add(taito);
         tavoite.setSkills(taidot);

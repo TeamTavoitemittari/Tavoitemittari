@@ -32,7 +32,7 @@ $(document).ready(function() {
                 
                
                 document.getElementById("gradeLevels["+gradeLevelIndex+"].goals["+goalIndex+"].skills["+skillIndex+"].description").value = course.gradeLevels[gradeLevelIndex].goals[goalIndex].skills[skillIndex].description;
-                document.getElementById("gradeLevels["+gradeLevelIndex+"].goals["+goalIndex+"].skills["+skillIndex+"].exercises[0].description").value = course.gradeLevels[gradeLevelIndex].goals[goalIndex].skills[skillIndex].exercises[0].description;
+                document.getElementById("gradeLevels["+gradeLevelIndex+"].goals["+goalIndex+"].skills["+skillIndex+"].exercise").value = course.gradeLevels[gradeLevelIndex].goals[goalIndex].skills[skillIndex].exercise;
                 
                 
                 }  
@@ -116,7 +116,7 @@ $(document).ready(function() {
         if(skillCounter < maxFields){ 
             var displayCurrentSkill=skillCounter+1;
             var displayCurrentGoal=goalIndex+1
-            $(wrapper).append('<div class="panel-body" id="skill'+gradeLevel+''+skillCounter+''+goalIndex+'"><label for="text">Tavoitteen ' + displayCurrentGoal + '. taito numero ' + displayCurrentSkill + '.</label> <input type="text" required="required" maxlength="255" name="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].description" class="form-control" id="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].description"/><label for="text">Tavoitteen ' + displayCurrentGoal + '. taitoon numero ' + displayCurrentSkill + '. liittyvät tehtävät</label><textArea required="required" maxlength="2000" name="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].exercises[0].description" class="form-control" id="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].exercises[0].description"></textArea></div>'); 
+            $(wrapper).append('<div class="panel-body" id="skill'+gradeLevel+''+skillCounter+''+goalIndex+'"><label for="text">Tavoitteen ' + displayCurrentGoal + '. taito numero ' + displayCurrentSkill + '.</label> <input type="text" required="required" maxlength="255" name="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].description" class="form-control" id="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].description"/><label for="text">Tavoitteen ' + displayCurrentGoal + '. taitoon numero ' + displayCurrentSkill + '. liittyvät tehtävät</label><textArea required="required" maxlength="2000" name="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].exercise" class="form-control" id="gradeLevels['+gradeLevel+'].goals[' + goalIndex + '].skills[' + skillCounter + '].exercise"></textArea></div>'); 
             skillCounter++; 
         }
     });
