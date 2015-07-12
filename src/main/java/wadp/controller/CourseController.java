@@ -56,17 +56,24 @@ public class CourseController {
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.POST)
-    public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult){
+    public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException{
         if (bindingResult.hasErrors()) {
 
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
             redirectAttributes.addFlashAttribute("course", course);
+            
+            ObjectMapper mapper = new ObjectMapper();
+            redirectAttributes.addFlashAttribute("invalidCourseAsJson", mapper.writeValueAsString(course)); 
+        
+            
+            
             return "redirect:/course";
 
         }
 
         courseService.addCourse(course);
-        return "redirect:mycourses";
+        redirectAttributes.addFlashAttribute("creationSuccessMessage", "Kurssi luotu!"); 
+        return "redirect:/course";
     }
 
 
@@ -121,17 +128,29 @@ public class CourseController {
          }
 
 
-        redirectAttributes.addFlashAttribute("json", mapper.writeValueAsString(courseService.getCourseById(courseId))); 
+        redirectAttributes.addFlashAttribute("updateCourseAsJson", mapper.writeValueAsString(courseService.getCourseById(courseId))); 
         redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
         return "redirect:/course#update";
        
     }
 
     
-        @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
-    public String updateCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @ModelAttribute Course course){
-        courseService.updateCourse(course, courseId);
+    @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
+    public String updateCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException{
     
+        
+          if (bindingResult.hasErrors()) {
+            ObjectMapper mapper = new ObjectMapper();
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
+            redirectAttributes.addFlashAttribute("course", course);
+            redirectAttributes.addFlashAttribute("updateCourseAsJson", mapper.writeValueAsString(course)); 
+            redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
+            return "redirect:/course#update";
+        
+        }
+        
+        courseService.updateCourse(course, courseId);
+       
         redirectAttributes.addFlashAttribute("updateSuccessMessage", "Kurssi päivitetty!"); 
         redirectAttributes.addFlashAttribute("course", courseService.getCourseById(courseId));
         return "redirect:/course#update";

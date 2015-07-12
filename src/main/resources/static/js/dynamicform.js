@@ -1,11 +1,45 @@
-      
-var json;
+var updateCourseAsJson;
+var invalidCourseAsJson;
 $(document).ready(function() {
     
     
     
-   var course = JSON.parse(json);
-   if (jQuery.isEmptyObject(course)==false){
+   var updateCourse = JSON.parse(updateCourseAsJson);
+   var invalidCourse = JSON.parse(invalidCourseAsJson);
+   
+   if (jQuery.isEmptyObject(updateCourse)==false){
+       
+    GenerateFormFromJson(updateCourse);
+    }         
+    
+     if (jQuery.isEmptyObject(updateCourse)==true){
+        
+      if (jQuery.isEmptyObject(invalidCourse)==false){
+         
+       GenerateFormFromJson(invalidCourse);    
+      
+      }
+      else {  
+      // 3 different gradelevels, 9-10, 7-8 and 5-6
+   
+       addGoal("0");
+       addGoal("1");
+       addGoal("2");
+  
+  
+  
+      $("#addGoal0").click();
+      $("#addGoal1").click();
+      $("#addGoal2").click(); 
+   
+      $("#addSkill00").click();
+      $("#addSkill10").click(); 
+      $("#addSkill20").click();
+    
+  
+    }
+   }
+   function GenerateFormFromJson(course){
        
     addGoal("0");
     addGoal("1");
@@ -39,28 +73,8 @@ $(document).ready(function() {
 
             }
         }  
-    }         
-    
-    if (jQuery.isEmptyObject(course)==true){
-    // 3 different gradelevels, 9-10, 7-8 and 5-6
-   
-     addGoal("0");
-     addGoal("1");
-     addGoal("2");
-  
-  
-  
-    $("#addGoal0").click();
-    $("#addGoal1").click();
-    $("#addGoal2").click(); 
-   
-    $("#addSkill00").click();
-    $("#addSkill10").click(); 
-    $("#addSkill20").click();
-    
-  
-    }
-
+       
+   }
 
 
   function addGoal(gradeLevel){

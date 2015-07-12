@@ -54,17 +54,25 @@ public class CreateCourseTest {
     public void tearDown() {
         service.clearUsers();
     }
-    
     @Test
-    public void teacherCanCreateaNewCourse() {
+    public void teacherCanAccessNewCourseCreationPageButCannotCreateCourseSinceGoalsMustBeSet() {
         createUser("ope", "Opettaja21", "teacher");
         login("ope@gmail.com", "Opettaja21");
         getCourseCreationPage();
         assertTrue(driver.getPageSource().contains("Lisää kurssi"));
         createCourse(name, "Tällä kurssila käsitellään jotain");
-        assertTrue(driver.getPageSource().contains(name));
-        assertTrue(driver.getPageSource().contains("Tällä kurssila käsitellään jotain"));
+        assertTrue(driver.getPageSource().contains("Tavoite ei saa olla tyhjä."));
     }
+//    @Test
+//    public void teacherCanCreateaNewCourse() {
+//        createUser("ope", "Opettaja21", "teacher");
+//        login("ope@gmail.com", "Opettaja21");
+//        getCourseCreationPage();
+//        assertTrue(driver.getPageSource().contains("Lisää kurssi"));
+//        createCourse(name, "Tällä kurssila käsitellään jotain");
+//        assertTrue(driver.getPageSource().contains(name));
+//        assertTrue(driver.getPageSource().contains("Tällä kurssila käsitellään jotain"));
+//    }
     
     @Test
     public void studentCannotCreateaNewCourse() {

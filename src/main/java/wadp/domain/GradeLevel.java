@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 
@@ -15,6 +16,7 @@ public class GradeLevel extends AbstractPersistable<Long> implements Comparable<
     private String grade;
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
+    @NotEmpty(message="Tavoite ei saa olla tyhjä.")
     private List<Goal> goals;
 
     public String getLevel() {

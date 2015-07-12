@@ -23,7 +23,9 @@
 <body>
 <script type="text/javascript" th:inline="javascript">
 
-    json=[[${json}]];
+ 
+    updateCourseAsJson=[[${updateCourseAsJson}]];
+    invalidCourseAsJson=[[${invalidCourseAsJson}]];
 </script>
 
 
@@ -42,7 +44,13 @@
                     <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                 </ul>
             </div>
-            <div th:if="${json == null}">
+            
+            <div th:if="${creationSuccessMessage != null}">
+                  <hr></hr>
+                    <div class="alert alert-success" role="alert" th:text="${creationSuccessMessage}">.</div>
+                </div>
+            
+            <div th:if="${updateCourseAsJson == null}">
                 <form th:action="@{/course}"  method="post">
 
                     <input type="hidden" name="gradeLevels[0].grade" id="gradeLevels[0].grade" value="9-10"/>
@@ -149,7 +157,14 @@
                 </div>
 
 
-                <div th:if="${json != null}">
+                <div th:if="${updateCourseAsJson != null}">
+                  <div th:object="${course}">
+                  <ul th:if="${#fields.hasErrors('*')}">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                  </ul>
+                 </div>
+                    
+                    
                     <form th:action="@{'/course/'+${updateCourse.id}+'/update'}"  method="post">
 
                         <input type="hidden" name="gradeLevels[0].grade" id="gradeLevels[0].grade" value="9-10"/>

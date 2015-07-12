@@ -16,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import wadp.Application;
 import wadp.domain.Course;
+import wadp.domain.Goal;
 import wadp.domain.GradeLevel;
 import wadp.repository.CourseRepository;
 
@@ -75,9 +76,29 @@ public class CourseServiceTest {
         GradeLevel l1 = new GradeLevel();
         GradeLevel l2 = new GradeLevel();
         GradeLevel l3 = new GradeLevel();
+ 
+        List<Goal> goals = new ArrayList<Goal>();
+        Goal x = new Goal();
+        x.setName("xx");
+        goals.add(x);
+        l1.setGoals(goals);
+        
+        List<Goal> goals2 = new ArrayList<Goal>();
+        Goal x2 = new Goal();
+        x2.setName("xx");
+        goals2.add(x2);
+        l2.setGoals(goals2);
+        
+        List<Goal> goals3 = new ArrayList<Goal>();
+        Goal x3 = new Goal();
+        x3.setName("xx");
+        goals3.add(x3);
+        l3.setGoals(goals3);
+        
         gradeLevels.add(l1);
         gradeLevels.add(l2);
         gradeLevels.add(l3);
+        
         course.setGradeLevels(gradeLevels);
         course.setName("test");
         course.setDescription("descr");
@@ -91,6 +112,25 @@ public class CourseServiceTest {
         GradeLevel l4 = new GradeLevel();
         GradeLevel l5 = new GradeLevel();
         GradeLevel l6 = new GradeLevel();
+        
+        List<Goal> goals4 = new ArrayList<Goal>();
+        Goal x4 = new Goal();
+        x4.setName("xx");
+        goals4.add(x4);
+        l4.setGoals(goals4);
+        
+        List<Goal> goals5 = new ArrayList<Goal>();
+        Goal x5 = new Goal();
+        x5.setName("xx");
+        goals5.add(x5);
+        l5.setGoals(goals5);
+        
+        List<Goal> goals6 = new ArrayList<Goal>();
+        Goal x6 = new Goal();
+        x6.setName("xx");
+        goals6.add(x6);
+        l6.setGoals(goals6);
+        
         gradeLevels2.add(l4);
         gradeLevels2.add(l5);
         gradeLevels2.add(l6);
