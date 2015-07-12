@@ -159,8 +159,10 @@
                             <exclude>wadp/controller/IndexController.class</exclude>
                             <exclude>wadp/controller/RegisterController.class</exclude>
                             <exclude>wadp/controller/UserDetailsController.class</exclude>
+                            <exclude>wadp/controller/CommentController.class</exclude>
                             <!-- Entities -->
                             <exclude>wadp/domain/form/UserForm.class</exclude>
+                            <exclude>wadp/domain/form/CourseForm.class</exclude>
                             <exclude>wadp/auth/UserAuthenticationProvider.class</exclude>
                             <!-- Other -->
                             <exclude>wadp/profiles/ProdProfile.class</exclude>

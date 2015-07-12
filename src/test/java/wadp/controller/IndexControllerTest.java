@@ -25,9 +25,6 @@ import wadp.repository.CourseRepository;
 public class IndexControllerTest {
 
     @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
     private IndexController indexController;
 
     private Model model;
