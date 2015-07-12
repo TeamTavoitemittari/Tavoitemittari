@@ -82,9 +82,5 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
     public void setComments(Map<Skill, Comment> comments) {
         this.comments = comments;
     }
-    
-    public void updateComment(Skill skill, String newComment){
-        this.comments.get(skill).setComment(newComment);
-    }
 
 }
