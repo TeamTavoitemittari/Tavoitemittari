@@ -13,6 +13,8 @@ import wadp.Application;
 import wadp.domain.*;
 import wadp.repository.*;
 
+import java.util.ArrayList;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -81,5 +83,36 @@ public class ProgressServiceTest {
         assertEquals(1, goProgressRepository.findAll().size());
     }
 
+    @Test
+    public void swapSkillStatusWorks(){
 
+        CourseProgressTracker tracker2 = new CourseProgressTracker(new User(), createCourse());
+        Course trackerCourse = tracker2.getCourse();
+        GradeLevel gradeLevel = trackerCourse.getGradeLevels().get(0);
+        Goal goal = gradeLevel.getGoals().get(0);
+        Skill skill = goal.getSkills().get(0);
+        assertFalse(tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        progressService.swapSkillsStatus(tracker2, gradeLevel, goal, skill);
+        assertTrue(tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        progressService.swapSkillsStatus(tracker2, gradeLevel, goal, skill);
+        assertFalse(tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+
+    }
+
+    public Course createCourse(){
+        Skill skill = new Skill();
+        ArrayList<Skill> skills = new ArrayList<Skill>();
+        skills.add(skill);
+        Goal goal = new Goal();
+        goal.setSkills(skills);
+        ArrayList<Goal> goals = new ArrayList<Goal>();
+        goals.add(goal);
+        GradeLevel level = new GradeLevel();
+        level.setGoals(goals);
+        ArrayList<GradeLevel> levels = new ArrayList<GradeLevel>();
+        levels.add(level);
+        Course course = new Course();
+        course.setGradeLevels(levels);
+        return course;
+    }
 }
