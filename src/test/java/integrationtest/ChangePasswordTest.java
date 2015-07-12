@@ -78,8 +78,7 @@ public class ChangePasswordTest {
         passwordChange("aasi", "aasi");
         assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
     }
-    
-        
+
     private void createUser() {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/");
