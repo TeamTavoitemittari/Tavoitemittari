@@ -30,7 +30,7 @@
         <!-- Goal-o-meter tab where students mark their progress -->
         <div class="tab-content">
             <div id="goalometer" class="tab-pane fade in active">
-                <div class="center-block col-xs-11 col-sm-9 col-md-10 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
+                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
                     <h1 th:text="${gradeLevel.grade}">4-10</h1>
                     <div th:each="goal : ${gradeLevel.goals}" th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Ready}">
                         <div th:case="true" class="panel panel-success">
@@ -94,7 +94,7 @@
 
             <!-- Comments tab where students comment on a specific goal -->
             <div id="comments" class="tab-pane fade">
-                <div class="center-block col-xs-11 col-sm-9 col-md-10 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
+                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
                     <h1 th:text="${gradeLevel.key.grade}">4-10</h1>
                     <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
                         <div class="panel-heading">
