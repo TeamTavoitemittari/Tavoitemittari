@@ -100,6 +100,10 @@ public User createUser(String email, String password, String name, String userRo
          return userRepository.findByEmail(email);
      }
 
+    public List<User> findUserByRole(String role) {
+        return userRepository.findByUserRole(role);
+    }
+
       public void clearUsers(){
           userRepository.deleteAll();
       }

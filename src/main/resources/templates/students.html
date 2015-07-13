@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Students</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.dropotron.min.js"></script>
+        <script src="/js/init.js"></script>
+    </head>
+<body>
+    <div th:replace="fragments/components :: course-navbar">navbar</div>
+
+    <div class="row center-block col-xs-24 col-sm-10 col-md-8 col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span>Oppilaat</span></h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Nimi</th>
+                        <th>Sähköposti</th>
+                        <th>Rooli</th><!--tähän vois tulla luokka tjsp-->
+                    </tr>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.userRole}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</body>
+
+</html>
