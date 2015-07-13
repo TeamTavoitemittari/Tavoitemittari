@@ -20,14 +20,25 @@
         
         <div class="container">
     <ul class="nav nav-tabs" id="courseCommentTab">
-        <li class="active"><a th:href="@{~/mycourses}">Kaikki kurssit</a></li>
+        <li class="active"><a data-toggle="tab" href="#allcourses">Kaikki kurssit</a></li>
         <li><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
     </ul>
     <div class="tab-content">
+        
+        
 
-        <div id="new" class="tab-pane fade in active">
+        <div id="allcourses" class="tab-pane fade in active">
 
-            <!--Dummy hard-coded courses for demonstration--><br></br>
+           <br></br>
+            <div th:if="${alreadyJoinedMessage != null}">
+                    <br/>
+                    <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
+                </div>
+            <div th:if="${joinedSuccessMessage != null}">
+                    <br/>
+                    <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
+                </div>
+            <!--Dummy hard-coded courses for demonstration-->
         <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
@@ -37,7 +48,7 @@
                     <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p>
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-success" role="button">Tavoitemittariin</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                    <button class="btn btn-success" role="button">Liity kurssille</button> <button class="btn btn-default" role="button">Lisätietoja</button>
                 </div>
 
             </div>
@@ -56,8 +67,8 @@
                         <p th:text="${course.description}">Course description</p> 
                     </div>
                     <div class="panel-footer">
-                        <form th:method="GET" th:action="'/course/' + ${course.id}">
-                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" name="tavoitemittari">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        <form th:method="GET" th:action="@{'/course/' + ${course.id} + '/join'}">
+                        <a th:href="@{'/course/' + ${course.id} + '/join'}" class="btn btn-success" name="tavoitemittari">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                         </form>
                     </div>
 

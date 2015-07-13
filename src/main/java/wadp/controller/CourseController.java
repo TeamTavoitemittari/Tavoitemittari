@@ -155,5 +155,26 @@ public class CourseController {
         redirectAttributes.addFlashAttribute("course", courseService.getCourseById(courseId));
         return "redirect:/course#update";
     }
+    
+    
+    
+   
+    @RequestMapping(value="/{courseId}/join", method=RequestMethod.GET)
+     public String joinCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId){
+         if(progressService.getProgress(userService.getAuthenticatedUser(), courseService.getCourseById(courseId)) != null){
+             
+             redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
+             return "redirect:/mycourses";
+         }
+         
+        courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
+        redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
+        return "redirect:/mycourses";
+        
+      
+        
+       
+    }
+     
 }
 
