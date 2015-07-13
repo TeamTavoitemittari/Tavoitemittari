@@ -17,8 +17,17 @@
     </head>
     <body>
         <div th:replace="fragments/components :: course-navbar">navbar</div>
+        
+        <div class="container">
+    <ul class="nav nav-tabs" id="courseCommentTab">
+        <li class="active"><a th:href="@{~/mycourses}">Kaikki kurssit</a></li>
+        <li><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
+    </ul>
+    <div class="tab-content">
 
-        <!--Dummy hard-coded courses for demonstration-->
+        <div id="new" class="tab-pane fade in active">
+
+            <!--Dummy hard-coded courses for demonstration--><br></br>
         <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
@@ -48,6 +57,30 @@
                     </div>
                     <div class="panel-footer">
                         <form th:method="GET" th:action="'/course/' + ${course.id}">
+                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" name="tavoitemittari">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+        
+        <div id="owncourses" class="tab-pane fade"><br></br>
+            <div class="container"></div>  
+            
+                 <div th:if="${owncourses != null}">
+            <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${owncourses}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p th:text="${course.description}">Course description</p> 
+                    </div>
+                    <div class="panel-footer">
+                        <form th:method="GET" th:action="'/course/' + ${course.id}">
                         <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" name="tavoitemittari">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                         </form>
                     </div>
@@ -55,6 +88,26 @@
                 </div>
             </div>
         </div>
+            
+        </div>
+   </div>  
+             <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
+    <script>
+        $(document).ready(function() {
+            if(location.hash) {
+                $('a[href=' + location.hash + ']').tab('show');
+            }
+            $(document.body).on("click", "a[data-toggle]", function(event) {
+                location.hash = this.getAttribute("href");
+            });
+        });
+        $(window).on('popstate', function() {
+            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+            $('a[href=' + anchor + ']').tab('show');
+        });
+    </script>
+
+ </div>
 
 
         <script src="/js/bootstrap.js"></script>

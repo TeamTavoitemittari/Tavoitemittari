@@ -1,17 +1,24 @@
 
 package wadp.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wadp.domain.Course;
+import wadp.domain.CourseProgressTracker;
+import wadp.domain.User;
+import wadp.repository.CourseProgressRepository;
 import wadp.repository.CourseRepository;
 import wadp.repository.GradeLevelRepository;
 
 @Service
 public class CourseService {
+    
+    @Autowired
+    private CourseProgressRepository progressRepository;
     
     @Autowired
     private CourseRepository courseRepository;
@@ -54,4 +61,18 @@ public class CourseService {
         gradeLevelRepository.delete(OldGradeLevel3Id);
     }
     
+        public List<Course> getUsersCourses(User user){
+        List<CourseProgressTracker> trackers = progressRepository.findByUser(user);
+        List<Course> courses = new ArrayList<Course>();
+        
+        for (CourseProgressTracker tracker : trackers){
+            courses.add(tracker.getCourse());
+            
+        }
+        
+        return courses;
+        
+      }
+        
+        
 }
