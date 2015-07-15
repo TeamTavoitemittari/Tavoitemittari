@@ -68,7 +68,7 @@
                     </div>
                     <div class="panel-footer">
                         <!-- turha ?? <form th:method="GET" th:action="@{'/course/' + ${course.id} + '/join'}"> -->
-                        <a th:href="@{'/course/' + ${course.id} + '/join'}" class="btn btn-success" name="tavoitemittari">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        <a th:href="@{'/course/' + ${course.id} + '/join'}" class="btn btn-success" th:id="'join' + ${course.id}">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                        
                     </div>
 
@@ -92,7 +92,7 @@
                     </div>
                     <div class="panel-footer">
                         <form th:method="GET" th:action="'/course/' + ${course.id}">
-                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" name="tavoitemittari">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" th:id="'tavoitemittari' + ${course.id}">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                         </form>
                     </div>
 
