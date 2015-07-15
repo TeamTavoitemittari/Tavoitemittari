@@ -30,7 +30,7 @@
                     <table>
                         <tr><td>Kurssit</td></tr>
                         <tr th:each="course : ${courses}">
-                            <th><a th:text="${course.name}" href="#"></a></th>
+                            <th><a th:text="${course.name}" th:href="@{'/course/' +${course.id}+ '/' + ${user.id}}"></a></th>
                         </tr>
                     </table>
                 </div>

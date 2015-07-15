@@ -1,4 +1,3 @@
-
 package wadp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,9 +39,6 @@ public class CourseController {
     @Autowired
     GoalService goalService;
 
-
-
-
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
     public String ShowCreateCoursePage(Model model) {
@@ -53,44 +49,57 @@ public class CourseController {
         return "addcourse";
     }
 
-
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.POST)
-    public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException{
+    public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException {
         if (bindingResult.hasErrors()) {
 
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
             redirectAttributes.addFlashAttribute("course", course);
-            
+
             ObjectMapper mapper = new ObjectMapper();
-            redirectAttributes.addFlashAttribute("invalidCourseAsJson", mapper.writeValueAsString(course)); 
-        
-            
-            
+            redirectAttributes.addFlashAttribute("invalidCourseAsJson", mapper.writeValueAsString(course));
+
             return "redirect:/course";
 
         }
 
         courseService.addCourse(course);
-        redirectAttributes.addFlashAttribute("creationSuccessMessage", "Kurssi luotu!"); 
+        redirectAttributes.addFlashAttribute("creationSuccessMessage", "Kurssi luotu!");
         return "redirect:/course";
     }
 
-
-
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getCourse(Model model, @PathVariable Long id){
+    public String getCourse(Model model, @PathVariable Long id) {
         Course course = courseService.getCourseById(id);
         courseService.sortCourseGrades(course);
         courseService.sortCourseGoals(course);
 
-        if(course==null){
+        if (course == null) {
             return "redirect:/mycourses";
         }
 
         model.addAttribute("course", course);
         User user = userService.getAuthenticatedUser();
+        CourseProgressTracker tracker = progressService.getProgress(user, course);
+        model.addAttribute("tracker", tracker);
+
+        return "course";
+    }
+
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{id}/{studentId}", method = RequestMethod.GET)
+    public String getStudentGoalOMeter(Model model, @PathVariable Long id, @PathVariable Long studentId) {
+        Course course = courseService.getCourseById(id);
+        courseService.sortCourseGrades(course);
+        courseService.sortCourseGoals(course);
+
+        if (course == null) {
+            return "redirect:/mycourses";
+        }
+
+        model.addAttribute("course", course);
+        User user = userService.findById(studentId);
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
 
@@ -113,69 +122,78 @@ public class CourseController {
 
         return "redirect:/course" + "/" + courseId;
     }
-    
-     @PreAuthorize("hasAuthority('teacher')")
-     @RequestMapping(value="/{courseId}/update", method=RequestMethod.GET)
-     public String getCourseForUpdate(RedirectAttributes redirectAttributes, @PathVariable Long courseId) throws JsonProcessingException{
-        redirectAttributes.addFlashAttribute("course", new Course());
-        
-        ObjectMapper mapper = new ObjectMapper();
 
-         Course updateCourse = courseService.getCourseById(courseId);
-         if(progressService.getProgressByCourse(updateCourse).size()>0){
-             redirectAttributes.addFlashAttribute("notEmptyMessage", "Tällä kurssilla on jo ilmoittautuneita oppilaita," +
-                     " joten et voi muokata sitä.");
-             return "redirect:/course#update";
-         }
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "{userId}/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
+    public String confirmLearnCourseSkill(
+            @PathVariable Long userId,
+            @PathVariable Long courseId,
+            @PathVariable Long levelId,
+            @PathVariable Long goalId,
+            @PathVariable Long skillId) {
 
+        Course course = courseService.getCourseById(courseId);
+        GradeLevel gradeLevel = gradeLevelService.findGradeLevelById(levelId);
+        Goal goal = goalService.findGoalById(goalId);
+        Skill skill = skillService.findSkill(skillId);
+        CourseProgressTracker tracker = progressService.getProgress(userService.findById(userId), course);
+        progressService.swapSkillsStatus(tracker, gradeLevel, goal, skill);
 
-        redirectAttributes.addFlashAttribute("updateCourseAsJson", mapper.writeValueAsString(courseService.getCourseById(courseId))); 
-        redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
-        return "redirect:/course#update";
-       
+        return "redirect:/course" + "/" + courseId + "/" + userId;
     }
 
-    
-    @RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
-    public String updateCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException{
-    
-        
-          if (bindingResult.hasErrors()) {
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{courseId}/update", method = RequestMethod.GET)
+    public String getCourseForUpdate(RedirectAttributes redirectAttributes, @PathVariable Long courseId) throws JsonProcessingException {
+        redirectAttributes.addFlashAttribute("course", new Course());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        Course updateCourse = courseService.getCourseById(courseId);
+        if (progressService.getProgressByCourse(updateCourse).size() > 0) {
+            redirectAttributes.addFlashAttribute("notEmptyMessage", "Tällä kurssilla on jo ilmoittautuneita oppilaita,"
+                    + " joten et voi muokata sitä.");
+            return "redirect:/course#update";
+        }
+
+        redirectAttributes.addFlashAttribute("updateCourseAsJson", mapper.writeValueAsString(courseService.getCourseById(courseId)));
+        redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
+        return "redirect:/course#update";
+
+    }
+
+    @RequestMapping(value = "/{courseId}/update", method = RequestMethod.POST)
+    public String updateCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException {
+
+        if (bindingResult.hasErrors()) {
             ObjectMapper mapper = new ObjectMapper();
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.course", bindingResult);
             redirectAttributes.addFlashAttribute("course", course);
-            redirectAttributes.addFlashAttribute("updateCourseAsJson", mapper.writeValueAsString(course)); 
+            redirectAttributes.addFlashAttribute("updateCourseAsJson", mapper.writeValueAsString(course));
             redirectAttributes.addFlashAttribute("updateCourse", courseService.getCourseById(courseId));
             return "redirect:/course#update";
-        
+
         }
-        
+
         courseService.updateCourse(course, courseId);
-       
-        redirectAttributes.addFlashAttribute("updateSuccessMessage", "Kurssi päivitetty!"); 
+
+        redirectAttributes.addFlashAttribute("updateSuccessMessage", "Kurssi päivitetty!");
         redirectAttributes.addFlashAttribute("course", courseService.getCourseById(courseId));
         return "redirect:/course#update";
     }
-    
-    
-    
-   
-    @RequestMapping(value="/{courseId}/join", method=RequestMethod.GET)
-     public String joinCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId){
-         if(progressService.getProgress(userService.getAuthenticatedUser(), courseService.getCourseById(courseId)) != null){
-             
-             redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
-             return "redirect:/mycourses";
-         }
-         
+
+    @RequestMapping(value = "/{courseId}/join", method = RequestMethod.GET)
+    public String joinCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
+        if (progressService.getProgress(userService.getAuthenticatedUser(), courseService.getCourseById(courseId)) != null) {
+
+            redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
+            return "redirect:/mycourses";
+        }
+
         courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
         redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
         return "redirect:/mycourses";
-        
-      
-        
-       
-    }
-     
-}
 
+    }
+
+}
