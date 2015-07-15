@@ -83,6 +83,7 @@ public class CourseController {
     public String getCourse(Model model, @PathVariable Long id){
         Course course = courseService.getCourseById(id);
         courseService.sortCourseGrades(course);
+        courseService.sortCourseGoals(course);
 
         if(course==null){
             return "redirect:/mycourses";

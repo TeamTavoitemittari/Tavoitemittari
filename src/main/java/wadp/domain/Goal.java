@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class Goal extends AbstractPersistable<Long>{
+public class Goal extends AbstractPersistable<Long> implements Comparable<Goal>{
     @NotNull(message="Tavoitteen nimeä ei voi jättää tyhjäksi.")
     @NotBlank(message="Tavoitteen nimeä ei voi jättää tyhjäksi.")
     @Length(max=255, message="Tavoitteen nimi korkeintaan 255 kirjainta.")
@@ -43,6 +43,12 @@ public class Goal extends AbstractPersistable<Long>{
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
+    
+    @Override
+    public int compareTo(Goal o) {
+        return getId().compareTo(o.getId());
+    }
+    
 }    
         
    

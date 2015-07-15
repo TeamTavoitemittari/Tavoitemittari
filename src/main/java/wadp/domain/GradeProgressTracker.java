@@ -3,6 +3,7 @@ package wadp.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -52,8 +53,14 @@ public class GradeProgressTracker extends AbstractPersistable<Long> {
         this.ready = ready;
     }
 
-    public Map<Goal, GoalProgressTracker> getGoals() {
-        return goals;
+   public Map<Goal, GoalProgressTracker> getGoals() {
+        
+      try {
+           TreeMap<Goal, GoalProgressTracker> sortMap = new TreeMap<>(goals);
+           return sortMap;
+       } catch (NullPointerException e) {
+            return goals;
+        }
     }
 
     public void setGoals(HashMap<Goal, GoalProgressTracker> goals) {

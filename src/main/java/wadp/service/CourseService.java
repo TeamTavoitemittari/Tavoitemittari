@@ -12,6 +12,7 @@ import wadp.domain.Comment;
 import wadp.domain.Course;
 import wadp.domain.CourseProgressTracker;
 import wadp.domain.GoalProgressTracker;
+import wadp.domain.GradeLevel;
 import wadp.domain.GradeProgressTracker;
 import wadp.domain.Skill;
 import wadp.domain.User;
@@ -51,6 +52,12 @@ public class CourseService {
 
     public void sortCourseGrades(Course course) {
         Collections.sort(course.getGradeLevels());
+    }
+    
+    public void sortCourseGoals(Course course) {
+        for (GradeLevel level : course.getGradeLevels()){
+        Collections.sort(level.getGoals());
+        }
     }
     
     @Transactional
