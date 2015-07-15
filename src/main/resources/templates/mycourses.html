@@ -67,9 +67,9 @@
                         <p th:text="${course.description}">Course description</p> 
                     </div>
                     <div class="panel-footer">
-                        <form th:method="GET" th:action="@{'/course/' + ${course.id} + '/join'}">
+                        <!-- turha ?? <form th:method="GET" th:action="@{'/course/' + ${course.id} + '/join'}"> -->
                         <a th:href="@{'/course/' + ${course.id} + '/join'}" class="btn btn-success" name="tavoitemittari">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
-                        </form>
+                       
                     </div>
 
                 </div>
