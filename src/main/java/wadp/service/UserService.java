@@ -38,9 +38,9 @@ public class UserService {
         }
         return false;
     }
-@Transactional       
-public User createUser(String email, String password, String name, String userRole) {
-        
+    @Transactional
+    public User createUser(String email, String password, String name, String userRole) {
+
         if (email== null || email.isEmpty()) {
             throw new IllegalArgumentException("Email must not be null or empty");
         }
@@ -71,19 +71,19 @@ public User createUser(String email, String password, String name, String userRo
 
         return user;
     }
-    
-      public User getAuthenticatedUser() {
+
+    public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByEmail(authentication.getName());
     }
-      
-     @Transactional 
-     public User ChangePassword(String newPassword){
-         if (newPassword== null || newPassword.isEmpty()) {
+
+    @Transactional
+    public User ChangePassword(String newPassword){
+        if (newPassword== null || newPassword.isEmpty()) {
             throw new IllegalArgumentException("newPassword must not be null or empty");
         }
-       
-         if (SecurityContextHolder.getContext().getAuthentication()==null) {
+
+        if (SecurityContextHolder.getContext().getAuthentication()==null) {
             throw new AuthenticatedUserIsNullException();
         }
         User user = getAuthenticatedUser();
@@ -93,19 +93,23 @@ public User createUser(String email, String password, String name, String userRo
         SecurityContextHolder.getContext().setAuthentication(authRequest);
         auth.setAuthenticated(false);
         return user;
-     
-     }
-     
-     public User findUserByEmail(String email){
-         return userRepository.findByEmail(email);
-     }
+
+    }
+
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
 
     public List<User> findUserByRole(String role) {
         return userRepository.findByUserRole(role);
     }
 
-      public void clearUsers(){
-          userRepository.deleteAll();
-      }
+    public User findById(Long id) {
+        return userRepository.findOne(id);
+    }
+
+    public void clearUsers(){
+        userRepository.deleteAll();
+    }
 
 }

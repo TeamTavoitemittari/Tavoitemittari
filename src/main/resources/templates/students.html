@@ -17,6 +17,7 @@
         <script src="/js/init.js"></script>
         <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+        <!--DataTables initialization-->
         <script type="text/javascript" charset="utf8">
             $(document).ready( function () {
                 $('#example').DataTable( {
@@ -58,7 +59,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="user : ${users}">
-                        <td th:text="${user.name}"></td>
+                        <td><a th:text="${user.name}" th:href="@{'/student/' + ${user.id}}"></a></td>
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.userRole}"></td>
                     </tr>
