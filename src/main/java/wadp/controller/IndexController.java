@@ -25,10 +25,6 @@ import wadp.service.ProgressService;
 import wadp.service.SkillService;
 import wadp.service.UserService;
 
-
-
-
-
 // Any request not handled by other controllers is redirected to index
 @Controller
 @RequestMapping("*")
@@ -46,8 +42,6 @@ public class IndexController {
     @Autowired
     private GoalService goalService;
 
-
-
     @Autowired
     private SkillService skillService;
 
@@ -61,10 +55,12 @@ public class IndexController {
     public String showIndex() {
         createDummyCourse();
         createDummyCourseWithoutUsers();
-        return "index";
+        if (userService.getAuthenticatedUser() != null) {
+            return "redirect:mycourses";
+        } else {
+            return "index";
+        }
     }
-
-
 
     @RequestMapping(value = "loginerror", method = RequestMethod.GET)
     public String showLoginError(Model model) {
@@ -113,17 +109,10 @@ public class IndexController {
 
         Skill skill1 = new Skill("Oppilas tunnistaa tähtikuvioita", "667, 12a, Käy illalla kotona ulkona ja piirrä kolme valitsemaasi tähtikuviota paperille, Kirjota 200 sanan tiivistelmä kirjan luvusta 6: Meidän galaksimme");
 
-
-
-      
-
-      
-
         skillService.addSkill(skill1);
 
         Skill skill2 = new Skill("Oppilas ymmärtää tähtikuvioiden suhteelliset etäisyydet", "758, 827, 100, 220, 12, 16, 16");
 
-     
         skillService.addSkill(skill2);
 
         ArrayList<Skill> skills1 = new ArrayList<>();
@@ -138,13 +127,9 @@ public class IndexController {
 
         Skill skill3 = new Skill("Oppilas osaa selittää painovoiman vaikutuksen hänen fyysiseen ympäristöönsä", "101b, 76, Katso Cosmos: A Spacetime Odyssey -sarjan seitsemästoista jakso ja kirjoita siitä 200 sanan referaatti, 63");
 
-
-
         skillService.addSkill(skill3);
 
         Skill skill4 = new Skill("Oppilas ymmärtää painovoiman suhteen planeettojen massaan", "758, 827,100,220,12,16,19");
-
-      
 
         skillService.addSkill(skill4);
 
@@ -173,8 +158,6 @@ public class IndexController {
 
         Skill skill5 = new Skill("Oppilas osaa kuvata mustan aukon syntymisprosessin", "89, 10");
 
-      
-
         skillService.addSkill(skill5);
 
         ArrayList<Skill> skillz = new ArrayList<>();
@@ -194,11 +177,7 @@ public class IndexController {
         Goal goal4 = new Goal();
         goal4.setName("Astrofysiikka");
 
-        
-
         Skill skill6 = new Skill("Oppilas taitaa astrofysiikan salat", "Laske auringon massa, 893, Lue Carl Saganin Kosmos ja kirjoita siitä neljän sivun referaatti. ");
-
-     
 
         skillService.addSkill(skill6);
 
@@ -255,8 +234,6 @@ public class IndexController {
 
     }
 
-
-
     @Transactional
     private void createDummyCourseWithoutUsers() {
 
@@ -264,7 +241,7 @@ public class IndexController {
             return;
         }
 
-           Course course = new Course();
+        Course course = new Course();
         course.setName("Tähtitiede 2");
         course.setDescription("Kurssilla perehdytään erinäisiin taivankappaleisiina alkaen omasta aurinkokunnastamme"
                 + "ja edeten hiljalleen galaksin muihin osiin. Kurssin jälkeen tiedät mitä eroa on mustalla aukolla"
@@ -277,17 +254,10 @@ public class IndexController {
 
         Skill skill1 = new Skill("Oppilas tunnistaa tähtikuvioita", "667, 12a, Käy illalla kotona ulkona ja piirrä kolme valitsemaasi tähtikuviota paperille, Kirjota 200 sanan tiivistelmä kirjan luvusta 6: Meidän galaksimme");
 
-
-
-      
-
-      
-
         skillService.addSkill(skill1);
 
         Skill skill2 = new Skill("Oppilas ymmärtää tähtikuvioiden suhteelliset etäisyydet", "758, 827, 100, 220, 12, 16, 16");
 
-     
         skillService.addSkill(skill2);
 
         ArrayList<Skill> skills1 = new ArrayList<>();
@@ -302,13 +272,9 @@ public class IndexController {
 
         Skill skill3 = new Skill("Oppilas osaa selittää painovoiman vaikutuksen hänen fyysiseen ympäristöönsä", "101b, 76, Katso Cosmos: A Spacetime Odyssey -sarjan seitsemästoista jakso ja kirjoita siitä 200 sanan referaatti, 63");
 
-
-
         skillService.addSkill(skill3);
 
         Skill skill4 = new Skill("Oppilas ymmärtää painovoiman suhteen planeettojen massaan", "758, 827,100,220,12,16,19");
-
-      
 
         skillService.addSkill(skill4);
 
@@ -337,8 +303,6 @@ public class IndexController {
 
         Skill skill5 = new Skill("Oppilas osaa kuvata mustan aukon syntymisprosessin", "89, 10");
 
-      
-
         skillService.addSkill(skill5);
 
         ArrayList<Skill> skillz = new ArrayList<>();
@@ -358,11 +322,7 @@ public class IndexController {
         Goal goal4 = new Goal();
         goal4.setName("Astrofysiikka");
 
-        
-
         Skill skill6 = new Skill("Oppilas taitaa astrofysiikan salat", "Laske auringon massa, 893, Lue Carl Saganin Kosmos ja kirjoita siitä neljän sivun referaatti. ");
-
-     
 
         skillService.addSkill(skill6);
 
