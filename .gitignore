@@ -1,5 +1,8 @@
 Tavoitemittari/target/
 target/
+src/main/java/wadp/NameListProvider.java
+names.csv
+
 
 
 # Created by https://www.gitignore.io
