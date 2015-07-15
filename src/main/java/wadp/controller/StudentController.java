@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import wadp.domain.User;
+import wadp.service.CourseService;
 import wadp.service.UserService;
 
 @Controller
@@ -15,12 +18,22 @@ public class StudentController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CourseService courseService;
+
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
     public String getStudents(Model model) {
-
         model.addAttribute("users", userService.findUserByRole("student"));
         return "students";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String getStudent(Model model, @PathVariable Long id) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("courses", courseService.getUsersCourses(user));
+        return "student";
     }
 
 }
