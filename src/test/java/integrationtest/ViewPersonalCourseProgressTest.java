@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.openqa.selenium.interactions.Actions;
 import wadp.*;
 import wadp.domain.*;
 import wadp.service.*;
@@ -15,53 +17,44 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class ViewPersonalCourseProgressTest {
+
+    private Actions builder;
+    private WebElement element;
+    private HtmlUnitDriver driver;
     
     public ViewPersonalCourseProgressTest() {
+        this.driver = new HtmlUnitDriver();
+        this.builder = new Actions(driver);
     }
-    
-    @Before
-    public void setUp() {
-    }
-    
+
     @After
     public void tearDown() {
     }
 
-//At the moment this is a redundant test.
-/*
-description 'Anyone can view the course goal view for a course'
+    @Test
+    public void studentCanViewPersonalCourseProgress() {
+        login("oppilas@a.com", "oppilas");
+        getCourseProgressPage();
+        assertTrue(driver.getPageSource().contains("9-10"));
+    }
 
     @Test
-    public void User can view the course demo for a course", {
-        createUser("oppilas", "Oppilas21", "student");
-        login("oppilas@gmail.com", "Oppilas21");
-        //todo
-        assertTrue(driver.getPageSource().contains("9-10"));
-    } 
-    
-    private void createUser(String mailName, String password, String role) {
-        driver.get("http://localhost:8080/index");
-        element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy!')]"));
-        element.click();
-        element = driver.findElement(By.id("name"));
-        element.sendKeys(mailName);
-        element = driver.findElementByName("email");
-        element.sendKeys(mailName + "@gmail.com");
-        element = driver.findElementByName("confirmemail");
-        element.sendKeys(mailName + "@gmail.com");
-        Select select = new Select(driver.findElement(By.name("userRole")));
-        select.selectByVisibleText(role);
-        element = driver.findElement(By.id("password"));
-        element.sendKeys(password);
-        element = driver.findElement(By.id("confirmpassword"));
-        element.sendKeys(password);
-        element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy')]"));
+    public void studentCanChangePersonalCourseProgress() {
+        login("oppilas@a.com", "oppilas");
+        getCourseProgressPage();
+        //System.out.println(driver.getPageSource());
+        WebElement checkProgress = driver.findElement(By.linkText("Mustat aukot"));
+        checkProgress.click();
+        assertTrue(driver.getPageSource().contains("Osaan"));
+        element = driver.findElement(By.xpath("//button[contains(.,'Osaan')]"));
+        //assertFalse(element.getAttribute("id").equals("done"); osaan buttoneiden specifiointi!?
         element.submit();
+
     }
     
     private void login(String email, String password) {
         driver.get("http://localhost:8080/index");
-        element = driver.findElementByName("email");
+        element = driver.findElement(By.id("email"));
         element.sendKeys(email);
         element = driver.findElement(By.id("password"));
         element.sendKeys(password);
@@ -69,5 +62,12 @@ description 'Anyone can view the course goal view for a course'
         element.click();
     }
 
-*/
+    private void getCourseProgressPage() {
+        driver.setJavascriptEnabled(true);
+        WebElement courseCommentTab = driver.findElement(By.id("courseCommentTab"));
+        WebElement owncourses = driver.findElement(By.name("updatetab"));
+        WebElement tavoitemittariin = driver.findElement(By.id("tavoitemittari1"));
+        builder.moveToElement(courseCommentTab).moveToElement(owncourses).
+                moveToElement(tavoitemittariin).click().build().perform();
+    }
 }

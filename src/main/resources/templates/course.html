@@ -1,157 +1,1 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/css/course.css" />
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <title>Tavoitemittari</title>
-</head>
- 
-    
-<body>
-<div th:replace="fragments/components :: course-navbar">navbar</div>
-
-<div class="container">
-    <div class="row" th:if="${course != null}">
-        <ul class="nav nav-tabs" id="courseCommentTab">
-            <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>
-            <li><a data-toggle="tab" href="#comments" name="commenttab">Kommentit</a></li>
-        </ul>
-        <!-- Goal-o-meter tab where students mark their progress -->
-        <div class="tab-content">
-            <div id="goalometer" class="tab-pane fade in active">
-                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
-                    <h1 th:text="${gradeLevel.grade}">4-10</h1>
-                    <div th:each="goal : ${gradeLevel.goals}" th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Ready}">
-                        <div th:case="true" class="panel panel-success">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
-                                </h4>
-                            </div>
-                            <div th:id="${goal.id}" class="panel-collapse collapse">
-                                <div style="padding: 10px" th:each="skill : ${goal.skills}">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                            <form method="post"
-                                                  th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                  th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)}"
-                                                  style="display: inline-block; float: right;">
-                                                <button th:case="true" type="submit" class="btn btn-sm btn-success">Osaan</button>
-                                                <button th:case="false" type="submit" class="btn btn-sm btn-default">Osaan</button>
-                                            </form>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <b>Tehtävät:</b>
-                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div th:case="false" class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
-                                </h4>
-                            </div>
-                            <div th:id="${goal.id}" class="panel-collapse collapse">
-                                <div style="padding: 10px" th:each="skill : ${goal.skills}">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                            <form method="post"
-                                                  th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                  th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)}"
-                                                  style="display: inline-block; float: right;">
-                                                <button th:case="true" type="submit" class="btn btn-sm btn-success">Osaan</button>
-                                                <button th:case="false" type="submit" class="btn btn-sm btn-default">Osaan</button>
-                                            </form>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <b>Tehtävät:</b>
-                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
-            </div>
-
-            <!-- Comments tab where students comment on a specific goal -->
-            <div id="comments" class="tab-pane fade">
-                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
-                    <h1 th:text="${gradeLevel.key.grade}">4-10</h1>
-                    <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a th:text="${goal.key.name}">Ympyrä</a>
-                            </h4>
-                        </div>
-                        <div class="panel">
-                            <div style="padding: 10px" th:each="skill : ${goal.key.skills}">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
-                                            <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" style="resize: vertical; margin: 8px" th:readonly="true"></textarea>
-                                            <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
-                                            <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">
-            <div class="progress">
-                <div class="progress-bar progress-bar-success" style="width: 35%">
-                    <span class="sr-only">35% Complete (success)</span>
-                </div>
-                <div class="progress-bar progress-bar-warning" style="width: 20%">
-                    <span class="sr-only">20% Complete (warning)</span>
-                </div>
-                <div class="progress-bar progress-bar-danger" style="width: 10%">
-                    <span class="sr-only">10% Complete (danger)</span>
-                </div>
-            </div>
-        </div> -->
-    </div>
-
-    <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-    <script>
-        $(document).ready(function() {
-            if(location.hash) {
-                $('a[href=' + location.hash + ']').tab('show');
-            }
-            $(document.body).on("click", "a[data-toggle]", function(event) {
-                location.hash = this.getAttribute("href");
-            });
-        });
-        $(window).on('popstate', function() {
-            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
-            $('a[href=' + anchor + ']').tab('show');
-        });
-    </script>
-
-</div>
-</body></html>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head lang="en">    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>    <meta charset="utf-8"/>    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>    <meta name="viewport" content="width=device-width, initial-scale=1"/>    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->    <meta name="description" content=""/>    <meta name="author" content=""/>    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->    <link rel="stylesheet" type="text/css" href="/css/course.css" />    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>    <script src="/js/jquery.min.js"></script>    <script src="/js/bootstrap.min.js"></script>    <title>Tavoitemittari</title></head>     <body><div th:replace="fragments/components :: course-navbar">navbar</div><div class="container">    <div class="row" th:if="${course != null}">        <ul class="nav nav-tabs" id="courseCommentTab">            <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>            <li><a data-toggle="tab" href="#comments" name="commenttab">Kommentit</a></li>        </ul>        <!-- Goal-o-meter tab where students mark their progress -->        <div class="tab-content">            <div id="goalometer" class="tab-pane fade in active">                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">                    <h1 th:text="${gradeLevel.grade}">4-10</h1>                    <div th:each="goal : ${gradeLevel.goals}" th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Ready}">                        <div th:case="true" class="panel panel-success">                            <div class="panel-heading">                                <h4 class="panel-title">                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>                                </h4>                            </div>                            <div th:id="${goal.id}" class="panel-collapse collapse">                                <div style="padding: 10px" th:each="skill : ${goal.skills}">                                    <div class="panel panel-default">                                        <div class="panel-body">                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>                                            <form method="post"                                                  th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"                                                  th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)}"                                                  style="display: inline-block; float: right;">                                                <button th:case="true" type="submit" class="btn btn-sm btn-success">Osaan</button>                                                <button th:case="false" type="submit" class="btn btn-sm btn-default">Osaan</button>                                            </form>                                        </div>                                        <div class="panel-footer">                                            <b>Tehtävät:</b>                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>                                        </div>                                    </div>                                </div>                            </div>                        </div>                        <div th:case="false" class="panel panel-primary">                            <div class="panel-heading">                                <h4 class="panel-title">                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>                                </h4>                            </div>                            <div th:id="${goal.id}" class="panel-collapse collapse">                                <div style="padding: 10px" th:each="skill : ${goal.skills}">                                    <div class="panel panel-default">                                        <div class="panel-body">                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>                                            <form method="post"                                                  th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"                                                  th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)}"                                                  style="display: inline-block; float: right;">                                                <button th:case="true" type="submit" class="btn btn-sm btn-success">Osaan</button>                                                <button th:case="false" type="submit" class="btn btn-sm btn-default">Osaan</button>                                            </form>                                        </div>                                        <div class="panel-footer">                                            <b>Tehtävät:</b>                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>                                        </div>                                    </div>                                </div>                            </div>                        </div>                    </div>                    <hr/>                </div>            </div>            <!-- Comments tab where students comment on a specific goal -->            <div id="comments" class="tab-pane fade">                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">                    <h1 th:text="${gradeLevel.key.grade}">4-10</h1>                    <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">                        <div class="panel-heading">                            <h4 class="panel-title">                                <a th:text="${goal.key.name}">Ympyrä</a>                            </h4>                        </div>                        <div class="panel">                            <div style="padding: 10px" th:each="skill : ${goal.key.skills}">                                <div class="panel panel-default">                                    <div class="panel-body">                                        <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>                                    </div>                                    <div class="panel-footer">                                        <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">                                            <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" style="resize: vertical; margin: 8px" th:readonly="true"></textarea>                                            <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>                                            <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>                                        </form>                                    </div>                                </div>                            </div>                        </div>                    </div>                    <hr/>                </div>            </div>        </div>        <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">            <div class="progress">                <div class="progress-bar progress-bar-success" style="width: 35%">                    <span class="sr-only">35% Complete (success)</span>                </div>                <div class="progress-bar progress-bar-warning" style="width: 20%">                    <span class="sr-only">20% Complete (warning)</span>                </div>                <div class="progress-bar progress-bar-danger" style="width: 10%">                    <span class="sr-only">10% Complete (danger)</span>                </div>            </div>        </div> -->    </div>    <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->    <script>        $(document).ready(function() {            if(location.hash) {                $('a[href=' + location.hash + ']').tab('show');            }            $(document.body).on("click", "a[data-toggle]", function(event) {                location.hash = this.getAttribute("href");            });        });        $(window).on('popstate', function() {            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");            $('a[href=' + anchor + ']').tab('show');        });    </script></div></body></html>
