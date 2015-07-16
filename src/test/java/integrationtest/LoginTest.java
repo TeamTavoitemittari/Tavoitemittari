@@ -32,19 +32,14 @@ public class LoginTest {
     private String name;
     private HtmlUnitDriver driver;
     private WebElement element;
-    
-    @Autowired 
-    UserService service;
-   
-    @Autowired 
-    UserRepository repo;
+
     
     public LoginTest() {
     }
     
     @Before
     public void setUp() {
-        repo.deleteAll();
+
         registerSetup();
         name = "test";
         password = "passworDa1";

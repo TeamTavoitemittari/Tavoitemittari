@@ -38,21 +38,19 @@ public class ChangePasswordTest {
     private HtmlUnitDriver driver;
     private WebElement element;
     
-    @Autowired 
-    UserService service;
-   
-    @Autowired 
-    UserRepository repo;
-    
     public ChangePasswordTest() {
     }
 
     @Before
     public void setUp() {
-        repo.deleteAll();
         name = "test1";
         password = "Testpassword1";
         createUser();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
     }
     
     @Test
@@ -65,11 +63,13 @@ public class ChangePasswordTest {
     
     @Test
     public void cannotChangePasswordWithoutMatchingPasswords() {
-        login(name, password);
+        login(name, "Testpassword2");
         getUserdetailsPage();
         passwordChange("Testipassword2", "Testpassword3");
         assertTrue(hasMessage("Salasanojen pitää olla samoja!"));
     }
+
+
     
     @Test
     public void cannotChangeTooShortPassword() {
@@ -131,8 +131,4 @@ public class ChangePasswordTest {
         return driver.getPageSource().contains(message);
     }
 
-    @After
-    public void tearDown() {
-        repo.deleteAll();
-    }
 }

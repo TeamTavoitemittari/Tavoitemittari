@@ -29,6 +29,7 @@ public class ViewPersonalCourseProgressTest {
 
     @After
     public void tearDown() {
+
     }
 
     @Test

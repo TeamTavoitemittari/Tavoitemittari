@@ -2,6 +2,7 @@
 package integrationtest;
 
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -29,22 +30,21 @@ public class CreateaNewAccountTest{
     private String name;
     private HtmlUnitDriver driver;
     private WebElement element;
-    
-    @Autowired 
-    UserService service;
-   
-    @Autowired 
-    UserRepository repo;
+
     
     public CreateaNewAccountTest() {
     }
     
     @Before
     public void setUp() {
-        repo.deleteAll();
+
         name = "test2";
     }
-    
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+
     @Test
     public void studentCanCreateUserWithValidUsernameAndPassword() {
         registerSetup();
@@ -101,16 +101,16 @@ public class CreateaNewAccountTest{
     @Test
     public void teacherCanCreateUserWithValidUsernameAndPassword() {
         registerSetup();
-        createUser(name, "passWord1", "student");
+        createUser("test9", "passWord1", "student");
         assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
     }
     
     @Test
     public void teacherCanCreateUserWithValidUsernameAndPasswordAndLogin() {
         registerSetup();
-        createUser("test3", "passWord1", "teacher");
+        createUser("test8", "passWord1", "teacher");
         assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
-        login("test3", "passWord1");
+        login("test8", "passWord1");
         assertTrue(hasMessage("Minun kurssini"));
         assertTrue(hasMessage("Hallinnointi"));
     }

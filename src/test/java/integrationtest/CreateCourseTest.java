@@ -31,12 +31,7 @@ public class CreateCourseTest {
     private HtmlUnitDriver driver;
     private WebElement element;
     private String name;
-    
-    @Autowired 
-    UserRepository repo;
-    
-    @Autowired
-    UserService service;
+
     
     public CreateCourseTest() {
         driver = new HtmlUnitDriver();
@@ -49,11 +44,7 @@ public class CreateCourseTest {
     public void setUp() {
         name = "Kurssi";
     }
-    
-    @After
-    public void tearDown() {
-        service.clearUsers();
-    }
+
     @Test
     public void teacherCanAccessNewCourseCreationPageButCannotCreateCourseSinceGoalsMustBeSet() {
         createUser("ope", "Opettaja21", "teacher");
