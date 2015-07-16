@@ -1,4 +1,4 @@
-/*
+
 package integrationtest;
 
 import org.junit.After;
@@ -11,6 +11,8 @@ import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
@@ -29,8 +31,13 @@ public class AddCommentTest {
     
     private HtmlUnitDriver driver;
     private WebElement element;
+    private Actions builder;
     
-    public AddCommentTest() {}
+    public AddCommentTest() {
+        driver = new HtmlUnitDriver();
+
+        this.builder = new Actions(driver);
+    }
 
     
     @Before
@@ -41,9 +48,8 @@ public class AddCommentTest {
     @Test
     public void studentCanAddComment() {
         studentLogin();
-        addComment("Oli helppo");
-        System.out.println(driver.getPageSource());
-        assertTrue(driver.getPageSource().contains("Oli helppo"));
+        addComment("Oli aluksi hankala - Matti");
+        assertTrue(driver.getPageSource().contains("Oli aluksi hankala - Matti"));
     }
     
     @After
@@ -57,39 +63,13 @@ public class AddCommentTest {
     }
     
     private void teacherLogin() {
-        createUser("ope1", "Opettaja21", "teacher");
-        login("ope1@gmail.com", "Opettaja21");
+        login("ope@a.com", "ope");
         getCommentpage();
     }
-    
-   
-    
-    private void createUser(String mailName, String password, String role) {
-        driver = new HtmlUnitDriver(true);
-        
+
+    private void login(String email, String password) {
         driver.get("http://localhost:8080/index");
-        element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy!')]"));
-        element.click();
-        element = driver.findElement(By.id("name"));
-        element.sendKeys(mailName);
-        element = driver.findElementByName("email");
-        element.sendKeys(mailName + "@gmail.com");
-        element = driver.findElementByName("confirmemail");
-        element.sendKeys(mailName + "@gmail.com");
-        Select select = new Select(driver.findElement(By.name("userRole")));
-        select.selectByVisibleText(role);
-        element = driver.findElement(By.id("password"));
-        element.sendKeys(password);
-        element = driver.findElement(By.id("confirmpassword"));
-        element.sendKeys(password);
-        element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy')]"));
-        element.submit();
-    }
-    
-    private void login(String email, String password) {  
-        driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/index");
-        element = driver.findElementByName("email");
+        element = driver.findElement(By.id("email"));
         element.sendKeys(email);
         element = driver.findElement(By.id("password"));
         element.sendKeys(password);
@@ -98,30 +78,31 @@ public class AddCommentTest {
     }
     
     private void getCommentpage() {
-        element = driver.findElement(By.name("tavoitemittari"));
-        element.click();
-        
-        element = driver.findElement(By.name("commenttab"));
-        element.click();
+        driver.setJavascriptEnabled(true);
+        WebElement courseCommentTab = driver.findElement(By.id("courseCommentTab"));
+        WebElement owncourses = driver.findElement(By.name("updatetab"));
+        WebElement tavoitemittariin = driver.findElement(By.id("tavoitemittari1"));
+
+
+        builder.moveToElement(courseCommentTab).moveToElement(owncourses).
+                moveToElement(tavoitemittariin).click().build().perform();
+
+        WebElement coursecomment = driver.findElement(By.id("courseCommentTab"));
+        WebElement commenttab = driver.findElement(By.name("commenttab"));
+        builder.moveToElement(coursecomment).moveToElement(commenttab).click().build().perform();
 
     }
 
     private void addComment(String comment) {
-        driver.setJavascriptEnabled(true);
-        element = driver.findElement(By.id("edit1"));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", element);
-        //element.click();
-        System.out.println(driver.getPageSource());
-        //TODO Katso miten sendaa textarea
-        element = driver.findElement(By.id("comment1"));
-        element.sendKeys(comment);
+        WebElement edit = driver.findElement(By.id("edit2"));
+        builder.moveToElement(edit).click().build().perform();
+
+        WebElement commentfield = driver.findElement(By.id("comment2"));
         
-        element = driver.findElement(By.xpath("//button[contains(.,'Tallenna')]"));
-        executor.executeScript("arguments[0].click();", element);
-        //element.click();
-        System.out.println(driver.getPageSource());
+        WebElement save = driver.findElement(By.id("save2"));
+        builder.moveToElement(commentfield).click().sendKeys(comment).build().perform();
+        builder.moveToElement(save).click().build().perform();
+
     }
     
 }
-*/
