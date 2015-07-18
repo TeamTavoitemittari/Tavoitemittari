@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class GoalProgressTracker extends AbstractPersistable<Long> {
 
     private Status ready;
+    
     @ElementCollection
     @CollectionTable(name = "skill_statuses")
     private Map<Skill, Status> skills;
