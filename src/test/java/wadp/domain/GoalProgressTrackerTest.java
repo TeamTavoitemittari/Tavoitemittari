@@ -27,25 +27,25 @@ public class GoalProgressTrackerTest {
 
     @Test
     public void testUpdateSkillStatus() {
-        boolean found = tracker.updateSkillStatus(skill, true);
+        boolean found = tracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
         assertTrue(found);
-        found = tracker.updateSkillStatus(new Skill(), true);
+        found = tracker.updateSkillStatus(new Skill(), Status.STUDENT_CONFIRMED);
         assertFalse(found);
     }
 
     @Test
     public void testReady() {
-        boolean status = tracker.getReady();
-        assertFalse(status);
-        tracker.updateSkillStatus(skill, true);
-        assertTrue(tracker.getReady());
+        Status status = tracker.getReady();
+        assertEquals(Status.UNCONFIRMED, status);
+        tracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
+        assertEquals(Status.STUDENT_CONFIRMED, tracker.getReady());
     }
 
 
     @Test
     public void testSkills() {
         assertEquals(tracker.getSkills().size(), 1);
-        tracker.setSkills(new HashMap<Skill, Boolean>());
+        tracker.setSkills(new HashMap<Skill, Status>());
         assertEquals(tracker.getSkills().size(), 0);
     }
 

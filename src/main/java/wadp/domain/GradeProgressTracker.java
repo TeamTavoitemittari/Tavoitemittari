@@ -33,7 +33,7 @@ public class GradeProgressTracker extends AbstractPersistable<Long> {
     }
 
     
-    public boolean updateSkillStatus(Skill skill, boolean status){
+    public boolean updateSkillStatus(Skill skill, Status status){
         for (GoalProgressTracker tracker : goals.values()) {
             boolean foundInGoal = tracker.updateSkillStatus(skill, status);
             if(foundInGoal) return true;

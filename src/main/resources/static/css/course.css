@@ -11,3 +11,9 @@
 .checkbox-inline{
     float: right;
 }
+
+.btn-custom {
+    color: #FFFFFF;
+    background-color: #259C1F;
+    border-color: #259C1F;
+}

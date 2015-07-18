@@ -32,11 +32,11 @@ public class GradeProgressTrackerTest {
 
     @Test
     public void testUpdateSkillStatus() {
-        boolean result = tracker.updateSkillStatus(skill, true);
-        assertTrue(result);
+        boolean result = tracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
+        assertEquals(true, result);
         
-        result = tracker.updateSkillStatus(new Skill(), false);
-        assertFalse(result);
+        result = tracker.updateSkillStatus(new Skill(), Status.UNCONFIRMED);
+        assertEquals(false, result);
     }
 
    

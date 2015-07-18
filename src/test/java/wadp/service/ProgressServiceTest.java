@@ -91,11 +91,11 @@ public class ProgressServiceTest {
         GradeLevel gradeLevel = trackerCourse.getGradeLevels().get(0);
         Goal goal = gradeLevel.getGoals().get(0);
         Skill skill = goal.getSkills().get(0);
-        assertFalse(tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        assertEquals(Status.UNCONFIRMED, tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
         progressService.swapSkillsStatus(tracker2, gradeLevel, goal, skill);
-        assertTrue(tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        assertEquals(Status.STUDENT_CONFIRMED, tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
         progressService.swapSkillsStatus(tracker2, gradeLevel, goal, skill);
-        assertFalse(tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        assertEquals(Status.UNCONFIRMED, tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
 
     }
 

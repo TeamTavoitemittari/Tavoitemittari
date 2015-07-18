@@ -31,19 +31,31 @@ public class ProgressService {
     }
 
     @Transactional
-    public void updateSkillStatus(CourseProgressTracker progressTracker, Skill skill, boolean status) {
+    public void updateSkillStatus(CourseProgressTracker progressTracker, Skill skill, Status status) {
         progressTracker.updateSkillStatus(skill, status);
     }
 
     @Transactional
     public void swapSkillsStatus(CourseProgressTracker progressTracker, GradeLevel gradeLevel, Goal goal, Skill skill) {
         GoalProgressTracker gTracker = progressTracker.getGradeLevels().get(gradeLevel).getGoals().get(goal);
-        boolean skillIsLearned = gTracker.getSkills().get(skill);
+        Status status = gTracker.getSkills().get(skill);
 
-        if (skillIsLearned) {
-            gTracker.updateSkillStatus(skill, false);
+        if (status==Status.STUDENT_CONFIRMED) {
+            gTracker.updateSkillStatus(skill, Status.UNCONFIRMED);
+        } else if(status==Status.UNCONFIRMED) {
+            gTracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
+        }
+    }
+
+    @Transactional
+    public void swapSkillStatusAsTeacher(CourseProgressTracker progressTracker, GradeLevel gradeLevel, Goal goal, Skill skill) {
+        GoalProgressTracker gTracker = progressTracker.getGradeLevels().get(gradeLevel).getGoals().get(goal);
+        Status status = gTracker.getSkills().get(skill);
+
+        if (status==Status.TEACHER_CONFIRMED) {
+            gTracker.updateSkillStatus(skill, Status.UNCONFIRMED);
         } else {
-            gTracker.updateSkillStatus(skill, true);
+            gTracker.updateSkillStatus(skill, Status.TEACHER_CONFIRMED);
         }
     }
     

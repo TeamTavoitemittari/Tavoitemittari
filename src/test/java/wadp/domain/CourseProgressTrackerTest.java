@@ -40,9 +40,9 @@ public class CourseProgressTrackerTest {
     
     @Test
     public void testUpdateSkillStatus() {
-        boolean result = tracker.updateSkillStatus(skill, true);
+        boolean result = tracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
         assertTrue(result);
-        result = tracker.updateSkillStatus(new Skill(), true);
+        result = tracker.updateSkillStatus(new Skill(), Status.UNCONFIRMED);
         assertFalse(result);
     }
 

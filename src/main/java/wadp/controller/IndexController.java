@@ -8,15 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import wadp.domain.Comment;
-import wadp.domain.Course;
-import wadp.domain.CourseProgressTracker;
-import wadp.domain.Goal;
-import wadp.domain.GoalProgressTracker;
-import wadp.domain.GradeLevel;
-import wadp.domain.GradeProgressTracker;
-import wadp.domain.Skill;
-import wadp.domain.User;
+import wadp.domain.*;
 import wadp.service.CommentService;
 import wadp.service.CourseService;
 import wadp.service.GoalService;
@@ -229,8 +221,9 @@ public class IndexController {
 
         progressService.saveCourseTracker(tracker);
 
-        progressService.updateSkillStatus(tracker, skill6, true);
-        progressService.updateSkillStatus(tracker, skill2, true);
+        progressService.updateSkillStatus(tracker, skill6, Status.STUDENT_CONFIRMED);
+        progressService.updateSkillStatus(tracker, skill1, Status.TEACHER_CONFIRMED);
+        progressService.updateSkillStatus(tracker, skill2, Status.TEACHER_CONFIRMED);
 
     }
 

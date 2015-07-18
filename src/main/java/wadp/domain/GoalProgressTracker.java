@@ -5,74 +5,85 @@ import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class GoalProgressTracker extends AbstractPersistable<Long> {
 
-    private boolean ready;
+    private Status ready;
     @ElementCollection
     @CollectionTable(name = "skill_statuses")
-    private Map<Skill, Boolean> skills;
+    private Map<Skill, Status> skills;
     
     @ElementCollection
     @CollectionTable(name = "skill_comments")
     private Map<Skill, Comment> comments;
 
     public GoalProgressTracker() {
-        this.skills = new HashMap<Skill, Boolean>();
+        this.ready = Status.UNCONFIRMED;
+        this.skills = new HashMap<Skill, Status>();
         this.comments = new HashMap<Skill, Comment>();
     }
 
     public GoalProgressTracker(Goal goal) {
-        this.ready = false;
-        skills = new HashMap<Skill, Boolean>();
+        this.ready = Status.UNCONFIRMED;
+        skills = new HashMap<Skill, Status>();
         for (Skill skill : goal.getSkills()) {
-            skills.put(skill, false);
+            skills.put(skill, Status.UNCONFIRMED);
         }
     }
 
-    public boolean updateSkillStatus(Skill skill, boolean ready) {
+    public boolean updateSkillStatus(Skill skill, Status status) {
 
         if (skills.get(skill) != null) {
-            skills.put(skill, ready);
-            if (ready) {
-                checkIfReady();
-            } else if (this.ready) {
-                this.ready=false;
-            }
+            skills.put(skill, status);
+                checkStatus();
             return true;
         } else {
             return false;
         }
+
     }
 
-    public boolean getReady() {
+    public Status getReady() {
         return ready;
     }
 
-    public void setReady(boolean ready) {
+    public void setReady(Status ready) {
         this.ready = ready;
     }
 
-    public Map<Skill, Boolean> getSkills() {
+    public Map<Skill, Status> getSkills() {
         return skills;
     }
 
-    public void setSkills(HashMap<Skill, Boolean> skills) {
+    public void setSkills(HashMap<Skill, Status> skills) {
         this.skills = skills;
     }
 
-    private void checkIfReady() {
-        boolean allReady = true;
-        for (boolean skillReady : skills.values()) {
-            if (!skillReady) {
-                allReady = false;
-                break;
+    private void checkStatus() {
+        boolean allStudentConfirmed = true;
+        boolean allTeacherConfirmed = true;
+        for (Status status : skills.values()) {
+            if(allStudentConfirmed){
+                if(status != Status.STUDENT_CONFIRMED && status != Status.TEACHER_CONFIRMED){
+                    allStudentConfirmed = false;
+                }
+            }
+            if(allTeacherConfirmed){
+                if(status != Status.TEACHER_CONFIRMED){
+                    allTeacherConfirmed = false;
+                }
             }
         }
-        this.ready = allReady;
+        if(allTeacherConfirmed){
+            this.ready = Status.TEACHER_CONFIRMED;
+        } else if( allStudentConfirmed){
+            this.ready = Status.STUDENT_CONFIRMED;
+        } else {
+            this.ready = Status.UNCONFIRMED;
+        }
     }
 
     public Map<Skill, Comment> getComments() {

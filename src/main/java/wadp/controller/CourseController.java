@@ -137,7 +137,7 @@ public class CourseController {
         Goal goal = goalService.findGoalById(goalId);
         Skill skill = skillService.findSkill(skillId);
         CourseProgressTracker tracker = progressService.getProgress(userService.findById(userId), course);
-        progressService.swapSkillsStatus(tracker, gradeLevel, goal, skill);
+        progressService.swapSkillStatusAsTeacher(tracker, gradeLevel, goal, skill);
 
         return "redirect:/course" + "/" + courseId + "/" + userId;
     }
