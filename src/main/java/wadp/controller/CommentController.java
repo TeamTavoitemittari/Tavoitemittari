@@ -24,12 +24,6 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
     
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private SkillService skillService;
-    
     
     @RequestMapping(value="/{courseId}/{commentId}", method=RequestMethod.POST)
     public String postOrUpdateComment(@PathVariable long courseId, @PathVariable long commentId, @RequestParam String comment){

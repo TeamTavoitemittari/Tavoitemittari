@@ -107,7 +107,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
-    public String learnCourseSkill(
+    public String confirmCourseSkillAsStudent(
             @PathVariable Long courseId,
             @PathVariable Long levelId,
             @PathVariable Long goalId,
@@ -125,7 +125,7 @@ public class CourseController {
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "{userId}/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
-    public String confirmLearnCourseSkill(
+    public String confirmCourseSkillAsTeacher(
             @PathVariable Long userId,
             @PathVariable Long courseId,
             @PathVariable Long levelId,

@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class GoalProgressTracker extends AbstractPersistable<Long> {
 
     private Status ready;
-    
+
     @ElementCollection
     @CollectionTable(name = "skill_statuses")
     private Map<Skill, Status> skills;
@@ -64,20 +64,8 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
     }
 
     private void checkStatus() {
-        boolean allStudentConfirmed = true;
-        boolean allTeacherConfirmed = true;
-        for (Status status : skills.values()) {
-            if(allStudentConfirmed){
-                if(status != Status.STUDENT_CONFIRMED && status != Status.TEACHER_CONFIRMED){
-                    allStudentConfirmed = false;
-                }
-            }
-            if(allTeacherConfirmed){
-                if(status != Status.TEACHER_CONFIRMED){
-                    allTeacherConfirmed = false;
-                }
-            }
-        }
+        boolean allStudentConfirmed = checkStudentConfirmations();
+        boolean allTeacherConfirmed = checkTeacherConfirmations();
         if(allTeacherConfirmed){
             this.ready = Status.TEACHER_CONFIRMED;
         } else if( allStudentConfirmed){
@@ -85,6 +73,24 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         } else {
             this.ready = Status.UNCONFIRMED;
         }
+    }
+
+    private boolean checkStudentConfirmations(){
+        for(Status status : skills.values()){
+            if(status != Status.STUDENT_CONFIRMED && status != Status.TEACHER_CONFIRMED){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkTeacherConfirmations(){
+        for(Status status : skills.values()){
+            if(status != Status.TEACHER_CONFIRMED){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Map<Skill, Comment> getComments() {
