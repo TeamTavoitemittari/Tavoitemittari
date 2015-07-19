@@ -64,6 +64,7 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
             TreeMap<GradeLevel, GradeProgressTracker> sortMap = new TreeMap<>(gradeLevels);
             return sortMap;
         } catch (NullPointerException e) {
+            System.out.println("was here");
             return gradeLevels;
         }
 

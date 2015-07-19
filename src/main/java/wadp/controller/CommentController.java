@@ -23,12 +23,19 @@ public class CommentController {
     
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private UserService userService;
     
     
-    @RequestMapping(value="/{courseId}/{commentId}", method=RequestMethod.POST)
-    public String postOrUpdateComment(@PathVariable long courseId, @PathVariable long commentId, @RequestParam String comment){
+    @RequestMapping(value="/{userId}/{courseId}/{commentId}", method=RequestMethod.POST)
+    public String postOrUpdateComment(@PathVariable long userId, @PathVariable long courseId, @PathVariable long commentId, @RequestParam String comment){
         Comment com = commentService.findCommentById(commentId);
         commentService.updateComment(com, comment);
+        User user = userService.getAuthenticatedUser();
+        if(user.getUserRole()=="teacher"){
+            return "redirect:/course/"+courseId+"/"+userId+"#comments";
+        }
         return "redirect:/course/"+courseId+"#comments";
     }
     

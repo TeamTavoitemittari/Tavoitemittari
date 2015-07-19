@@ -87,6 +87,7 @@ public class CourseController {
         return "course";
     }
 
+    //parameter missing for gradeLevels FIX!!!!
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{id}/{studentId}", method = RequestMethod.GET)
     public String getStudentGoalOMeter(Model model, @PathVariable Long id, @PathVariable Long studentId) {
@@ -139,7 +140,7 @@ public class CourseController {
         CourseProgressTracker tracker = progressService.getProgress(userService.findById(userId), course);
         progressService.swapSkillStatusAsTeacher(tracker, gradeLevel, goal, skill);
 
-        return "redirect:/course" + "/" + courseId + "/" + userId;
+        return "redirect:/course/" + courseId + "/" + userId;
     }
 
     @PreAuthorize("hasAuthority('teacher')")
