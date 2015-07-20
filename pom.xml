@@ -160,6 +160,7 @@
                             <exclude>wadp/controller/RegisterController.class</exclude>
                             <exclude>wadp/controller/UserDetailsController.class</exclude>
                             <exclude>wadp/controller/CommentController.class</exclude>
+                            <exclude>wadp/controller/StudentController.class</exclude>
                             <!-- Entities -->
                             <exclude>wadp/domain/form/UserForm.class</exclude>
                             <exclude>wadp/domain/form/CourseForm.class</exclude>
