@@ -67,6 +67,7 @@ public class CourseController {
         courseService.addCourse(course);
         redirectAttributes.addFlashAttribute("creationSuccessMessage", "Kurssi luotu!");
         return "redirect:/course";
+        
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
