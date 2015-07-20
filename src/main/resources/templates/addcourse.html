@@ -33,7 +33,7 @@
 
 <div class="container">
     <ul class="nav nav-tabs" id="courseCommentTab">
-        <li class="active"><a th:href="@{~/course}">Luo uusi kurssi</a></li>
+        <li class="active"><a data-toggle="tab" href="" name="updatetab"  id="GetNewCourseTab" >Luo uusi kurssi</a></li>
         <li><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
         <li><a data-toggle="tab" href="#update" name="updatetab">Muokkaa kurssia</a></li>
     </ul>
@@ -332,6 +332,13 @@
     <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
     <script>
         $(document).ready(function() {
+            
+            $('#GetNewCourseTab').click(function() {
+
+	        window.location.href = '/course';
+
+	    });
+               
             if(location.hash) {
                 $('a[href=' + location.hash + ']').tab('show');
             }
