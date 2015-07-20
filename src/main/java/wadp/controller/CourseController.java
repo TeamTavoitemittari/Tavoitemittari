@@ -45,7 +45,7 @@ public class CourseController {
         if (!model.containsAttribute("course")) {
             model.addAttribute("course", new Course());
         }
-        model.addAttribute("courses", courseService.getCourses());
+        model.addAttribute("courses", courseService.getCoursesByTeacher(userService.getAuthenticatedUser()));
         return "addcourse";
     }
 
@@ -63,7 +63,7 @@ public class CourseController {
             return "redirect:/course";
 
         }
-
+        course.setTeacher(userService.getAuthenticatedUser());
         courseService.addCourse(course);
         redirectAttributes.addFlashAttribute("creationSuccessMessage", "Kurssi luotu!");
         return "redirect:/course";

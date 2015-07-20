@@ -192,6 +192,10 @@ public class IndexController {
         levels.add(level3);
 
         course.setGradeLevels(levels);
+        
+        User teacher = userService.findUserByEmail("ope@a.com");
+        course.setTeacher(teacher);
+        
         courseService.addCourse(course);
 
         User user = userService.findUserByEmail("oppilas@a.com");
@@ -338,6 +342,8 @@ public class IndexController {
         levels.add(level3);
 
         course.setGradeLevels(levels);
+        User teacher = userService.findUserByEmail("ope@a.com");
+        course.setTeacher(teacher);
         courseService.addCourse(course);
 
     }

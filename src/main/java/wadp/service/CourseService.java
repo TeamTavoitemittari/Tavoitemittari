@@ -115,4 +115,9 @@ public class CourseService {
         progressService.saveCourseTracker(tracker);    
           
       }  
+      
+        public List<Course> getCoursesByTeacher(User teacher){
+        return courseRepository.findByTeacher(teacher);
+    }
+
 }

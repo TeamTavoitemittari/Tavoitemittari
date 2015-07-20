@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +15,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Course extends AbstractPersistable<Long> {
+    
+    @OneToOne
+    User teacher;
     
     @NotNull(message="Kurssin nimeä ei voi jättää tyhjäksi.")
     @NotBlank(message="Kurssin nimeä ei voi jättää tyhjäksi.")
@@ -55,5 +59,14 @@ public class Course extends AbstractPersistable<Long> {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
+    }
+    
     
 }
