@@ -208,6 +208,7 @@ public class CourseController {
         redirectAttributes.addFlashAttribute("deleteSuccessMessage", "Kurssi poistettu!");
        
         return "redirect:/course#owncourses";
+        
     }
 
 
