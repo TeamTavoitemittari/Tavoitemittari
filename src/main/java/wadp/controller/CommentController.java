@@ -33,7 +33,7 @@ public class CommentController {
         Comment com = commentService.findCommentById(commentId);
         commentService.updateComment(com, comment);
         User user = userService.getAuthenticatedUser();
-        if(user.getUserRole()=="teacher"){
+        if("teacher".equals(user.getUserRole())){
             return "redirect:/course/"+courseId+"/"+userId+"#comments";
         }
         return "redirect:/course/"+courseId+"#comments";
