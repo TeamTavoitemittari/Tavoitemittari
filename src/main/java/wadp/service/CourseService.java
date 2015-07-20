@@ -102,7 +102,7 @@ public class CourseService {
                 progressService.saveGoalTracker(goalTracker);
                 HashMap<Skill, Comment> comments = new HashMap<Skill, Comment>();
                 for (Skill skill : goalTracker.getSkills().keySet()) {
-                    Comment comment = commentService.addComment(skill);
+                    Comment comment = commentService.addComment(skill, user, course);
                     comments.put(skill, comment);
                 }
                 goalTracker.setComments(comments);
@@ -119,5 +119,26 @@ public class CourseService {
         public List<Course> getCoursesByTeacher(User teacher){
         return courseRepository.findByTeacher(teacher);
     }
+        
+        
+    @Transactional
+    public void deleteCourse(Long courseId){
+        
+        Course course = getCourseById(courseId);
+        if (progressService.getProgressByCourse(course).size() > 0) {
+          List<CourseProgressTracker> CourseProgressTrackers = progressService.getCourseProgressTrackersByCourse(course);
+          List<GradeProgressTracker> GradeProgressTrackers = progressService.getGradeProgressTrackersByCourse(course);       
+          List<Comment> comments = commentService.getCommentsByCourse(course);
+          List<GoalProgressTracker> GoalProgressTrackers = progressService.getGoalProgressTrackersByCourse(course);
+           
+           
+          progressService.deleteCourseProgressTrackers(CourseProgressTrackers);
+          progressService.deleteGradeProgressTrackers(GradeProgressTrackers);
+          commentService.deleteComments(comments);
+          progressService.deleteGoalProgressTrackers(GoalProgressTrackers);
+        }
+    courseRepository.delete(getCourseById(courseId));
+        
+    }    
 
 }

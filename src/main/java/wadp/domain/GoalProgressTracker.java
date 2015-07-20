@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -12,6 +13,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class GoalProgressTracker extends AbstractPersistable<Long> {
 
     private Status ready;
+    
+    @OneToOne
+    private User user;
+    @OneToOne
+    private Course course;
 
     @ElementCollection
     @CollectionTable(name = "skill_statuses")
@@ -27,7 +33,9 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
         this.comments = new HashMap<Skill, Comment>();
     }
 
-    public GoalProgressTracker(Goal goal) {
+      public GoalProgressTracker(Goal goal, User user, Course course) {
+        this.user = user;
+        this.course = course;
         this.ready = Status.UNCONFIRMED;
         skills = new HashMap<Skill, Status>();
         for (Skill skill : goal.getSkills()) {
@@ -99,6 +107,22 @@ public class GoalProgressTracker extends AbstractPersistable<Long> {
 
     public void setComments(Map<Skill, Comment> comments) {
         this.comments = comments;
+    }
+    
+     public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
 }

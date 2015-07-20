@@ -34,6 +34,7 @@
 <div class="container">
     <ul class="nav nav-tabs" id="courseCommentTab">
         <li class="active"><a th:href="@{~/course}">Luo uusi kurssi</a></li>
+        <li><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
         <li><a data-toggle="tab" href="#update" name="updatetab">Muokkaa kurssia</a></li>
     </ul>
     <div class="tab-content">
@@ -136,6 +137,82 @@
             <br/>
 
         </div>
+        
+         <div id="owncourses" class="tab-pane fade">
+        
+            
+                      
+       
+             <br></br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span>Kurssit</span></h3>
+            </div>
+            <div class="panel-body">
+                  
+                <div th:if="${deleteSuccessMessage != null}">
+                  <hr></hr>
+                    <div class="alert alert-success" role="alert" th:text="${deleteSuccessMessage}">.</div>
+                </div>
+                
+                
+                <table id="example" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Kurssin nimi:</th>
+                        <th>Muokkaa:</th>
+                        <th>Poista:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${courses}">
+                        <td th:text="${course.name}"> </td>
+                        <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" >Muokkaa</a></td>      
+
+                        <td> <a th:href="'#'+${course.id}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}">Poista</a>      
+                        </td>
+                        
+                        
+                                           
+                       <div th:id="${course.id}" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                               <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                 <h4 class="modal-title">Vahvistus</h4>
+                               </div>
+                                <div class="modal-body">
+                                    <p>Halutatko varmasti poistaa valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
+                                  <p class="text-warning"><small>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</small></p>
+                               </div>
+                                <div class="modal-footer">
+                               <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                    
+                    
+                                  <a th:href="'/course/'+${course.id}+'/delete'"  class="btn btn-danger" name="poista">Poista</a>              </div>
+                                 </div>
+                              </div>
+                         </div>
+                        
+                        
+                    </tr>
+                    </tbody>
+                </table>
+                
+                
+  
+   
+            </div>
+           </div>
+          
+                            
+    
+    
+ 
+                        
+               
+                
+        </div>
 
         <div id="update" class="tab-pane fade">
             <div class="container">
@@ -153,7 +230,7 @@
 
                 <div th:if="${notEmptyMessage != null}">
                     <br/>
-                    <div class="alert alert-success" role="alert" th:text="${notEmptyMessage}">.</div>
+                    <div class="alert alert-danger" role="alert" th:text="${notEmptyMessage}">.</div>
                 </div>
 
 

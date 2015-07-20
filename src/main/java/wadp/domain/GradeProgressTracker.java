@@ -9,12 +9,18 @@ import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class GradeProgressTracker extends AbstractPersistable<Long> {
     
     private boolean ready;
+    
+    @OneToOne
+    private User user;
+    @OneToOne
+    private Course course;
     
     @ElementCollection
     @CollectionTable(name = "goal_progress_trackers")
@@ -24,11 +30,13 @@ public class GradeProgressTracker extends AbstractPersistable<Long> {
         this.goals=new HashMap<Goal, GoalProgressTracker>();
     }
     
-    public GradeProgressTracker(GradeLevel level){
+       public GradeProgressTracker(GradeLevel level, User user, Course course){
+        this.user = user;
+        this.course = course;
         this.ready=false;
         this.goals=new HashMap<Goal, GoalProgressTracker>();
         for (Goal goal : level.getGoals()) {
-            goals.put(goal, new GoalProgressTracker(goal));
+            goals.put(goal, new GoalProgressTracker(goal, user, course));
         }
     }
 
@@ -65,6 +73,22 @@ public class GradeProgressTracker extends AbstractPersistable<Long> {
 
     public void setGoals(HashMap<Goal, GoalProgressTracker> goals) {
         this.goals = goals;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
     
     

@@ -30,7 +30,7 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
         this.course = course;
         this.gradeLevels = new HashMap<GradeLevel, GradeProgressTracker>();
         for (GradeLevel gradeLevel : course.getGradeLevels()) {
-            gradeLevels.put(gradeLevel, new GradeProgressTracker(gradeLevel));
+            gradeLevels.put(gradeLevel, new GradeProgressTracker(gradeLevel, user, course));
         }
     }
 

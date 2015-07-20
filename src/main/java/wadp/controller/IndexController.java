@@ -207,7 +207,7 @@ public class IndexController {
                 progressService.saveGoalTracker(goalTracker);
                 HashMap<Skill, Comment> comments = new HashMap<Skill, Comment>();
                 for (Skill skill : goalTracker.getSkills().keySet()) {
-                    Comment comment = commentService.addComment(skill);
+                    Comment comment = commentService.addComment(skill, user, course);
                     comments.put(skill, comment);
                 }
                 goalTracker.setComments(comments);

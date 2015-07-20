@@ -197,5 +197,18 @@ public class CourseController {
         return "redirect:/mycourses";
 
     }
+    
+    @RequestMapping(value = "/{courseId}/delete", method = RequestMethod.GET)
+    public String deleteCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
+
+     
+
+        courseService.deleteCourse(courseId);
+
+        redirectAttributes.addFlashAttribute("deleteSuccessMessage", "Kurssi poistettu!");
+       
+        return "redirect:/course#owncourses";
+    }
+
 
 }

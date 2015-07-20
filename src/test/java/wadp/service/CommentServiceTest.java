@@ -14,9 +14,11 @@ import wadp.Application;
 import wadp.domain.Comment;
 import wadp.domain.Course;
 import wadp.domain.Skill;
+import wadp.domain.User;
 import wadp.repository.CommentRepository;
 import wadp.repository.CourseRepository;
 import wadp.repository.SkillRepository;
+import wadp.repository.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -32,32 +34,48 @@ public class CommentServiceTest {
     @Autowired
     private SkillRepository skillRepository;
     
+       
+    @Autowired
+    private CourseRepository courseRepository; 
+
+    @Autowired
+    private UserRepository userRepository; 
+    
+    private Course course;
+    private User user;
     private Skill skill;
     
     @Before
     public void setUp(){
         skill = new Skill();
         skillRepository.save(skill);
+        
+        course = new Course();
+        course.setDescription("descr");
+        course.setName("name");
+        user = new User();
+        courseRepository.save(course);
+        userRepository.save(user);
     }
     
     @Test
     public void addingEmptyCommentWorks(){
         assertTrue(commentRepository.findAll().isEmpty());
         
-        commentService.addComment(skill);
+        commentService.addComment(skill, user, course);
         
         assertEquals(1, commentRepository.findAll().size());
     }
     
     @Test
     public void commentsAreFoundById(){
-        Comment comment = commentRepository.save(new Comment(skill));
+        Comment comment = commentRepository.save(new Comment(skill, user, course));
         assertEquals(comment, commentService.findCommentById(comment.getId()));
     }
     
     @Test
     public void updatingCommentTextWorks(){
-        Comment comment = new Comment(skill); 
+        Comment comment = new Comment(skill,user, course); 
         comment.setComment("comment");
         commentRepository.save(comment);
         

@@ -15,9 +15,15 @@ public class GradeProgressTrackerTest {
     
     private GradeProgressTracker tracker;
     private Skill skill;
+    private Course course;
+    private User user;
     
     @Before
     public void setUp(){
+        course = new Course();
+        course.setName("name");
+        user = new User();
+        
         GradeLevel level = new GradeLevel();
         Goal goal = new Goal();
         skill = new Skill();
@@ -27,7 +33,7 @@ public class GradeProgressTrackerTest {
         ArrayList<Goal> goals = new ArrayList<Goal>();
         goals.add(goal);
         level.setGoals(goals);
-        tracker = new GradeProgressTracker(level);
+        tracker = new GradeProgressTracker(level, user, course);
     }
 
     @Test

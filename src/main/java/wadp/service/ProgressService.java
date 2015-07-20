@@ -85,5 +85,34 @@ public class ProgressService {
         List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
         return trackers;
     }
+    
+   @Transactional
+   public void deleteCourseProgressTrackers(List<CourseProgressTracker> trackers){
+        progressRepository.delete(trackers);
+    }
+    
+    @Transactional
+    public void deleteGradeProgressTrackers(List<GradeProgressTracker> trackers){
+        gradeRepository.delete(trackers);
+    }
+    
+    @Transactional
+    public void deleteGoalProgressTrackers(List<GoalProgressTracker> trackers){
+        goalRepository.delete(trackers);
+    }
+
+    public List<CourseProgressTracker> getCourseProgressTrackersByCourse(Course course){
+        List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
+        return trackers;
+    }
+    public List<GradeProgressTracker> getGradeProgressTrackersByCourse(Course course){
+        List<GradeProgressTracker> trackers = gradeRepository.findByCourse(course);
+        return trackers;
+    }
+    
+     public List<GoalProgressTracker> getGoalProgressTrackersByCourse(Course course){
+        List<GoalProgressTracker> trackers = goalRepository.findByCourse(course);
+        return trackers;
+    }
 
 }

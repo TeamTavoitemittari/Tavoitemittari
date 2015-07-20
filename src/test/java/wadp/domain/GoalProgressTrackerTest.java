@@ -13,6 +13,8 @@ public class GoalProgressTrackerTest {
 
     private GoalProgressTracker tracker;
     private Skill skill;
+    private Course course;
+    private User user;
 
     @Before
     public void setUp() {
@@ -21,7 +23,11 @@ public class GoalProgressTrackerTest {
         ArrayList<Skill> skills = new ArrayList<Skill>();
         skills.add(skill);
         goal.setSkills(skills);
-        tracker = new GoalProgressTracker(goal);
+        course = new Course();
+        course.setName("name");
+        user = new User();
+        tracker = new GoalProgressTracker(goal, user, course);
+      
 
     }
 
