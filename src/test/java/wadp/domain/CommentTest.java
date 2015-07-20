@@ -44,5 +44,24 @@ public class CommentTest {
         
         assertEquals("comment", comment.getComment());
     }
+
+    @Test
+    public void testUser(){
+        Comment comment = new Comment(skill, user, course);
+        assertEquals(user, comment.getUser());
+        User user2 = new User();
+        comment.setUser(user2);
+        assertEquals(user2, comment.getUser());
+
+    }
+
+    @Test
+    public void testCourse(){
+        Comment comment = new Comment(skill, user, course);
+        assertEquals(course, comment.getCourse());
+        Course course2 = new Course();
+        comment.setCourse(course2);
+        assertEquals(course2, comment.getCourse());
+    }
     
 }

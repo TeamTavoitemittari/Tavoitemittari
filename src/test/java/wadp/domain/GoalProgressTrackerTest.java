@@ -45,6 +45,8 @@ public class GoalProgressTrackerTest {
         assertEquals(Status.UNCONFIRMED, status);
         tracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
         assertEquals(Status.STUDENT_CONFIRMED, tracker.getReady());
+        tracker.setReady(Status.TEACHER_CONFIRMED);
+        assertEquals(Status.TEACHER_CONFIRMED, tracker.getReady());
     }
 
 
@@ -53,6 +55,18 @@ public class GoalProgressTrackerTest {
         assertEquals(tracker.getSkills().size(), 1);
         tracker.setSkills(new HashMap<Skill, Status>());
         assertEquals(tracker.getSkills().size(), 0);
+    }
+
+    @Test
+    public void testUser() {
+        tracker.setUser(user);
+        assertEquals(user, tracker.getUser());
+    }
+
+    @Test
+    public void testCourse() {
+        tracker.setCourse(course);
+        assertEquals(course, tracker.getCourse());
     }
 
 }

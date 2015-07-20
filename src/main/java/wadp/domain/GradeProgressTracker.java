@@ -53,7 +53,7 @@ public class GradeProgressTracker extends AbstractPersistable<Long> {
         return ready;
     }
     
-    public boolean getReadt(){
+    public boolean getReady(){
         return this.ready;
     }
 

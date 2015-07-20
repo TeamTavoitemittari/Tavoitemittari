@@ -2,28 +2,28 @@
 package wadp.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 
 public class GradeProgressTrackerTest {
-    
+
     private GradeProgressTracker tracker;
     private Skill skill;
     private Course course;
     private User user;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         course = new Course();
         course.setName("name");
         user = new User();
-        
+
         GradeLevel level = new GradeLevel();
         Goal goal = new Goal();
         skill = new Skill();
@@ -40,22 +40,38 @@ public class GradeProgressTrackerTest {
     public void testUpdateSkillStatus() {
         boolean result = tracker.updateSkillStatus(skill, Status.STUDENT_CONFIRMED);
         assertEquals(true, result);
-        
+
         result = tracker.updateSkillStatus(new Skill(), Status.UNCONFIRMED);
         assertEquals(false, result);
     }
 
-   
+
     @Test
     public void testIsReady() {
         tracker.setReady(true);
         assertTrue(tracker.isReady());
+        assertTrue(tracker.getReady());
     }
 
+    @Test
+    public void testUser() {
+        tracker.setUser(user);
+        assertEquals(user, tracker.getUser());
+    }
+
+    @Test
+    public void testCourse() {
+        tracker.setCourse(course);
+        assertEquals(course, tracker.getCourse());
+    }
 
     @Test
     public void testGoals() {
-        assertEquals(tracker.getGoals().size(), 1);
+        HashMap<Goal, GoalProgressTracker> trackers = new HashMap<Goal, GoalProgressTracker>();
+        trackers.put(new Goal(), new GoalProgressTracker());
+        tracker.setGoals(trackers);
+        assertEquals(1, tracker.getGoals().size());
     }
-    
+
+
 }

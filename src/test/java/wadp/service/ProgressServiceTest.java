@@ -99,6 +99,20 @@ public class ProgressServiceTest {
 
     }
 
+    @Test
+    public void swapSkillStatusAsTeacherTest(){
+        CourseProgressTracker tracker2 = new CourseProgressTracker(new User(), createCourse());
+        Course trackerCourse = tracker2.getCourse();
+        GradeLevel gradeLevel = trackerCourse.getGradeLevels().get(0);
+        Goal goal = gradeLevel.getGoals().get(0);
+        Skill skill = goal.getSkills().get(0);
+        assertEquals(Status.UNCONFIRMED, tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        progressService.swapSkillStatusAsTeacher(tracker2, gradeLevel, goal, skill);
+        assertEquals(Status.TEACHER_CONFIRMED, tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+        progressService.swapSkillStatusAsTeacher(tracker2, gradeLevel, goal, skill);
+        assertEquals(Status.UNCONFIRMED, tracker2.getGradeLevels().get(gradeLevel).getGoals().get(goal).getSkills().get(skill));
+    }
+
     public Course createCourse(){
         Skill skill = new Skill();
         ArrayList<Skill> skills = new ArrayList<Skill>();
