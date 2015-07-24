@@ -31,9 +31,6 @@ public class Course extends AbstractPersistable<Long> {
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     private List<GradeLevel> gradeLevels;
-    @Valid
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<User> students;
     
     
     public Course(){
@@ -71,16 +68,5 @@ public class Course extends AbstractPersistable<Long> {
     public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
-    
-    public List<User> getStudents(){
-        return students;
-    }
-    public void setStudents(List<User> students){
-        this.students=students;
-    }
-    public void addStudent(User student){
-        this.students.add(student);
-    }
-    
     
 }
