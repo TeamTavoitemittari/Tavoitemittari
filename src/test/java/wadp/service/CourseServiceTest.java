@@ -18,6 +18,8 @@ import wadp.Application;
 import wadp.domain.Course;
 import wadp.domain.Goal;
 import wadp.domain.GradeLevel;
+import wadp.domain.Skill;
+import wadp.domain.User;
 import wadp.repository.CourseRepository;
 
 
@@ -31,8 +33,146 @@ public class CourseServiceTest {
    
     @Autowired
     private CourseRepository courseRepository;
+        
+    @Autowired
+    private UserService userService;
+
+
+    @Autowired
+    private GradeLevelService gradeService;
+
+    @Autowired
+    private GoalService goalService;
+
+    @Autowired
+    private SkillService skillService;
+
+    @Autowired
+    private ProgressService progressService;
+
+    @Autowired
+    private CommentService commentService;
     
     private Course course;
+    private Course TestCourse;
+    
+
+    
+    @Before
+    public void setUp(){
+        
+        userService.createUser("testope@a.com", "ope", "Olli Opettaja", "teacher");
+        userService.createUser("testoppilas@a.com", "oppilas", "Matti Meikalainen", "student");
+        
+        TestCourse = new Course();
+        TestCourse.setName("Testikurssi");
+        TestCourse.setDescription("Kurssilla perehdytään erinäisiin taivankappaleisiina alkaen omasta aurinkokunnastamme"
+                + "ja edeten hiljalleen galaksin muihin osiin. Kurssin jälkeen tiedät mitä eroa on mustalla aukolla"
+                + "ja valkoisella kääpiöllä sekä tunnistat tähtitaivaalta eri tähtikuviot.");
+
+        GradeLevel level1 = new GradeLevel();
+        level1.setGrade("5-6");
+        Goal goal1 = new Goal();
+        goal1.setName("Tähtikuviot");
+
+        Skill skill1 = new Skill("Oppilas tunnistaa tähtikuvioita", "667, 12a, Käy illalla kotona ulkona ja piirrä kolme valitsemaasi tähtikuviota paperille, Kirjota 200 sanan tiivistelmä kirjan luvusta 6: Meidän galaksimme");
+
+        
+
+        Skill skill2 = new Skill("Oppilas ymmärtää tähtikuvioiden suhteelliset etäisyydet", "758, 827, 100, 220, 12, 16, 16");
+
+        
+
+        ArrayList<Skill> skills1 = new ArrayList<>();
+        skills1.add(skill1);
+        skills1.add(skill2);
+
+        goal1.setSkills(skills1);
+        
+
+        Goal goal2 = new Goal();
+        goal2.setName("Painovoima");
+
+        Skill skill3 = new Skill("Oppilas osaa selittää painovoiman vaikutuksen hänen fyysiseen ympäristöönsä", "101b, 76, Katso Cosmos: A Spacetime Odyssey -sarjan seitsemästoista jakso ja kirjoita siitä 200 sanan referaatti, 63");
+
+        
+
+        Skill skill4 = new Skill("Oppilas ymmärtää painovoiman suhteen planeettojen massaan", "758, 827,100,220,12,16,19");
+
+        
+
+        ArrayList<Skill> skills2 = new ArrayList<>();
+
+        skills2.add(skill4);
+        skills2.add(skill3);
+
+        goal2.setSkills(skills2);
+
+        
+
+        ArrayList<Goal> goals1 = new ArrayList<Goal>();
+        goals1.add(goal1);
+        goals1.add(goal2);
+
+        level1.setGoals(goals1);
+
+        
+
+        GradeLevel level2 = new GradeLevel();
+        level2.setGrade("7-8");
+
+        Goal goal3 = new Goal();
+        goal3.setName("Mustat aukot");
+
+        Skill skill5 = new Skill("Oppilas osaa kuvata mustan aukon syntymisprosessin", "89, 10");
+
+        
+
+        ArrayList<Skill> skillz = new ArrayList<>();
+        skillz.add(skill5);
+        goal3.setSkills(skillz);
+
+        
+
+        ArrayList<Goal> goals2 = new ArrayList<Goal>();
+        goals2.add(goal3);
+        level2.setGoals(goals2);
+        
+
+        GradeLevel level3 = new GradeLevel();
+        level3.setGrade("9-10");
+
+        Goal goal4 = new Goal();
+        goal4.setName("Astrofysiikka");
+
+        Skill skill6 = new Skill("Oppilas taitaa astrofysiikan salat", "Laske auringon massa, 893, Lue Carl Saganin Kosmos ja kirjoita siitä neljän sivun referaatti. ");
+
+        
+
+        ArrayList<Skill> skills4 = new ArrayList<Skill>();
+        skills4.add(skill6);
+        goal4.setSkills(skills4);
+
+        
+
+        ArrayList<Goal> goals4 = new ArrayList<Goal>();
+        goals4.add(goal4);
+
+        level3.setGoals(goals4);
+
+        
+
+        ArrayList<GradeLevel> levels = new ArrayList<GradeLevel>();
+        levels.add(level1);
+        levels.add(level2);
+        levels.add(level3);
+
+        TestCourse.setGradeLevels(levels);
+        
+        User teacher = userService.findUserByEmail("testope@a.com");
+        TestCourse.setTeacher(teacher);
+        
+    }
 
     @Test
     public void testGetCourses() {
@@ -142,5 +282,54 @@ public class CourseServiceTest {
 
         assertEquals("newname", courseService.getCourseById(oldCourseId).getName());
         assertEquals("newdescr", courseService.getCourseById(oldCourseId).getDescription());
+    }
+    
+    @Test
+    public void JoinCourseWorks(){
+        
+       courseService.addCourse(TestCourse);
+        
+         
+       User user = userService.findUserByEmail("testoppilas@a.com");
+        
+       courseService.joinCourse(user, TestCourse);
+    
+       assertTrue(progressService.getCourseProgressTrackersByCourse(TestCourse).isEmpty()==false);
+       assertTrue(progressService.getGradeProgressTrackersByCourse(TestCourse).isEmpty()==false);
+       assertTrue(progressService.getGoalProgressTrackersByCourse(TestCourse).isEmpty()==false);
+       assertTrue(commentService.getCommentsByCourse(TestCourse).isEmpty()==false);
+        
+        
+    }
+    @Test
+    public void DeleteCourseWorks(){
+        
+
+        
+        courseService.addCourse(TestCourse);
+        
+        
+        User user = userService.findUserByEmail("testoppilas@a.com");
+        
+        courseService.joinCourse(user, TestCourse);
+
+  
+     
+        
+        Long id = TestCourse.getId();
+         
+        courseService.deleteCourse(id);
+        
+        ///test that not only course itself but also all related trackers and comments are truly deleted with the course
+        
+        assertTrue(courseService.getCourseById(id) == null);
+        assertTrue(progressService.getCourseProgressTrackersByCourse(TestCourse).isEmpty());
+        assertTrue(progressService.getGradeProgressTrackersByCourse(TestCourse).isEmpty());
+        assertTrue(progressService.getGoalProgressTrackersByCourse(TestCourse).isEmpty());
+        assertTrue(commentService.getCommentsByCourse(TestCourse).isEmpty());
+        
+  
+        
+   
     }
 }
