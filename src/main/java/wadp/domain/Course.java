@@ -1,7 +1,6 @@
 
 package wadp.domain;
 import java.util.ArrayList;
-import javax.persistence.Entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -31,6 +30,10 @@ public class Course extends AbstractPersistable<Long> {
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     private List<GradeLevel> gradeLevels;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<User> students;
+    
     
     public Course(){
         this.gradeLevels=new ArrayList<GradeLevel>();
@@ -66,6 +69,16 @@ public class Course extends AbstractPersistable<Long> {
 
     public void setTeacher(User teacher) {
         this.teacher = teacher;
+    }
+    
+    public List<User> getStudents(){
+        return students;
+    }
+    public void setStudents(List<User> students){
+        this.students=students;
+    }
+    public void addStudent(User student){
+        this.students.add(student);
     }
     
     
