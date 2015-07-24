@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
@@ -30,8 +31,8 @@ public class Course extends AbstractPersistable<Long> {
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     private List<GradeLevel> gradeLevels;
-    
-    @OneToMany(cascade = CascadeType.ALL)
+    @Valid
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<User> students;
     
     
