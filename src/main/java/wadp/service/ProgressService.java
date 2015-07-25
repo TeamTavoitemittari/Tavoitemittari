@@ -5,10 +5,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wadp.domain.*;
+import wadp.repository.CommentRepository;
 import wadp.repository.CourseProgressRepository;
+import wadp.repository.CourseRepository;
 import wadp.repository.GoalProgressRepository;
 import wadp.repository.GradeLevelRepository;
 import wadp.repository.GradeProgressRepository;
+import wadp.repository.UserRepository;
 
 @Service
 public class ProgressService {
@@ -21,7 +24,21 @@ public class ProgressService {
     
     @Autowired
     private GoalProgressRepository goalRepository;
+    
+  
+    
+    
+    @Autowired
+    private CourseService courseService;
+    
+    @Autowired
+    private UserService userService;
+    
+   
 
+    @Autowired
+    private CommentRepository commentRepository;
+     
     public CourseProgressTracker getProgress(User user, Course course) {
         List<CourseProgressTracker> trackers = progressRepository.findByUserAndCourse(user, course);
         if (trackers.isEmpty()) {
@@ -114,5 +131,27 @@ public class ProgressService {
         List<GoalProgressTracker> trackers = goalRepository.findByCourse(course);
         return trackers;
     }
+     
+    public void RemoveUserFromCourse(Long courseId, Long UserId)
+    {
+    Course course = courseService.getCourseById(courseId);
+    User user = userService.findById(UserId);
+          
+    List<CourseProgressTracker> courseProgressTrackers = progressRepository.findByUserAndCourse(user, course);
+    List<GradeProgressTracker> gradeProgressTrackers = gradeRepository.findByUserAndCourse(user, course);
+    
+    List<Comment> comments = commentRepository.findByUserAndCourse(user, course);
+    List<GoalProgressTracker>  goalProgresstrackers = goalRepository.findByUserAndCourse(user, course);
+    
+    progressRepository.delete(courseProgressTrackers);
+    gradeRepository.delete(gradeProgressTrackers);
+    goalRepository.delete(goalProgresstrackers); 
+    commentRepository.delete(comments);
+    
+     
+    
+    
+    
+    }   
 
 }

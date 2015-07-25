@@ -123,7 +123,7 @@ public class CourseService {
         }
 
 
-        courseRepository.save(course);
+        
         progressService.saveCourseTracker(tracker);    
           
       }  

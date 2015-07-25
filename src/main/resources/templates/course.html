@@ -286,7 +286,33 @@
                     <tr th:each="user : ${users}">
                         <td><a th:text="${user.name}" th:href="@{'/course/'+${course.id}+'/' + ${user.id}}"></a></td>
                         <td th:text="${user.email}"></td>
-                        <td th:text="${user.userRole}"></td>
+                       
+                        
+                               <td> <a th:href="'#'+${user.id}+'update'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${user.id}+'update'">Poista</a>      
+                        </td>
+                        
+                        
+                                           
+                       <div th:id="${user.id}+'update'" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                               <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                 <h4 class="modal-title">Vahvistus</h4>
+                               </div>
+                                <div class="modal-body">
+                                    <p>Halutatko varmasti poistaa valitsemasi oppilaan <b th:text="${user.name}">nimi</b> kurssilta?</p>
+                                
+                               </div>
+                                <div class="modal-footer">
+                               <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                    
+                    
+                                  <a th:href="'/student/'+${course.id}+'/' + ${user.id}+'/remove'"  class="btn btn-danger" name="poista">Poista</a>              </div>
+                                 </div>
+                              </div>
+                         </div>
+                        
                     </tr>
                     </tbody>
                 </table>
