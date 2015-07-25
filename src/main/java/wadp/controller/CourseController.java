@@ -2,6 +2,7 @@ package wadp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.*;
-import wadp.domain.form.CourseForm;
 import wadp.service.*;
 
 @Controller
@@ -84,6 +84,7 @@ public class CourseController {
         User user = userService.getAuthenticatedUser();
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
+        model.addAttribute("users" , courseService.getCourseStudents(course));
 
         return "course";
     }
@@ -104,7 +105,8 @@ public class CourseController {
         User user = userService.findById(studentId);
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
-
+        model.addAttribute("users" , courseService.getCourseStudents(course));
+        model.addAttribute("currentStudent", user);
         return "course";
     }
 
@@ -140,7 +142,7 @@ public class CourseController {
         Skill skill = skillService.findSkill(skillId);
         CourseProgressTracker tracker = progressService.getProgress(userService.findById(userId), course);
         progressService.swapSkillStatusAsTeacher(tracker, gradeLevel, goal, skill);
-
+        
         return "redirect:/course/" + courseId + "/" + userId;
     }
 
@@ -191,7 +193,7 @@ public class CourseController {
             redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
             return "redirect:/mycourses";
         }
-
+        
         courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
         redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
         return "redirect:/mycourses";
