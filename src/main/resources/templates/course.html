@@ -206,6 +206,8 @@
                                         <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${tracker.user.id} + '/'+ ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
                                             <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" style="resize: vertical; margin: 8px" th:readonly="true"></textarea>
                                             <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
+                                            <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
+                                            <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
                                             <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
                                         </form>
                                     </div>

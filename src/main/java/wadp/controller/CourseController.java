@@ -88,7 +88,8 @@ public class CourseController {
         return "course";
     }
 
-    //parameter missing for gradeLevels FIX!!!!
+
+
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{id}/{studentId}", method = RequestMethod.GET)
     public String getStudentGoalOMeter(Model model, @PathVariable Long id, @PathVariable Long studentId) {

@@ -38,5 +38,16 @@ public class CommentController {
         }
         return "redirect:/course/"+courseId+"#comments";
     }
+
+    @RequestMapping(value="/{courseId}/cancel")
+    public String cancelCommentUpdatingAsStudent(@PathVariable long courseId){
+        return "redirect:/course/"+courseId+"#comments";
+    }
+
+
+    @RequestMapping(value="/{courseId}/{studentId}/cancel", method=RequestMethod.GET)
+    public String cancelCommentUpdatingAsTeacher(@PathVariable long courseId, @PathVariable long studentId){
+        return "redirect:/course/"+courseId+"/"+studentId+"#comments";
+    }
     
 }

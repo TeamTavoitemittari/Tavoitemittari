@@ -9,4 +9,14 @@ function enableEdit(id){
     var saveButton = document.getElementById("save"+id);
     saveButton.style.visibility = "visible";
 
+    var teacherCancelButton = document.getElementById("cancelteacher"+id);
+    if(teacherCancelButton != null) {
+        teacherCancelButton.style.visibility = "visible";
+    }
+
+    var cancelButton = document.getElementById("cancelstudent"+id);
+    if(cancelButton != null){
+        cancelButton.style.visibility = "visible";
+    }
+
 }
