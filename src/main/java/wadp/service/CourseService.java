@@ -91,10 +91,22 @@ public class CourseService {
         return courses;
         
       }
+        
+        public List<User> getCourseStudents(Course course){
+           List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
+        List<User> users = new ArrayList<User>();
+        
+        for (CourseProgressTracker tracker : trackers){
+            users.add(tracker.getUser());
+            
+        }
+        
+        return users;
+        }
        
       ///needs work  
+      
       public void joinCourse (User user, Course course){
-          
           CourseProgressTracker tracker = new CourseProgressTracker(user, course);
 
         for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
@@ -111,7 +123,7 @@ public class CourseService {
         }
 
 
-
+        
         progressService.saveCourseTracker(tracker);    
           
       }  

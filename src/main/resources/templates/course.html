@@ -15,7 +15,55 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/course.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+            <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+            
+            
+        <!--These seem to interfere with css files needed for teacher 
+        confirming  students' progress
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <!-->
+        
+        
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+     
+        <!-- This messes with the hallinto-dropdown menu
+        <script src="/js/bootstrap.js"></script>-->
+        
+        
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.dropotron.min.js"></script>
+        <!--TÄMÄ HAJOTTAA TESTIT SYYSTÄ X <script src="/js/init.js"></script><!-->
+        <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+        <!--DataTables initialization-->
+        <script type="text/javascript" charset="utf8">
+            $(document).ready( function () {
+                $('#example').DataTable( {
+                    "language": {
+                        "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
+                        "zeroRecords": "Mitään ei löytynyt",
+                        "info": "Sivu _PAGE_ / _PAGES_",
+                        "infoEmpty": "Haku ei vastaa taulun sisältöä",
+                        "infoFiltered": "(haku rajattu _MAX_ oppilaasta)",
+                        "search": "Haku",
+                        "paginate": {
+                            "first": "Ensimmäinen",
+                            "last": "Viimeinen",
+                            "next": "Seuraava",
+                            "previous": "Edellinen"
+                        }
+                    }
+                } );
+            } );
+        </script>
+    
     <title>Tavoitemittari</title>
+    
+    
 </head>
 
 
@@ -23,10 +71,14 @@
 <div th:replace="fragments/components :: course-navbar">navbar</div>
 
 <div class="container">
+    <div th:if="${currentStudent !=null}">
+        <h1><b><span th:text="${currentStudent.name}"></span></b></h1>
+    </div>
     <div class="row" th:if="${course != null}">
         <ul class="nav nav-tabs" id="courseCommentTab">
             <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>
             <li><a data-toggle="tab" href="#comments" name="commenttab">Kommentit</a></li>
+            <li sec:authorize="hasRole('teacher')"><a data-toggle="tab" href="#students" name="studenttab" >Oppilaat</a></li>
         </ul>
         <!-- Goal-o-meter tab where students mark their progress and the teacher confirms them  -->
         <div class="tab-content">
@@ -218,7 +270,61 @@
                     <hr/>
                 </div>
             </div>
+            <div id="students" class="tab-pane fade" sec:authorize="hasRole('teacher')">
+                      <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span>Oppilaat</span></h3>
+            </div>
+            <div class="panel-body">
+                <table id="example" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nimi</th>
+                        <th>Sähköposti</th>
+                        <th>Rooli</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td><a th:text="${user.name}" th:href="@{'/course/'+${course.id}+'/' + ${user.id}}"></a></td>
+                        <td th:text="${user.email}"></td>
+                       
+                        
+                               <td> <a th:href="'#'+${user.id}+'update'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${user.id}+'update'">Poista</a>      
+                        </td>
+                        
+                        
+                                           
+                       <div th:id="${user.id}+'update'" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                               <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                 <h4 class="modal-title">Vahvistus</h4>
+                               </div>
+                                <div class="modal-body">
+                                    <p>Halutatko varmasti poistaa valitsemasi oppilaan <b th:text="${user.name}">nimi</b> kurssilta?</p>
+                                
+                               </div>
+                                <div class="modal-footer">
+                               <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                    
+                    
+                                  <a th:href="'/student/'+${course.id}+'/' + ${user.id}+'/remove'"  class="btn btn-danger" name="poista">Poista</a>              </div>
+                                 </div>
+                              </div>
+                         </div>
+                        
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+            </div>
+            
+        </div>
+        
+        
         <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">
             <div class="progress">
                 <div class="progress-bar progress-bar-success" style="width: 35%">
