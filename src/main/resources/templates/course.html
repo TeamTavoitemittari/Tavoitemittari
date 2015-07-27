@@ -71,8 +71,8 @@
 <div th:replace="fragments/components :: course-navbar">navbar</div>
 
 <div class="container">
-    <div th:if="${currentStudent !=null}">
-        <h1><b><span th:text="${currentStudent.name}"></span></b></h1>
+    <div th:if="${currentStudent !=null} and ${course != null}">
+        <h1><b><span th:text="${course.name}"></span></b> : <b><span th:text="${currentStudent.name}"></span></b></h1>
     </div>
     <div class="row" th:if="${course != null}">
         <ul class="nav nav-tabs" id="courseCommentTab">
@@ -281,7 +281,7 @@
                     <tr>
                         <th>Nimi</th>
                         <th>Sähköposti</th>
-                        <th>Rooli</th>
+                        <th>Poista kurssilta</th>
                     </tr>
                     </thead>
                     <tbody>

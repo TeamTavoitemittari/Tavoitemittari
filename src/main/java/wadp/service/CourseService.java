@@ -37,6 +37,9 @@ public class CourseService {
     @Autowired
     private CommentService commentService;
     
+    @Autowired
+    private UserService userService;
+    
     public List<Course> getCourses(){
         return courseRepository.findAll();
     }
@@ -137,7 +140,7 @@ public class CourseService {
     public void deleteCourse(Long courseId){
         
         Course course = getCourseById(courseId);
-        if (progressService.getProgressByCourse(course).size() > 0) {
+        if (progressService.getCourseProgressTrackersByCourse(course).size() > 0) {
           List<CourseProgressTracker> CourseProgressTrackers = progressService.getCourseProgressTrackersByCourse(course);
           List<GradeProgressTracker> GradeProgressTrackers = progressService.getGradeProgressTrackersByCourse(course);       
           List<Comment> comments = commentService.getCommentsByCourse(course);
@@ -152,5 +155,23 @@ public class CourseService {
     courseRepository.delete(getCourseById(courseId));
         
     }    
+    
+    public void RemoveUserFromCourse(Long courseId, Long UserId)
+    {
+    Course course = getCourseById(courseId);
+    User user = userService.findById(UserId);
+          
+    List<CourseProgressTracker> courseProgressTrackers = progressService.getCourseProgressTrackersByUserAndCourse(user, course);     
+    List<GradeProgressTracker> gradeProgressTrackers = progressService.getGradeProgressTrackersByUserAndCourse(user, course);
+    List<Comment> comments = commentService.getCommentsByUserAndCourse(user, course);
+    List<GoalProgressTracker>  goalProgressTrackers = progressService.getGoalProgressTrackersByUserAndCourse(user, course);
+    
+    progressService.deleteCourseProgressTrackers(courseProgressTrackers);
+    progressService.deleteGradeProgressTrackers(gradeProgressTrackers);
+    progressService.deleteGoalProgressTrackers(goalProgressTrackers);
+    commentService.deleteComments(comments);
+    
+
+    }   
 
 }

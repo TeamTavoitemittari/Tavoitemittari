@@ -98,10 +98,7 @@ public class ProgressService {
         goalRepository.save(tracker);
     }
 
-    public List<CourseProgressTracker> getProgressByCourse(Course course){
-        List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
-        return trackers;
-    }
+ 
     
    @Transactional
    public void deleteCourseProgressTrackers(List<CourseProgressTracker> trackers){
@@ -117,6 +114,7 @@ public class ProgressService {
     public void deleteGoalProgressTrackers(List<GoalProgressTracker> trackers){
         goalRepository.delete(trackers);
     }
+    
 
     public List<CourseProgressTracker> getCourseProgressTrackersByCourse(Course course){
         List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
@@ -132,26 +130,20 @@ public class ProgressService {
         return trackers;
     }
      
-    public void RemoveUserFromCourse(Long courseId, Long UserId)
-    {
-    Course course = courseService.getCourseById(courseId);
-    User user = userService.findById(UserId);
-          
-    List<CourseProgressTracker> courseProgressTrackers = progressRepository.findByUserAndCourse(user, course);
-    List<GradeProgressTracker> gradeProgressTrackers = gradeRepository.findByUserAndCourse(user, course);
+    public List<CourseProgressTracker> getCourseProgressTrackersByUserAndCourse(User user, Course course){
+        List<CourseProgressTracker> courseProgressTrackers = progressRepository.findByUserAndCourse(user, course);
+        return courseProgressTrackers;
+    }
+    public List<GradeProgressTracker> getGradeProgressTrackersByUserAndCourse(User user, Course course){
+        List<GradeProgressTracker> gradeProgressTrackers = gradeRepository.findByUserAndCourse(user, course);
+        return gradeProgressTrackers;
+    }
     
-    List<Comment> comments = commentRepository.findByUserAndCourse(user, course);
-    List<GoalProgressTracker>  goalProgresstrackers = goalRepository.findByUserAndCourse(user, course);
-    
-    progressRepository.delete(courseProgressTrackers);
-    gradeRepository.delete(gradeProgressTrackers);
-    goalRepository.delete(goalProgresstrackers); 
-    commentRepository.delete(comments);
-    
+     public List<GoalProgressTracker> getGoalProgressTrackersByUserAndCourse(User user, Course course){
+       List<GoalProgressTracker>  goalProgresstrackers = goalRepository.findByUserAndCourse(user, course);
+        return goalProgresstrackers;
+    } 
      
-    
-    
-    
-    }   
+
 
 }

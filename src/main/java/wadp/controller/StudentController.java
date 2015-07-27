@@ -44,7 +44,7 @@ public class StudentController {
     @RequestMapping(value = "/{courseId}/{userId}/remove", method = RequestMethod.GET)
     public String removeStudentFromCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @PathVariable Long userId) {
 
-      progressService.RemoveUserFromCourse(courseId, userId);
+      courseService.RemoveUserFromCourse(courseId, userId);
 
        return "redirect:/student";
     }

@@ -354,4 +354,26 @@ public class CourseServiceTest {
         
    
     }
+    
+    @Test
+    public void RemoveUserFromCourseWorks(){
+        
+    courseService.addCourse(TestCourse);
+    User user = userService.findUserByEmail("testoppilas@a.com");
+    Long CourseId = TestCourse.getId();
+    Long UserId = user.getId();
+        
+    
+    courseService.joinCourse(user, TestCourse);
+    courseService.RemoveUserFromCourse(CourseId, UserId);
+    
+    assertTrue(progressService.getCourseProgressTrackersByUserAndCourse(user, TestCourse).isEmpty());
+    assertTrue(progressService.getGradeProgressTrackersByUserAndCourse(user,TestCourse).isEmpty());
+    assertTrue(progressService.getGoalProgressTrackersByUserAndCourse(user,TestCourse).isEmpty());
+    assertTrue(commentService.getCommentsByUserAndCourse(user,TestCourse).isEmpty());
+        
+        
+        
+    }
+    
 }

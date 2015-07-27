@@ -39,6 +39,11 @@ public class CommentService {
         List<Comment> comments = commentRepository.findByCourse(course);
         return comments;
     }
+    
+    public List<Comment> getCommentsByUserAndCourse(User user, Course course){
+        List<Comment> comments = commentRepository.findByUserAndCourse(user, course);
+        return comments;
+    }
         
     @Transactional
     public void deleteComments(List<Comment> comments){

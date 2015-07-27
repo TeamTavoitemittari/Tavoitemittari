@@ -62,9 +62,9 @@ public class ProgressServiceTest {
     }
 
     @Test
-    public void testGetProgressByCourse(){
+    public void testgetCourseProgressTrackersByCourse(){
         coProgressRepository.save(tracker);
-        assertTrue(progressService.getProgressByCourse(course).size() == 1);
+        assertTrue(progressService.getCourseProgressTrackersByCourse(course).size() == 1);
     }
 
     @Test

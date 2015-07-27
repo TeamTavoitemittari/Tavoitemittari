@@ -155,7 +155,7 @@ public class CourseController {
         ObjectMapper mapper = new ObjectMapper();
 
         Course updateCourse = courseService.getCourseById(courseId);
-        if (progressService.getProgressByCourse(updateCourse).size() > 0) {
+        if (progressService.getCourseProgressTrackersByCourse(updateCourse).size() > 0) {
             redirectAttributes.addFlashAttribute("notEmptyMessage", "Tällä kurssilla on jo ilmoittautuneita oppilaita,"
                     + " joten et voi muokata sitä.");
             return "redirect:/course#update";
