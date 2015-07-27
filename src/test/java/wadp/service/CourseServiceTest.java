@@ -301,6 +301,28 @@ public class CourseServiceTest {
         
         
     }
+    
+    @Test
+    public void GetUsersCoursesWorks(){
+        courseService.addCourse(TestCourse);
+        User user = userService.findUserByEmail("testoppilas@a.com");
+        assertTrue(courseService.getUsersCourses(user).isEmpty());
+        courseService.joinCourse(user,TestCourse);
+        List<Course> courses = courseService.getUsersCourses(user);
+        assertTrue(courses.get(0).getName().equals("Testikurssi"));
+        
+    }
+    
+    @Test
+    public void GetCourseStudentsWorks(){
+        courseService.addCourse(TestCourse);
+        assertTrue(courseService.getCourseStudents(TestCourse).isEmpty());
+        User user = userService.findUserByEmail("testoppilas@a.com");
+        courseService.joinCourse(user,TestCourse);
+        assertTrue(courseService.getCourseStudents(TestCourse).get(0).getName().equals("Matti Meikalainen"));
+    }
+    
+    
     @Test
     public void DeleteCourseWorks(){
         
