@@ -84,7 +84,7 @@ public class CourseController {
         User user = userService.getAuthenticatedUser();
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
-        model.addAttribute("users" , courseService.getCourseStudents(course));
+        model.addAttribute("currentStudent" , userService.getAuthenticatedUser());
 
         return "course";
     }
