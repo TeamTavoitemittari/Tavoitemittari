@@ -17,6 +17,7 @@ import wadp.service.ProgressService;
 import wadp.service.SkillService;
 import wadp.service.UserService;
 
+
 // Any request not handled by other controllers is redirected to index
 @Controller
 @RequestMapping("*")
