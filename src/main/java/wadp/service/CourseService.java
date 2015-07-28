@@ -1,4 +1,3 @@
-
 package wadp.service;
 
 import java.util.ArrayList;
@@ -22,25 +21,25 @@ import wadp.repository.GradeLevelRepository;
 
 @Service
 public class CourseService {
-    
+
     @Autowired
     private CourseProgressRepository progressRepository;
-    
+
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
     private GradeLevelRepository gradeLevelRepository;
-    
+
     @Autowired
     private ProgressService progressService;
 
     @Autowired
     private CommentService commentService;
-    
+
     @Autowired
     private UserService userService;
-    
-    public List<Course> getCourses(){
+
+    public List<Course> getCourses() {
         return courseRepository.findAll();
     }
 
@@ -48,69 +47,66 @@ public class CourseService {
     public void addCourse(Course course) {
         courseRepository.save(course);
     }
-    
-    public Course getCourseById(Long id){
+
+    public Course getCourseById(Long id) {
         return courseRepository.findOne(id);
     }
 
     public void sortCourseGrades(Course course) {
         Collections.sort(course.getGradeLevels());
     }
-    
+
     public void sortCourseGoals(Course course) {
-        for (GradeLevel level : course.getGradeLevels()){
-        Collections.sort(level.getGoals());
+        for (GradeLevel level : course.getGradeLevels()) {
+            Collections.sort(level.getGoals());
         }
     }
-    
+
     @Transactional
-    public void updateCourse(Course course, Long courseId){
+    public void updateCourse(Course course, Long courseId) {
         Course courseToBeUpdated = courseRepository.findOne(courseId);
         courseToBeUpdated.setName(course.getName());
         courseToBeUpdated.setDescription(course.getDescription());
-        
+
         Long OldGradeLevel1Id = courseToBeUpdated.getGradeLevels().get(0).getId();
         Long OldGradeLevel2Id = courseToBeUpdated.getGradeLevels().get(1).getId();
         Long OldGradeLevel3Id = courseToBeUpdated.getGradeLevels().get(2).getId();
-       
+
         courseToBeUpdated.setGradeLevels(course.getGradeLevels());
-      
-       
 
         gradeLevelRepository.delete(OldGradeLevel1Id);
         gradeLevelRepository.delete(OldGradeLevel2Id);
         gradeLevelRepository.delete(OldGradeLevel3Id);
     }
-    
-        public List<Course> getUsersCourses(User user){
+
+    public List<Course> getUsersCourses(User user) {
         List<CourseProgressTracker> trackers = progressRepository.findByUser(user);
         List<Course> courses = new ArrayList<Course>();
-        
-        for (CourseProgressTracker tracker : trackers){
+
+        for (CourseProgressTracker tracker : trackers) {
             courses.add(tracker.getCourse());
-            
+
         }
-        
+
         return courses;
-        
-      }
-        
-        public List<User> getCourseStudents(Course course){
-           List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
-        List<User> users = new ArrayList<User>();
-        
-        for (CourseProgressTracker tracker : trackers){
+
+    }
+
+    public List<User> getCourseStudents(Course course) {
+        List<CourseProgressTracker> trackers = progressRepository.findByCourse(course);
+        List<User> users = new ArrayList<>();
+
+        for (CourseProgressTracker tracker : trackers) {
             users.add(tracker.getUser());
-            
+
         }
-        
+
         return users;
-        }
-       
+    }
+
       ///needs work  
-      
-      public void joinCourse (User user, Course course){
-          CourseProgressTracker tracker = new CourseProgressTracker(user, course);
+    public void joinCourse(User user, Course course) {
+        CourseProgressTracker tracker = new CourseProgressTracker(user, course);
 
         for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
             for (GoalProgressTracker goalTracker : gradeTracker.getGoals().values()) {
@@ -125,53 +121,47 @@ public class CourseService {
             progressService.saveGradeTracker(gradeTracker);
         }
 
+        progressService.saveCourseTracker(tracker);
 
-        
-        progressService.saveCourseTracker(tracker);    
-          
-      }  
-      
-        public List<Course> getCoursesByTeacher(User teacher){
+    }
+
+    public List<Course> getCoursesByTeacher(User teacher) {
         return courseRepository.findByTeacher(teacher);
     }
-        
-        
+
     @Transactional
-    public void deleteCourse(Long courseId){
-        
+    public void deleteCourse(Long courseId) {
+
         Course course = getCourseById(courseId);
         if (progressService.getCourseProgressTrackersByCourse(course).size() > 0) {
-          List<CourseProgressTracker> CourseProgressTrackers = progressService.getCourseProgressTrackersByCourse(course);
-          List<GradeProgressTracker> GradeProgressTrackers = progressService.getGradeProgressTrackersByCourse(course);       
-          List<Comment> comments = commentService.getCommentsByCourse(course);
-          List<GoalProgressTracker> GoalProgressTrackers = progressService.getGoalProgressTrackersByCourse(course);
-           
-           
-          progressService.deleteCourseProgressTrackers(CourseProgressTrackers);
-          progressService.deleteGradeProgressTrackers(GradeProgressTrackers);
-          commentService.deleteComments(comments);
-          progressService.deleteGoalProgressTrackers(GoalProgressTrackers);
-        }
-    courseRepository.delete(getCourseById(courseId));
-        
-    }    
-    
-    public void RemoveUserFromCourse(Long courseId, Long UserId)
-    {
-    Course course = getCourseById(courseId);
-    User user = userService.findById(UserId);
-          
-    List<CourseProgressTracker> courseProgressTrackers = progressService.getCourseProgressTrackersByUserAndCourse(user, course);     
-    List<GradeProgressTracker> gradeProgressTrackers = progressService.getGradeProgressTrackersByUserAndCourse(user, course);
-    List<Comment> comments = commentService.getCommentsByUserAndCourse(user, course);
-    List<GoalProgressTracker>  goalProgressTrackers = progressService.getGoalProgressTrackersByUserAndCourse(user, course);
-    
-    progressService.deleteCourseProgressTrackers(courseProgressTrackers);
-    progressService.deleteGradeProgressTrackers(gradeProgressTrackers);
-    progressService.deleteGoalProgressTrackers(goalProgressTrackers);
-    commentService.deleteComments(comments);
-    
+            List<CourseProgressTracker> CourseProgressTrackers = progressService.getCourseProgressTrackersByCourse(course);
+            List<GradeProgressTracker> GradeProgressTrackers = progressService.getGradeProgressTrackersByCourse(course);
+            List<Comment> comments = commentService.getCommentsByCourse(course);
+            List<GoalProgressTracker> GoalProgressTrackers = progressService.getGoalProgressTrackersByCourse(course);
 
-    }   
+            progressService.deleteCourseProgressTrackers(CourseProgressTrackers);
+            progressService.deleteGradeProgressTrackers(GradeProgressTrackers);
+            commentService.deleteComments(comments);
+            progressService.deleteGoalProgressTrackers(GoalProgressTrackers);
+        }
+        courseRepository.delete(getCourseById(courseId));
+
+    }
+
+    public void RemoveUserFromCourse(Long courseId, Long UserId) {
+        Course course = getCourseById(courseId);
+        User user = userService.findById(UserId);
+
+        List<CourseProgressTracker> courseProgressTrackers = progressService.getCourseProgressTrackersByUserAndCourse(user, course);
+        List<GradeProgressTracker> gradeProgressTrackers = progressService.getGradeProgressTrackersByUserAndCourse(user, course);
+        List<Comment> comments = commentService.getCommentsByUserAndCourse(user, course);
+        List<GoalProgressTracker> goalProgressTrackers = progressService.getGoalProgressTrackersByUserAndCourse(user, course);
+
+        progressService.deleteCourseProgressTrackers(courseProgressTrackers);
+        progressService.deleteGradeProgressTrackers(gradeProgressTrackers);
+        progressService.deleteGoalProgressTrackers(goalProgressTrackers);
+        commentService.deleteComments(comments);
+
+    }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import wadp.domain.Course;
 import wadp.domain.User;
 import wadp.service.CourseService;
 import wadp.service.ProgressService;
@@ -30,6 +31,7 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.GET)
     public String getStudents(Model model) {
         model.addAttribute("users", userService.findUserByRole("student"));
+        model.addAttribute("courses", courseService.getCoursesByTeacher(userService.getAuthenticatedUser()));
         return "students";
     }
 
@@ -48,4 +50,13 @@ public class StudentController {
 
        return "redirect:/student";
     }
+    
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "filter/{id}", method = RequestMethod.GET)
+    public String getFilteredStudents(Model model, @PathVariable Long id) {
+        Course course = courseService.getCourseById(id);
+        model.addAttribute("users", courseService.getCourseStudents(course));
+        model.addAttribute("courses", courseService.getCoursesByTeacher(userService.getAuthenticatedUser()));
+        return "students";
+    }    
 }

@@ -11,10 +11,10 @@
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
         <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
         <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-        <script src="/js/bootstrap.min.js"></script>
         <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>        
         <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>               
         <!--DataTables initialization-->
         <script type="text/javascript" charset="utf8">
             $(document).ready( function () {
@@ -36,7 +36,7 @@
                 } );
             } );
         </script>
-    </head>
+    </head>    
 <body>
     <div th:replace="fragments/components    :: course-navbar">navbar</div>
 
@@ -47,6 +47,18 @@
                 <h3 class="panel-title"><span>Oppilaat</span></h3>
             </div>
             <div class="panel-body">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a th:text="${'Kaikki oppilaat'}" th:href="@{'/student'}"></a></li>
+                        <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'/student/filter/' +${course.id}}"></a></li>
+                    </ul>
+                </div>
+                <br/>
+                
                 <table id="example" class="table table-striped">
                     <thead>
                     <tr>
