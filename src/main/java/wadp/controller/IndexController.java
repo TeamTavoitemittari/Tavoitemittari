@@ -43,6 +43,8 @@ public class IndexController {
 
     @Autowired
     private CommentService commentService;
+    
+    
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex() {
