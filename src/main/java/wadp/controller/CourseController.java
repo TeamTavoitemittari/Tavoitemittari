@@ -45,7 +45,9 @@ public class CourseController {
         if (!model.containsAttribute("course")) {
             model.addAttribute("course", new Course());
         }
-        model.addAttribute("courses", courseService.getCoursesByTeacher(userService.getAuthenticatedUser()));
+        model.addAttribute("coursesNotInUse", courseService.getCoursesNotInUseByTeacher(userService.getAuthenticatedUser()));
+        model.addAttribute("coursesInUse", courseService.getCoursesInUseByTeacher(userService.getAuthenticatedUser()));
+
         return "addcourse";
     }
 
@@ -194,9 +196,10 @@ public class CourseController {
             redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
             return "redirect:/mycourses";
         }
-        
-        courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
-        redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
+        if (courseService.getCourseById(courseId).getInUse()==true){
+         courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
+         redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
+        }
         return "redirect:/mycourses";
 
     }
@@ -211,6 +214,17 @@ public class CourseController {
         }
         return "redirect:/course#owncourses";
         
+    }
+    
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{courseId}/publish", method = RequestMethod.PUT)
+    public String publishCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
+        
+     if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
+         courseService.publishCourse(courseId);
+         redirectAttributes.addFlashAttribute("publishSuccessMessage", "Kurssi julkaistu!");
+        }
+        return "redirect:/course#owncourses";    
     }
 
 

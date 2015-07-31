@@ -65,6 +65,7 @@ public class CourseServiceTest {
         userService.createUser("testoppilas@a.com", "oppilas", "Matti Meikalainen", "student");
         
         TestCourse = new Course();
+        TestCourse.setInUse(true);
         TestCourse.setName("Testikurssi");
         TestCourse.setDescription("Kurssilla perehdytään erinäisiin taivankappaleisiina alkaen omasta aurinkokunnastamme"
                 + "ja edeten hiljalleen galaksin muihin osiin. Kurssin jälkeen tiedät mitä eroa on mustalla aukolla"

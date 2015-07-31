@@ -32,9 +32,12 @@ public class Course extends AbstractPersistable<Long> {
     @OneToMany(cascade = CascadeType.ALL)
     private List<GradeLevel> gradeLevels;
     
+    Boolean inUse;
+    
     
     public Course(){
         this.gradeLevels=new ArrayList<GradeLevel>();
+        this.inUse=false;
     }
     
     public String getName() {
@@ -68,5 +71,14 @@ public class Course extends AbstractPersistable<Long> {
     public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
+
+    public Boolean getInUse() {
+        return inUse;
+    }
+
+    public void setInUse(Boolean inUse) {
+        this.inUse = inUse;
+    }
+    
     
 }

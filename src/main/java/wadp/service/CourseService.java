@@ -42,6 +42,9 @@ public class CourseService {
     public List<Course> getCourses() {
         return courseRepository.findAll();
     }
+     public List<Course> getCoursesInUse() {
+        return courseRepository.findByInUse(true);
+    }
 
     @Transactional
     public void addCourse(Course course) {
@@ -106,9 +109,10 @@ public class CourseService {
 
       ///needs work  
     public void joinCourse(User user, Course course) {
-        CourseProgressTracker tracker = new CourseProgressTracker(user, course);
+        if (course.getInUse()==true){
+         CourseProgressTracker tracker = new CourseProgressTracker(user, course);
 
-        for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
+         for (GradeProgressTracker gradeTracker : tracker.getGradeLevels().values()) {
             for (GoalProgressTracker goalTracker : gradeTracker.getGoals().values()) {
                 progressService.saveGoalTracker(goalTracker);
                 HashMap<Skill, Comment> comments = new HashMap<Skill, Comment>();
@@ -119,15 +123,32 @@ public class CourseService {
                 goalTracker.setComments(comments);
             }
             progressService.saveGradeTracker(gradeTracker);
+         }
+
+         progressService.saveCourseTracker(tracker);
         }
-
-        progressService.saveCourseTracker(tracker);
-
     }
 
     public List<Course> getCoursesByTeacher(User teacher) {
         return courseRepository.findByTeacher(teacher);
     }
+    
+    public List<Course> getCoursesNotInUseByTeacher(User teacher) {
+        Boolean inUse=false;
+        return courseRepository.findByTeacherAndInUse(teacher, inUse);
+    }
+    
+    public List<Course> getCoursesInUseByTeacher(User teacher) {
+        Boolean inUse=true;
+        return courseRepository.findByTeacherAndInUse(teacher, inUse);
+    }
+       
+    @Transactional
+    public void publishCourse(Long courseId) {
+
+    Course course = getCourseById(courseId);
+    course.setInUse(true);
+    }    
 
     @Transactional
     public void deleteCourse(Long courseId) {
@@ -147,7 +168,7 @@ public class CourseService {
         courseRepository.delete(getCourseById(courseId));
 
     }
-
+    @Transactional
     public void RemoveUserFromCourse(Long courseId, Long UserId) {
         Course course = getCourseById(courseId);
         User user = userService.findById(UserId);

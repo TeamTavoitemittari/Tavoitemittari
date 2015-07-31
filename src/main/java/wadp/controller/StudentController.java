@@ -31,7 +31,7 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.GET)
     public String getStudents(Model model) {
         model.addAttribute("users", userService.findUserByRole("student"));
-        model.addAttribute("courses", courseService.getCoursesByTeacher(userService.getAuthenticatedUser()));
+        model.addAttribute("courses", courseService.getCoursesInUseByTeacher(userService.getAuthenticatedUser()));
         return "students";
     }
 
@@ -56,7 +56,7 @@ public class StudentController {
     public String getFilteredStudents(Model model, @PathVariable Long id) {
         Course course = courseService.getCourseById(id);
         model.addAttribute("users", courseService.getCourseStudents(course));
-        model.addAttribute("courses", courseService.getCoursesByTeacher(userService.getAuthenticatedUser()));
+        model.addAttribute("courses", courseService.getCoursesInUseByTeacher(userService.getAuthenticatedUser()));
         return "students";
     }    
 }

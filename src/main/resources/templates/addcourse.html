@@ -143,29 +143,39 @@
                       
        
              <br></br>
+      <div th:if="${deleteSuccessMessage != null}">
+                   <hr></hr>
+                    <div class="alert alert-success" role="alert" th:text="${deleteSuccessMessage}">.</div>
+                    <hr></hr>
+        </div>
+             
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title"><span>Kurssit</span></h3>
+                <h3 class="panel-title"><span>Julkaisettomat kurssit</span></h3>
             </div>
             <div class="panel-body">
                   
-                <div th:if="${deleteSuccessMessage != null}">
-                  <hr></hr>
-                    <div class="alert alert-success" role="alert" th:text="${deleteSuccessMessage}">.</div>
-                </div>
+               
                 
                 
-                <table id="example" class="table table-striped">
+                <table id="CoursesNotInUse" class="table table-striped">
                     <thead>
                     <tr>
                         <th>Kurssin nimi:</th>
+                        <th>Julkaise:</th>
                         <th>Muokkaa:</th>
                         <th>Poista:</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="course : ${courses}">
+                        <tr th:each="course : ${coursesNotInUse}">
                         <td th:text="${course.name}"> </td>
+                        <td>  <form th:method="put" th:action="'/course/'+${course.id}+'/publish'">
+                               <button class="btn btn-primary" type="submit" name="remove">Julkaise</button>
+                              </form>  
+                        </td>
+  
+
                         <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" >Muokkaa</a></td>      
 
                         <td> <a th:href="'#'+${course.id}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}">Poista</a>      
@@ -203,6 +213,74 @@
   
    
             </div>
+        </div>
+             <br></br>
+         <div class="panel panel-primary">    
+            
+            <div class="panel-heading">
+                <h3 class="panel-title"><span>Käytössä olevat kurssit</span></h3>
+            </div>
+            
+            
+             <div class="panel-body">
+                  
+              
+                
+                
+                <table id="CoursesInUse" class="table table-striped">
+                    <thead>
+                    <tr>
+                    <th>Kurssin nimi:</th>
+                        <th>Julkaise:</th>
+                        <th>Muokkaa:</th>
+                        <th>Poista:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${coursesInUse}">
+                         <td th:text="${course.name}"> </td>
+                        <td> <button class="btn btn-primary disabled" >Julkaise</button>                  
+                       </td>
+  
+
+                        <td> <button class="btn btn-success disabled" >Muokkaa</button></td>      
+
+                        <td> <a th:href="'#'+${course.id}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}">Poista</a>      
+                        </td>
+                        
+                        
+                                           
+                       <div th:id="${course.id}" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                               <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                 <h4 class="modal-title">Vahvistus</h4>
+                               </div>
+                                <div class="modal-body">
+                                    <p>Halutatko varmasti poistaa valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
+                                  <p class="text-warning"><small>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</small></p>
+                               </div>
+                                <div class="modal-footer">
+                                   <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                    <button class="btn btn-danger" type="submit" name="remove">Poista</button>
+                                   </form>          
+                                 </div>
+                                </div>
+                              </div>
+                         </div>
+                        
+                        
+                    </tr>
+                    </tbody>
+                </table>
+                
+                
+  
+   
+             </div>
+            
            </div>
           
                             
@@ -224,7 +302,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="courses">
-                        <li th:each="oldCourse : ${courses}"><a th:href="'/course/'+${oldCourse.id}+'/update'" th:text="${oldCourse.name}">Kurssi1</a></li>
+                        <li th:each="oldCourse : ${coursesNotInUse}"><a th:href="'/course/'+${oldCourse.id}+'/update'" th:text="${oldCourse.name}">Kurssi1</a></li>
                     </ul>
                 </div>
 

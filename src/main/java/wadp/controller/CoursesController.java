@@ -21,7 +21,7 @@ public class CoursesController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String showCoursesPage(Model model) {
-        model.addAttribute("courses", courseService.getCourses());
+        model.addAttribute("courses", courseService.getCoursesInUse());
         model.addAttribute("owncourses", courseService.getUsersCourses(userService.getAuthenticatedUser()));
         return "mycourses";
     }
