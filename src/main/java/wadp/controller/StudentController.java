@@ -43,11 +43,11 @@ public class StudentController {
         return "student";
     }
     @PreAuthorize("hasAuthority('teacher')")
-    @RequestMapping(value = "/{courseId}/{userId}/remove", method = RequestMethod.GET)
+    @RequestMapping(value = "/{courseId}/{userId}/remove", method = RequestMethod.DELETE)
     public String removeStudentFromCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @PathVariable Long userId) {
-
-      courseService.RemoveUserFromCourse(courseId, userId);
-
+      if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
+       courseService.RemoveUserFromCourse(courseId, userId);
+      }
        return "redirect:/student";
     }
     

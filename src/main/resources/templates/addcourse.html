@@ -185,11 +185,12 @@
                                   <p class="text-warning"><small>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</small></p>
                                </div>
                                 <div class="modal-footer">
-                               <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
-                    
-                    
-                                  <a th:href="'/course/'+${course.id}+'/delete'"  class="btn btn-danger" name="poista">Poista</a>              </div>
+                                   <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                    <button class="btn btn-danger" type="submit" name="remove">Poista</button>
+                                   </form>          
                                  </div>
+                                </div>
                               </div>
                          </div>
                         

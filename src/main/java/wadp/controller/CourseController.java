@@ -200,16 +200,15 @@ public class CourseController {
         return "redirect:/mycourses";
 
     }
-    
-    @RequestMapping(value = "/{courseId}/delete", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{courseId}/delete", method = RequestMethod.DELETE)
     public String deleteCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
 
      
-
-        courseService.deleteCourse(courseId);
-
-        redirectAttributes.addFlashAttribute("deleteSuccessMessage", "Kurssi poistettu!");
-       
+        if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
+         courseService.deleteCourse(courseId);
+         redirectAttributes.addFlashAttribute("deleteSuccessMessage", "Kurssi poistettu!");
+        }
         return "redirect:/course#owncourses";
         
     }
