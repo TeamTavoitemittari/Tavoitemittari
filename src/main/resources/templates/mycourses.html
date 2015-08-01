@@ -63,12 +63,13 @@
                         <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
                     </div>
                     <div class="panel-body">
+                        <p>Opettaja: <b th:text="${course.teacher.name}">teacher</b> </p>
                         <p th:text="${course.description}">Course description</p> 
                     </div>
                     <div class="panel-footer">
-                        <!-- turha ?? <form th:method="GET" th:action="@{'/course/' + ${course.id} + '/join'}"> -->
-                        <a th:href="@{'/course/' + ${course.id} + '/join'}" class="btn btn-success" th:id="'join' + ${course.id}">Liity kurssille!</a> <button class="btn btn-default" role="button">Lisätietoja</button>
-                       
+                        <form th:method="POST" th:action="@{'/course/' + ${course.id} + '/join'}">
+                         <button class="btn btn-success" type="submit" th:id="'join' + ${course.id}">Liity kurssille!</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                        </form>
                     </div>
 
                 </div>

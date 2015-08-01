@@ -377,4 +377,13 @@ public class CourseServiceTest {
         
     }
     
+    @Test
+    public void PublishCourseWorks(){
+        TestCourse.setInUse(false);
+        courseService.addCourse(TestCourse);
+        courseService.publishCourse(TestCourse.getId());
+        
+        assertTrue(courseService.getCourseById(TestCourse.getId()).getInUse()==true);
+    }
+    
 }

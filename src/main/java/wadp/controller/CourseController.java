@@ -189,7 +189,7 @@ public class CourseController {
         return "redirect:/course#update";
     }
 
-    @RequestMapping(value = "/{courseId}/join", method = RequestMethod.GET)
+    @RequestMapping(value = "/{courseId}/join", method = RequestMethod.POST)
     public String joinCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
         if (progressService.getProgress(userService.getAuthenticatedUser(), courseService.getCourseById(courseId)) != null) {
 
