@@ -1,0 +1,3 @@
+table { table-layout: fixed; }
+td { width: 33%;    word-wrap: break-word;       
+    overflow-wrap: break-word;   }
