@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -184,5 +185,13 @@ public class CourseService {
         commentService.deleteComments(comments);
 
     }
+    
+      public Map<Long, Integer> GetStudentCountsForTeachersEachCourseAsMap(User teacher, List<Course> teachersCourses) {
+        Map<Long, Integer> count = new HashMap<Long, Integer>();
+        for (Course course : teachersCourses) {
+             count.put(course.getId(), progressService.getCourseProgressTrackersByCourse(course).size());
+       }
+       return count;
+    }       
 
 }

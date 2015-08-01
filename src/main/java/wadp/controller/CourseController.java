@@ -91,7 +91,19 @@ public class CourseController {
         return "course";
     }
 
-
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{courseId}/goalometer", method = RequestMethod.GET)
+        public String getStudentGoalOMeterDefault(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
+        Course course = courseService.getCourseById(courseId);
+        if (progressService.getCourseProgressTrackersByCourse(course).isEmpty()==true){
+            redirectAttributes.addFlashAttribute("CourseHasNoStudentsMessage", "Kurssilla ei ole oppilaita!");
+            return "redirect:/mycourses";
+        }
+            
+        Long userId = progressService.getCourseProgressTrackersByCourse(course).get(0).getUser().getId();
+        return "redirect:/course/" + courseId + "/" + userId +"#students";
+     
+        }
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{id}/{studentId}", method = RequestMethod.GET)

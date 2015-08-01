@@ -10,14 +10,17 @@
         <link rel="stylesheet" type="text/css" href="/css/general.css"/>
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
         <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
+        
         <script src="/js/jquery.dropotron.min.js"></script>
+        
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.js"></script>
     </head>
-    <body>
+ 
+ <body>
         <div th:replace="fragments/components :: course-navbar">navbar</div>
         
-        <div class="container">
+        <div class="container" sec:authorize="hasRole('student')">
     <ul class="nav nav-tabs" id="courseCommentTab">
         <li class="active"><a data-toggle="tab" href="#allcourses">Kaikki kurssit</a></li>
         <li><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
@@ -118,11 +121,45 @@
         });
     </script>
 
- </div>
+  </div>
+  <div sec:authorize="hasRole('teacher')">
+     
+      <div class="container">
+            <br></br>
+           <div th:if="${CourseHasNoStudentsMessage != null}">     
+             <div class="alert alert-danger" role="alert" th:text="${CourseHasNoStudentsMessage}">.</div>         
+           </div>
+            
+            <div class="panel panel-primary">    
+            
+               <div class="panel-heading">
+                <h3 class="panel-title"><span>Omat kurssini:</span></h3>
+               </div>
+            
+            
+               <div class="panel-body">
+                   <table id="CoursesInUse" class="table table-striped">
+                    <thead>
+                     <tr>
+                      <th>Kurssin nimi:</th>
+                      <th>Oppilasmäärä:</th>
+                      <th>Tavoitemittarit:</th>
+                        
+                     </tr>
+                    </thead>
+                     <tbody>
+                        <tr th:each="course : ${teachersCourses}">
+                          <td th:text="${course.name}"> </td>
+                          <td th:text="${counts.get(course.id)}">  </td>
+                          <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success">Tavoitemittareihin</a></td>      
+                        </tr>
+                     </tbody>
+                    </table>
+                </div>
+             </div>
+          </div>
+  </div>       
 
-
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
-    </body>
-
+ 
+ </body>
 </html>

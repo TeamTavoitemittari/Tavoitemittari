@@ -48,7 +48,7 @@ public class StudentController {
       if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
        courseService.RemoveUserFromCourse(courseId, userId);
       }
-       return "redirect:/student";
+       return "redirect:/course/" + courseId + "/goalometer";
     }
     
     @PreAuthorize("hasAuthority('teacher')")
