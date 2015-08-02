@@ -102,11 +102,11 @@
                                                       th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
                                                       th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
                                                       style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-custom">
+                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
                                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         Osaa
                                                     </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-success">
+                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
                                                         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
                                                         Vahvista
                                                     </button>
@@ -118,11 +118,11 @@
                                                       th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
                                                       th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
                                                       style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-custom">
+                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
                                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         Osaat
                                                     </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
                                                     <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
                                                 </form>
                                             </div>
@@ -135,8 +135,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div th:case="'STUDENT_CONFIRMED'" class="panel panel-success">
-                            <div class="panel-heading">
+                        <div th:case="'STUDENT_CONFIRMED'" class="panel panel-primary" style="border-color: #84DBB7">
+                            <div class="panel-heading" style="background-color: #84DBB7; border-bottom-color: #84DBB7">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
                                 </h4>
@@ -151,11 +151,11 @@
                                                       th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
                                                       th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
                                                       style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-custom">
+                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
                                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         Osaa
                                                     </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-success">
+                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
                                                         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
                                                         Vahvista
                                                     </button>
@@ -167,11 +167,11 @@
                                                       th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
                                                       th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
                                                       style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-custom">
+                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
                                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         Osaan
                                                     </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
                                                     <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
                                                 </form>
                                             </div>
@@ -200,11 +200,11 @@
                                                       th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
                                                       th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
                                                       style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-custom">
+                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
                                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         Osaa
                                                     </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-success">
+                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
                                                         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
                                                         Vahvista
                                                     </button>
@@ -216,11 +216,11 @@
                                                       th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
                                                       th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
                                                       style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-custom">
+                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
                                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         Osaan
                                                     </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-success">Osaan</button>
+                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
                                                     <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
                                                 </form>
                                             </div>
@@ -245,10 +245,10 @@
                     <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a th:text="${goal.key.name}">Ympyrä</a>
+                                <a data-toggle="collapse" th:href="'#' + ${goal.key.id} + 'comment'" th:text="${goal.key.name}">Ympyrä</a>
                             </h4>
                         </div>
-                        <div class="panel">
+                        <div th:id="${goal.key.id} + 'comment'" class="panel-collapse collapse">
                             <div style="padding: 10px" th:each="skill : ${goal.key.skills}">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
@@ -256,7 +256,7 @@
                                     </div>
                                     <div class="panel-footer">
                                         <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${tracker.user.id} + '/'+ ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
-                                            <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" style="resize: vertical; margin: 8px" th:readonly="true"></textarea>
+                                            <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" rows="5" style="resize: none; margin: 8px" th:readonly="true"></textarea>
                                             <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
                                             <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
                                             <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
@@ -293,8 +293,6 @@
                         
                                <td> <a th:href="'#'+${user.id}+'update'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${user.id}+'update'">Poista</a>      
                         </td>
-                        
-                        
                                            
                        <div th:id="${user.id}+'update'" class="modal fade">
                         <div class="modal-dialog">

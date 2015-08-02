@@ -12,8 +12,14 @@
     float: right;
 }
 
-.btn-custom {
+.btn-teacher {
     color: #FFFFFF;
     background-color: #259C1F;
     border-color: #259C1F;
+}
+
+.btn-student {
+    color: #FFFFFF;
+    background-color: #84DBB7;
+    border-color: #84DBB7;
 }

@@ -40,16 +40,17 @@ public class JoinCourseAndViewCourseStudentsPage {
     public void setUp() {
 
     }
-    
-    @Test
-    public void teacherCanViewCourseStudentPage() {
-        teacherLogin();
-        joinCourse();
-        assertTrue(driver.getPageSource().contains("Sinut on liitetty kurssille!"));
-        getCourseProgressPage();
-        getCourseStudentPage();
-        assertTrue(driver.getPageSource().contains("Olli Opettaja"));
-    }
+
+    //Test structure became irrelevant due to changes in the teacher's mycourses view
+//    @Test
+//    public void teacherCanViewCourseStudentPage() {
+//        teacherLogin();
+//        joinCourse();
+//        assertTrue(driver.getPageSource().contains("Sinut on liitetty kurssille!"));
+//        getCourseProgressPage();
+//        getCourseStudentPage();
+//        assertTrue(driver.getPageSource().contains("Olli Opettaja"));
+//    }
     
 
     @Test
