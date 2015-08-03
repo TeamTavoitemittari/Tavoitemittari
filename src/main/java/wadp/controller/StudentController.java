@@ -39,7 +39,7 @@ public class StudentController {
     public String getStudent(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
-        model.addAttribute("courses", courseService.getUsersCourses(user));
+        model.addAttribute("courses", courseService.getUsersCoursesWithTeacher(user, userService.getAuthenticatedUser()));
         return "student";
     }
     @PreAuthorize("hasAuthority('teacher')")
