@@ -14,6 +14,7 @@ import wadp.service.UserService;
 import wadp.service.EmailAlreadyRegisteredException;
 
 import javax.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -31,6 +32,7 @@ public class RegisterController {
             userService.clearUsers();
             userService.createUser("ope@a.com", "ope", "Olli Opettaja", "teacher");
             userService.createUser("oppilas@a.com", "oppilas", "Matti Meikalainen", "student");
+            userService.createUser("admin@a.com", "admin", "Eve Lappalainen", "admin");
         }
     }
 
@@ -50,9 +52,39 @@ public class RegisterController {
             bindingResult.addError(new FieldError("user", "email", "Sähköpostiosoite on jo rekisteröity palveluun!"));
             return "register";
         }
-        redirectAttributes.addFlashAttribute("registeredEmail", user.getEmail());
 
+        redirectAttributes.addFlashAttribute("registeredEmail", user.getEmail());
         return "redirect:welcome";
+
+    }
+    @PreAuthorize("hasAuthority('admin')")
+    @RequestMapping(value = "/as_admin", method = RequestMethod.POST)
+    public String createUserAsAdmin(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+            redirectAttributes.addFlashAttribute("user", user);
+            return "redirect:/register";
+
+        }
+
+        try {
+            userService.createUser(user.getEmail(), user.getPassword(), user.getName(), user.getUserRole());
+        } catch (EmailAlreadyRegisteredException ex) {
+            bindingResult.addError(new FieldError("user", "email", "Sähköpostiosoite on jo rekisteröity palveluun!"));
+            return "register";
+        }
+
+        return "redirect:admin";
+
+    }
+    @PreAuthorize("hasAuthority('admin')")
+    @RequestMapping(value = "/as_admin", method = RequestMethod.GET)
+    public String RegisterAsAdmin(Model model) {
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new UserForm());
+        }
+        return "register";
     }
 
     @RequestMapping(method = RequestMethod.GET)

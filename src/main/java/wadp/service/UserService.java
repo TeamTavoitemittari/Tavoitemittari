@@ -5,8 +5,6 @@
  */
 package wadp.service;
 
-import wadp.domain.User;
-import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -16,6 +14,7 @@ import wadp.repository.UserRepository;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import wadp.domain.Course;
 
 import wadp.domain.User;
 
@@ -25,10 +24,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> list() {
-        List<User> list = userRepository.findAll();
+    @Autowired
+    private CourseService courseService;
+    
+    @Autowired 
+    private CommentService commentService;
 
+    public List<User> list() {
+        List<User> list = userRepository.findByUserRole("student");
+        list.addAll(userRepository.findByUserRole("teacher"));
         return list;
+    }
+
+    public List<User> getAdmins() {
+        return userRepository.findByUserRole("admin");
     }
 
     private boolean emailAlreadyRegistered(String email) {
@@ -38,10 +47,11 @@ public class UserService {
         }
         return false;
     }
+
     @Transactional
     public User createUser(String email, String password, String name, String userRole) {
 
-        if (email== null || email.isEmpty()) {
+        if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email must not be null or empty");
         }
         email = email.toLowerCase();
@@ -78,12 +88,12 @@ public class UserService {
     }
 
     @Transactional
-    public User ChangePassword(String newPassword){
-        if (newPassword== null || newPassword.isEmpty()) {
+    public User ChangePassword(String newPassword) {
+        if (newPassword == null || newPassword.isEmpty()) {
             throw new IllegalArgumentException("newPassword must not be null or empty");
         }
 
-        if (SecurityContextHolder.getContext().getAuthentication()==null) {
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
             throw new AuthenticatedUserIsNullException();
         }
         User user = getAuthenticatedUser();
@@ -96,7 +106,7 @@ public class UserService {
 
     }
 
-    public User findUserByEmail(String email){
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -108,9 +118,33 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public void clearUsers(){
+    public void clearUsers() {
         userRepository.deleteAll();
     }
-    
+
+    @Transactional
+    public void deleteUser(Long id) {
+            User user = userRepository.findOne(id);
+            System.out.println(user.getName());
+            System.out.println(user.getName());
+            System.out.println(user.getName());
+            System.out.println(user.getName());
+            System.out.println(user.getName());
+            if (user.getUserRole().equals("student")) {
+                List<Course> courses = courseService.getUsersCourses(user);
+                for (Course course : courses) {
+                    courseService.RemoveUserFromCourse(course.getId(), id);
+                }
+                userRepository.delete(id);
+            }
+            if (user.getUserRole().equals("teacher")) {
+                List<Course> courses = courseService.getCoursesByTeacher(user);
+                for (Course course : courses) {
+                    courseService.deleteCourse(course.getId());
+                }
+                userRepository.delete(id);
+
+            }   
+    }
 
 }

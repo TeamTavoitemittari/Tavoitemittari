@@ -44,8 +44,9 @@
                     <div class="form-group">
                         <label for="password">Käyttäjän rooli</label>
                         <select name="userRole"  class="form-control">
+                            <option sec:authorize="hasRole('admin')" value="teacher">teacher</option>
                             <option value="student">student</option>
-                            <option value="teacher">teacher</option>
+                            
                         </select> 
                     </div>
 

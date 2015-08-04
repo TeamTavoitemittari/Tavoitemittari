@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Control Panel</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>        
+        <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>               
+        <!--DataTables initialization-->
+        <script type="text/javascript" charset="utf8">
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    "language": {
+                        "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
+                        "zeroRecords": "Mitään ei löytynyt",
+                        "info": "Sivu _PAGE_ / _PAGES_",
+                        "infoEmpty": "Haku ei vastaa taulun sisältöä",
+                        "infoFiltered": "(haku rajattu _MAX_ oppilaasta)",
+                        "search": "Haku",
+                        "paginate": {
+                            "first": "Ensimmäinen",
+                            "last": "Viimeinen",
+                            "next": "Seuraava",
+                            "previous": "Edellinen"
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>    
+    <body>
+        <div th:replace="fragments/components    :: course-navbar">navbar</div>
+
+        <div class="row center-block col-xs-24 col-sm-10 col-md-8 col-lg-6">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span>Oppilaat</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Dropdown
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a th:text="${'Kaikki oppilaat'}" th:href="@{'/admin'}"></a></li>
+                            <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'/admin/filter/' +${course.id}}"></a></li>
+                        </ul>
+                    </div>
+                    <br/>
+
+                    <table id="example" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nimi</th>
+                                <th>Sähköposti</th>
+                                <th>Rooli</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user : ${users}">
+                                <td><a th:text="${user.name}" th:href="@{'/admin/' + ${user.id}}"></a></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.userRole}"></td>
+                                <td> <a th:href="'#'+${user.id}+'delete'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${user.id}+'delete'">Poista</a></td>
+                                            <div th:id="${user.id}+'delete'" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Vahvistus</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Halutatko varmasti poistaa valitsemasi käyttäjän? <b th:text="${user.name}">nimi</b>?</p>
+                            <p>Jos poistat käyttäjän menetät kaikki kyseiseen käyttäjään liittyvät tiedot.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <form th:method="delete" th:action="'admin/'+${user.id}+'/delete'">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                <button class="btn btn-danger" type="submit" name="remove">Poista</button>
+                            </form>          
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a id="newuser" href='register/as_admin'>Lisää uusi käyttäjä</a>
+        </div>
+
+    </body>
+
+</html>

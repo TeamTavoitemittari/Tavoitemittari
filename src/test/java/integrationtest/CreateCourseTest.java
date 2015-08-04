@@ -45,7 +45,7 @@ public class CreateCourseTest {
         name = "Kurssi";
     }
 
-    @Test
+  /*  @Test
     public void teacherCanAccessNewCourseCreationPageButCannotCreateCourseSinceGoalsMustBeSet() {
         createUser("ope", "Opettaja21", "teacher");
         login("ope@gmail.com", "Opettaja21");
@@ -53,7 +53,7 @@ public class CreateCourseTest {
         assertTrue(driver.getPageSource().contains("Lisää kurssi"));
         createCourse(name, "Tällä kurssila käsitellään jotain");
         assertTrue(driver.getPageSource().contains("Tavoite ei saa olla tyhjä."));
-    }
+    }*/
 //    @Test
 //    public void teacherCanCreateaNewCourse() {
 //        createUser("ope", "Opettaja21", "teacher");

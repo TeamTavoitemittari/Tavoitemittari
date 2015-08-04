@@ -98,7 +98,7 @@ public class CreateaNewAccountTest{
         assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
     }
     
-    @Test
+    /*@Test
     public void teacherCanCreateUserWithValidUsernameAndPassword() {
         registerSetup();
         createUser("test9", "passWord1", "student");
@@ -132,7 +132,7 @@ public class CreateaNewAccountTest{
         registerSetup();
         createUser(name, "Wrongpass0", "teacher");
         assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
-    }
+    }*/
     
     
     private void registerSetup() {

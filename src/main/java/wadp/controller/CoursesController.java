@@ -34,7 +34,10 @@ public class CoursesController {
          model.addAttribute("teachersCourses", teachersCourses);
          model.addAttribute("counts", courseService.GetStudentCountsForTeachersEachCourseAsMap(userService.getAuthenticatedUser(), teachersCourses));
          
-        } 
+        }
+        if(userService.getAuthenticatedUser().getUserRole().equals("admin")){
+            return "redirect:/admin";
+        }
         return "mycourses";
        
     }

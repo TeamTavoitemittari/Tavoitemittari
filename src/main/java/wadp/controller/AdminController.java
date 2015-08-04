@@ -1,5 +1,6 @@
 package wadp.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,55 +12,66 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.Course;
 import wadp.domain.User;
 import wadp.service.CourseService;
-import wadp.service.ProgressService;
 import wadp.service.UserService;
 
 @Controller
-@RequestMapping(value = "/student")
-public class StudentController {
+@RequestMapping(value = "/admin")
+public class AdminController {
 
     @Autowired
     private UserService userService;
     
-    @Autowired
-    private ProgressService progressService;
 
     @Autowired
     private CourseService courseService;
 
-    @PreAuthorize("hasAuthority('teacher')")
+    @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(method = RequestMethod.GET)
     public String getStudents(Model model) {
-        model.addAttribute("users", userService.findUserByRole("student"));
-        model.addAttribute("courses", courseService.getCoursesInUseByTeacher(userService.getAuthenticatedUser()));
-        return "students";
+        model.addAttribute("users", userService.list());
+        model.addAttribute("courses", courseService.getCourses());
+        return "admin_index";
     }
-    
 
-    
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getStudent(Model model, @PathVariable Long id) {
+    public String getUser(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         model.addAttribute("courses", courseService.getUsersCourses(user));
         return "student";
     }
-    @PreAuthorize("hasAuthority('teacher')")
+    @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/{courseId}/{userId}/remove", method = RequestMethod.DELETE)
-    public String removeStudentFromCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @PathVariable Long userId) {
-      if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
+    public String removeUserFromCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @PathVariable Long userId) {
        courseService.RemoveUserFromCourse(courseId, userId);
-      }
        return "redirect:/course/" + courseId + "/goalometer";
     }
     
-    @PreAuthorize("hasAuthority('teacher')")
+    @PreAuthorize("hasAuthority('admin')")
+    @RequestMapping(value = "/{userId}/delete", method = RequestMethod.DELETE)
+     public String deleteUser(RedirectAttributes redirectAttributes, @PathVariable Long userId) {
+       userService.deleteUser(userId);
+       return "redirect:/admin";
+    }
+    
+    @PreAuthorize("hasAuthority('admin')")
+    @RequestMapping(value="/newuser")
+    public String createNewuser(){
+        return "register";
+    }
+    
+    
+    
+    
+    @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "filter/{id}", method = RequestMethod.GET)
-    public String getFilteredStudents(Model model, @PathVariable Long id) {
+    public String getFilteredUsers(Model model, @PathVariable Long id) {
         Course course = courseService.getCourseById(id);
-        model.addAttribute("users", courseService.getCourseStudents(course));
-        model.addAttribute("courses", courseService.getCoursesInUseByTeacher(userService.getAuthenticatedUser()));
-        return "students";
+        List<User> users = courseService.getCourseStudents(course);
+        users.add(courseService.getCourseById(id).getTeacher());
+        model.addAttribute("users", users);
+        model.addAttribute("courses", courseService.getCourses());
+        return "admin_index";
     }  
 }

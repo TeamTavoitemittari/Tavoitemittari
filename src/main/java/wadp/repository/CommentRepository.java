@@ -14,4 +14,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
      public List<Comment> findByCourse(Course course);
      
      public List<Comment> findByUserAndCourse(User user, Course course);
+     
+     public List<Comment> findByUser(User user);
 }
