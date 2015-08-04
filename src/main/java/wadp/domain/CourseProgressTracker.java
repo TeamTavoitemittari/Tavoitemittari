@@ -20,6 +20,8 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
     @ElementCollection
     @CollectionTable(name = "grade_level_progress")
     private Map<GradeLevel, GradeProgressTracker> gradeLevels;
+    
+    private boolean completed;
 
     public CourseProgressTracker(){
         this.gradeLevels=new HashMap<GradeLevel, GradeProgressTracker>();
@@ -73,6 +75,13 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
 
     public void setGradeLevels(Map<GradeLevel, GradeProgressTracker> gradeLevels) {
         this.gradeLevels = gradeLevels;
+    }
+    
+    public void setCompleted(Boolean completed){
+        this.completed=completed;
+    }
+    public boolean getCompleted(){
+        return completed;
     }
 
 }

@@ -2,6 +2,7 @@ package wadp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.*;
 import wadp.service.*;
@@ -38,6 +40,9 @@ public class CourseController {
 
     @Autowired
     GoalService goalService;
+
+    @Autowired
+    private GradeService gradeService;
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
@@ -69,7 +74,7 @@ public class CourseController {
         courseService.addCourse(course);
         redirectAttributes.addFlashAttribute("creationSuccessMessage", "Kurssi luotu!");
         return "redirect:/course";
-        
+
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -86,24 +91,24 @@ public class CourseController {
         User user = userService.getAuthenticatedUser();
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
-        model.addAttribute("currentStudent" , userService.getAuthenticatedUser());
+        model.addAttribute("currentStudent", userService.getAuthenticatedUser());
 
         return "course";
     }
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/goalometer", method = RequestMethod.GET)
-        public String getStudentGoalOMeterDefault(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
+    public String getStudentGoalOMeterDefault(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        if (progressService.getCourseProgressTrackersByCourse(course).isEmpty()==true){
+        if (progressService.getCourseProgressTrackersByCourse(course).isEmpty() == true) {
             redirectAttributes.addFlashAttribute("CourseHasNoStudentsMessage", "Kurssilla ei ole oppilaita!");
             return "redirect:/mycourses";
         }
-            
+
         Long userId = progressService.getCourseProgressTrackersByCourse(course).get(0).getUser().getId();
-        return "redirect:/course/" + courseId + "/" + userId +"#students";
-     
-        }
+        return "redirect:/course/" + courseId + "/" + userId + "#students";
+
+    }
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{id}/{studentId}", method = RequestMethod.GET)
@@ -111,10 +116,10 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         courseService.sortCourseGrades(course);
         courseService.sortCourseGoals(course);
-        
-        if (userService.getAuthenticatedUser().getId()!=course.getTeacher().getId()){
-             throw new IllegalArgumentException("Teacher can only access his own courses");
-            
+
+        if (userService.getAuthenticatedUser().getId() != course.getTeacher().getId()) {
+            throw new IllegalArgumentException("Teacher can only access his own courses");
+
         }
         if (course == null) {
             return "redirect:/mycourses";
@@ -124,7 +129,13 @@ public class CourseController {
         User user = userService.findById(studentId);
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
-        model.addAttribute("users" , courseService.getCourseStudents(course));
+        List<User> students= courseService.getCourseStudents(course);
+        HashMap<User, Grade> studentGrades = new HashMap();
+        for (User student : students) {
+            studentGrades.put(student, gradeService.getStudentCourseGrade(student, course));
+        }
+        model.addAttribute("users", courseService.getCourseStudents(course));
+        model.addAttribute("studentGrades", studentGrades);
         model.addAttribute("currentStudent", user);
         return "course";
     }
@@ -161,7 +172,7 @@ public class CourseController {
         Skill skill = skillService.findSkill(skillId);
         CourseProgressTracker tracker = progressService.getProgress(userService.findById(userId), course);
         progressService.swapSkillStatusAsTeacher(tracker, gradeLevel, goal, skill);
-        
+
         return "redirect:/course/" + courseId + "/" + userId;
     }
 
@@ -212,36 +223,44 @@ public class CourseController {
             redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
             return "redirect:/mycourses";
         }
-        if (courseService.getCourseById(courseId).getInUse()==true){
-         courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
-         redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
+        if (courseService.getCourseById(courseId).getInUse() == true) {
+            courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
+            redirectAttributes.addFlashAttribute("joinedSuccessMessage", "Sinut on liitetty kurssille!");
         }
         return "redirect:/mycourses";
 
     }
+
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/delete", method = RequestMethod.DELETE)
     public String deleteCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
 
-     
-        if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
-         courseService.deleteCourse(courseId);
-         redirectAttributes.addFlashAttribute("deleteSuccessMessage", "Kurssi poistettu!");
+        if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())) {
+            courseService.deleteCourse(courseId);
+            redirectAttributes.addFlashAttribute("deleteSuccessMessage", "Kurssi poistettu!");
         }
         return "redirect:/course#owncourses";
-        
+
     }
-    
+
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/publish", method = RequestMethod.PUT)
     public String publishCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
-        
-     if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())){
-         courseService.publishCourse(courseId);
-         redirectAttributes.addFlashAttribute("publishSuccessMessage", "Kurssi julkaistu!");
+
+        if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())) {
+            courseService.publishCourse(courseId);
+            redirectAttributes.addFlashAttribute("publishSuccessMessage", "Kurssi julkaistu!");
         }
-        return "redirect:/course#owncourses";    
+        return "redirect:/course#owncourses";
     }
 
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{userId}/{courseId}/grade", method = RequestMethod.POST)
+    public String giveGrade(@PathVariable Long courseId, @PathVariable Long userId, @RequestParam String grade) {
+        if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())) {
+            gradeService.giveGrade(userService.findById(userId), courseService.getCourseById(courseId), grade);
+        }
+        return "redirect:/course/" + courseId + "/goalometer";
+    }
 
 }

@@ -79,6 +79,7 @@ public class ProgressService {
     @Transactional
     public CourseProgressTracker createProgressTracker(User user, Course course){
         CourseProgressTracker tracker = new CourseProgressTracker(user, course);
+        tracker.setCompleted(false);
         progressRepository.save(tracker);
         return tracker;
     }

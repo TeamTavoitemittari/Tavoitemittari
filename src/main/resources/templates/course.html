@@ -1,48 +1,48 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/css/course.css" />
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/course.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-            <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-            
-            
+    <head lang="en">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="/css/course.css" />
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/course.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+
+
         <!--These seem to interfere with css files needed for teacher 
         confirming  students' progress
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
         <!-->
-        
-        
+
+
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/css/general.css"/>
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
         <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
         <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-     
+
         <!-- This messes with the hallinto-dropdown menu
         <script src="/js/bootstrap.js"></script>-->
-        
-        
-        
+
+
+
         <script src="/js/jquery.dropotron.min.js"></script>
         <!--TÄMÄ HAJOTTAA TESTIT SYYSTÄ X <script src="/js/init.js"></script><!-->
         <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
         <!--DataTables initialization-->
         <script type="text/javascript" charset="utf8">
-            $(document).ready( function () {
-                $('#example').DataTable( {
+            $(document).ready(function () {
+                $('#example').DataTable({
                     "language": {
                         "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
                         "zeroRecords": "Mitään ei löytynyt",
@@ -57,305 +57,335 @@
                             "previous": "Edellinen"
                         }
                     }
-                } );
-            } );
-        </script>
-    
-    <title>Tavoitemittari</title>
-    
-    
-</head>
-
-
-<body>
-<div th:replace="fragments/components :: course-navbar">navbar</div>
-
-<div class="container">
-    <div th:if="${currentStudent !=null} and ${course != null}">
-        <h1><b><span th:text="${course.name}"></span></b> : <b><span th:text="${currentStudent.name}"></span></b></h1>
-    </div>
-    <div class="row" th:if="${course != null}">
-        <ul class="nav nav-tabs" id="courseCommentTab">
-            <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>
-            <li><a data-toggle="tab" href="#comments" name="commenttab">Kommentit</a></li>
-            <li sec:authorize="hasRole('teacher')"><a data-toggle="tab" href="#students" name="studenttab" >Oppilaat</a></li>
-        </ul>
-        <!-- Goal-o-meter tab where students mark their progress and the teacher confirms them  -->
-        <div class="tab-content">
-            <div id="goalometer" class="tab-pane fade in active">
-                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
-                    <h1 th:text="${gradeLevel.grade}">4-10</h1>
-                    <div th:each="goal : ${gradeLevel.goals}" th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Ready?.name()}">
-                        <div th:case="'TEACHER_CONFIRMED'" class="panel panel-primary" style="border-color: #4EC748">
-                            <div class="panel-heading" style="background-color: #4EC748; border-bottom-color: #4EC748">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
-                                </h4>
-                            </div>
-                            <div th:id="${goal.id}" class="panel-collapse collapse">
-                                <div style="padding: 10px" th:each="skill : ${goal.skills}">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                            <div sec:authorize="hasRole('teacher')">
-                                                <form method="post"
-                                                      th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                      th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
-                                                      style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
-                                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        Osaa
-                                                    </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
-                                                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                        Vahvista
-                                                    </button>
-                                                    <button th:case="*" type="submit" class="btn btn-sm btn-default">Vahvista</button>
-                                                </form>
-                                            </div>
-                                            <div sec:authorize="hasRole('student')">
-                                                <form method="post"
-                                                      th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                      th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
-                                                      style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
-                                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        Osaat
-                                                    </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
-                                                    <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <b>Tehtävät:</b>
-                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div th:case="'STUDENT_CONFIRMED'" class="panel panel-primary" style="border-color: #84DBB7">
-                            <div class="panel-heading" style="background-color: #84DBB7; border-bottom-color: #84DBB7">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
-                                </h4>
-                            </div>
-                            <div th:id="${goal.id}" class="panel-collapse collapse">
-                                <div style="padding: 10px" th:each="skill : ${goal.skills}">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                            <div sec:authorize="hasRole('teacher')">
-                                                <form method="post"
-                                                      th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                      th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
-                                                      style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
-                                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        Osaa
-                                                    </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
-                                                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                        Vahvista
-                                                    </button>
-                                                    <button th:case="*" type="submit" class="btn btn-sm btn-default">Vahvista</button>
-                                                </form>
-                                            </div>
-                                            <div sec:authorize="hasRole('student')">
-                                                <form method="post"
-                                                      th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                      th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
-                                                      style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
-                                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        Osaan
-                                                    </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
-                                                    <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <b>Tehtävät:</b>
-                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div th:case="*" class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
-                                </h4>
-                            </div>
-                            <div th:id="${goal.id}" class="panel-collapse collapse">
-                                <div style="padding: 10px" th:each="skill : ${goal.skills}">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                            <div sec:authorize="hasRole('teacher')">
-                                                <form method="post"
-                                                      th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                      th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
-                                                      style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
-                                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        Osaa
-                                                    </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
-                                                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                        Vahvista
-                                                    </button>
-                                                    <button th:case="*" type="submit" class="btn btn-sm btn-default">Vahvista</button>
-                                                </form>
-                                            </div>
-                                            <div sec:authorize="hasRole('student')">
-                                                <form method="post"
-                                                      th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
-                                                      th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
-                                                      style="display: inline-block; float: right;">
-                                                    <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
-                                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        Osaan
-                                                    </button>
-                                                    <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
-                                                    <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <b>Tehtävät:</b>
-                                            <div th:text="${skill.exercise}">Ei tehtäviä</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
-            </div>
-
-            <!-- Comments tab where students comment on a specific goal -->
-            <div id="comments" class="tab-pane fade">
-                <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
-                    <h1 th:text="${gradeLevel.key.grade}">4-10</h1>
-                    <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" th:href="'#' + ${goal.key.id} + 'comment'" th:text="${goal.key.name}">Ympyrä</a>
-                            </h4>
-                        </div>
-                        <div th:id="${goal.key.id} + 'comment'" class="panel-collapse collapse">
-                            <div style="padding: 10px" th:each="skill : ${goal.key.skills}">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${tracker.user.id} + '/'+ ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
-                                            <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" rows="5" style="resize: none; margin: 8px" th:readonly="true"></textarea>
-                                            <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
-                                            <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
-                                            <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
-                                            <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
-            </div>
-            <div id="students" class="tab-pane fade" sec:authorize="hasRole('teacher')">
-            <div th:if="${users != null}">
-                      <div class="panel panel-primary">
-             <div class="panel-heading">
-                <h3 class="panel-title"><span>Oppilaat</span></h3>
-             </div>
-             <div class="panel-body">
-                <table id="example" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Nimi</th>
-                        <th>Sähköposti</th>
-                        <th>Poista kurssilta</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="user : ${users}">
-                        <td><a th:text="${user.name}" th:href="@{'/course/'+${course.id}+'/' + ${user.id}}"></a></td>
-                        <td th:text="${user.email}"></td>
-                       
-                        
-                               <td> <a th:href="'#'+${user.id}+'update'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${user.id}+'update'">Poista</a>      
-                        </td>
-                                           
-                       <div th:id="${user.id}+'update'" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                               <div class="modal-header">
-                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                 <h4 class="modal-title">Vahvistus</h4>
-                               </div>
-                                <div class="modal-body">
-                                    <p>Halutatko varmasti poistaa valitsemasi oppilaan <b th:text="${user.name}">nimi</b> kurssilta?</p>
-                                
-                               </div>
-                                <div class="modal-footer">
-                                    
-                                    <form th:method="delete" th:action="'/student/'+${course.id}+'/' + ${user.id}+'/remove'">
-                                     <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
-                                     <button class="btn btn-danger" type="submit" name="remove">Poista</button>
-                                    </form>  
-                                   </div>
-                                 </div>
-                              </div>
-                         </div>
-                        
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-            </div>
-          </div>    
-        </div>
-        
-        
-        <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">
-            <div class="progress">
-                <div class="progress-bar progress-bar-success" style="width: 35%">
-                    <span class="sr-only">35% Complete (success)</span>
-                </div>
-                <div class="progress-bar progress-bar-warning" style="width: 20%">
-                    <span class="sr-only">20% Complete (warning)</span>
-                </div>
-                <div class="progress-bar progress-bar-danger" style="width: 10%">
-                    <span class="sr-only">10% Complete (danger)</span>
-                </div>
-            </div>
-        </div> -->
-    </div>
-
-    <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-    <script>
-        $(document).ready(function() {
-            if(location.hash) {
-                $('a[href=' + location.hash + ']').tab('show');
-            }
-            $(document.body).on("click", "a[data-toggle]", function(event) {
-                location.hash = this.getAttribute("href");
+                });
             });
-        });
-        $(window).on('popstate', function() {
-            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
-            $('a[href=' + anchor + ']').tab('show');
-        });
-    </script>
+        </script>
 
-</div>
-</body></html>
+        <title>Tavoitemittari</title>
+
+
+    </head>
+
+
+    <body>
+        <div th:replace="fragments/components :: course-navbar">navbar</div>
+
+        <div class="container">
+            <div th:if="${currentStudent !=null} and ${course != null}">
+                <h1><b><span th:text="${course.name}"></span></b> : <b><span th:text="${currentStudent.name}"></span></b></h1>
+            </div>
+            <div class="row" th:if="${course != null}">
+                <ul class="nav nav-tabs" id="courseCommentTab">
+                    <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>
+                    <li><a data-toggle="tab" href="#comments" name="commenttab">Kommentit</a></li>
+                    <li sec:authorize="hasRole('teacher')"><a data-toggle="tab" href="#students" name="studenttab" >Oppilaat</a></li>
+                </ul>
+                <!-- Goal-o-meter tab where students mark their progress and the teacher confirms them  -->
+                <div class="tab-content">
+                    <div id="goalometer" class="tab-pane fade in active">
+                        <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${course.gradeLevels}">
+                            <h1 th:text="${gradeLevel.grade}">4-10</h1>
+                            <div th:each="goal : ${gradeLevel.goals}" th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Ready?.name()}">
+                                <div th:case="'TEACHER_CONFIRMED'" class="panel panel-primary" style="border-color: #4EC748">
+                                    <div class="panel-heading" style="background-color: #4EC748; border-bottom-color: #4EC748">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                        </h4>
+                                    </div>
+                                    <div th:id="${goal.id}" class="panel-collapse collapse">
+                                        <div style="padding: 10px" th:each="skill : ${goal.skills}">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
+                                                    <div sec:authorize="hasRole('teacher')">
+                                                        <form method="post"
+                                                              th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                              th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
+                                                              style="display: inline-block; float: right;">
+                                                            <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
+                                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                                Osaa
+                                                            </button>
+                                                            <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
+                                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                                                Vahvista
+                                                            </button>
+                                                            <button th:case="*" type="submit" class="btn btn-sm btn-default">Vahvista</button>
+                                                        </form>
+                                                    </div>
+                                                    <div sec:authorize="hasRole('student')">
+                                                        <form method="post"
+                                                              th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                              th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
+                                                              style="display: inline-block; float: right;">
+                                                            <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
+                                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                                Osaat
+                                                            </button>
+                                                            <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
+                                                            <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <b>Tehtävät:</b>
+                                                    <div th:text="${skill.exercise}">Ei tehtäviä</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:case="'STUDENT_CONFIRMED'" class="panel panel-primary" style="border-color: #84DBB7">
+                                    <div class="panel-heading" style="background-color: #84DBB7; border-bottom-color: #84DBB7">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                        </h4>
+                                    </div>
+                                    <div th:id="${goal.id}" class="panel-collapse collapse">
+                                        <div style="padding: 10px" th:each="skill : ${goal.skills}">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
+                                                    <div sec:authorize="hasRole('teacher')">
+                                                        <form method="post"
+                                                              th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                              th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
+                                                              style="display: inline-block; float: right;">
+                                                            <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
+                                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                                Osaa
+                                                            </button>
+                                                            <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
+                                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                                                Vahvista
+                                                            </button>
+                                                            <button th:case="*" type="submit" class="btn btn-sm btn-default">Vahvista</button>
+                                                        </form>
+                                                    </div>
+                                                    <div sec:authorize="hasRole('student')">
+                                                        <form method="post"
+                                                              th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                              th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
+                                                              style="display: inline-block; float: right;">
+                                                            <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
+                                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                                Osaan
+                                                            </button>
+                                                            <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
+                                                            <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <b>Tehtävät:</b>
+                                                    <div th:text="${skill.exercise}">Ei tehtäviä</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:case="*" class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                        </h4>
+                                    </div>
+                                    <div th:id="${goal.id}" class="panel-collapse collapse">
+                                        <div style="padding: 10px" th:each="skill : ${goal.skills}">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
+                                                    <div sec:authorize="hasRole('teacher')">
+                                                        <form method="post"
+                                                              th:action="@{'/course/'+ ${tracker.user.id}+ '/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                              th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
+                                                              style="display: inline-block; float: right;">
+                                                            <button th:case="'TEACHER_CONFIRMED'" type="submit" class="btn btn-sm btn-teacher">
+                                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                                Osaa
+                                                            </button>
+                                                            <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">
+                                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                                                Vahvista
+                                                            </button>
+                                                            <button th:case="*" type="submit" class="btn btn-sm btn-default">Vahvista</button>
+                                                        </form>
+                                                    </div>
+                                                    <div sec:authorize="hasRole('student')">
+                                                        <form method="post"
+                                                              th:action="@{'/course/' + ${course.id} + '/' + ${gradeLevel.id} + '/' + ${goal.id} + '/' + ${skill.id}}"
+                                                              th:switch="${tracker.gradeLevels.get(gradeLevel).Goals.get(goal).Skills.get(skill)?.name()}"
+                                                              style="display: inline-block; float: right;">
+                                                            <button th:case="'TEACHER_CONFIRMED'" class="btn btn-sm btn-teacher">
+                                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                                Osaan
+                                                            </button>
+                                                            <button th:case="'STUDENT_CONFIRMED'" type="submit" class="btn btn-sm btn-student">Osaan</button>
+                                                            <button th:case="*" type="submit" class="btn btn-sm btn-default">Osaan</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <b>Tehtävät:</b>
+                                                    <div th:text="${skill.exercise}">Ei tehtäviä</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+                    </div>
+
+                    <!-- Comments tab where students comment on a specific goal -->
+                    <div id="comments" class="tab-pane fade">
+                        <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
+                            <h1 th:text="${gradeLevel.key.grade}">4-10</h1>
+                            <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" th:href="'#' + ${goal.key.id} + 'comment'" th:text="${goal.key.name}">Ympyrä</a>
+                                    </h4>
+                                </div>
+                                <div th:id="${goal.key.id} + 'comment'" class="panel-collapse collapse">
+                                    <div style="padding: 10px" th:each="skill : ${goal.key.skills}">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <span th:text="${skill.description}">Taidon kuvaus puuttuu</span>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${tracker.user.id} + '/'+ ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
+                                                    <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" rows="5" style="resize: none; margin: 8px" th:readonly="true"></textarea>
+                                                    <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
+                                                    <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
+                                                    <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
+                                                    <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+                    </div>
+                    <div id="students" class="tab-pane fade" sec:authorize="hasRole('teacher')">
+                        <div th:if="${users != null}">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><span>Oppilaat</span></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table id="example" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nimi</th>
+                                                <th>Sähköposti</th>
+                                                <th>Arvosana</th>
+                                                <th>Poista kurssilta</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                    
+                                            <tr th:each="studentGrade : ${studentGrades}">
+                                                <td><a th:text="${studentGrade.key.name}" th:href="@{'/course/'+${course.id}+'/' + ${studentGrade.key.id}}"></a></td>
+                                                <td th:text="${studentGrade.key.email}"></td>
+                                                <td><div th:if="${studentGrade.value!=null}" th:text="${studentGrade.value.grade}"></div>
+                                                    <a th:if="${studentGrade.value==null}" th:href="'#'+${studentGrade.key.id}+'grade'" class="btn btn-default" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'grade'">Arvostele</a>
+                                                </td>
+                                                
+                                                <div th:id="${studentGrade.key.id}+'grade'" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Vahvistus</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Anna arvosana oppilaalle <b th:text="${studentGrade.key.name}">nimi</b> kurssille <b th:text="${course.name}">nimi</b></p>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <form th:method="post" th:action="'/course/'+${studentGrade.key.id}+'/' + ${course.id}+'/grade'">
+                                                                    <input type="text" name="grade" id="grade"/>
+                                                                    <button class="btn btn-primary" type="submit" name="grade">Arvostele</button>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                                                </form>  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                                <td> <a th:href="'#'+${studentGrade.key.id}+'update'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'update'">Poista</a>      
+                                                </td>
+
+                                                <div th:id="${studentGrade.key.id}+'update'" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Vahvistus</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Halutatko varmasti poistaa valitsemasi oppilaan <b th:text="${studentGrade.key.name}">nimi</b> kurssilta?</p>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <form th:method="delete" th:action="'/student/'+${course.id}+'/' + ${studentGrade.key.id}+'/remove'">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                                                    <button class="btn btn-danger" type="submit" name="remove">Poista</button>
+                                                                </form>  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+
+
+                <!-- <div class="center-block col-xs-8 col-sm-9 col-md-10 col-lg-11">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" style="width: 35%">
+                            <span class="sr-only">35% Complete (success)</span>
+                        </div>
+                        <div class="progress-bar progress-bar-warning" style="width: 20%">
+                            <span class="sr-only">20% Complete (warning)</span>
+                        </div>
+                        <div class="progress-bar progress-bar-danger" style="width: 10%">
+                            <span class="sr-only">10% Complete (danger)</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
+            <script>
+                $(document).ready(function () {
+                    if (location.hash) {
+                        $('a[href=' + location.hash + ']').tab('show');
+                    }
+                    $(document.body).on("click", "a[data-toggle]", function (event) {
+                        location.hash = this.getAttribute("href");
+                    });
+                });
+                $(window).on('popstate', function () {
+                    var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+                    $('a[href=' + anchor + ']').tab('show');
+                });
+            </script>
+
+        </div>
+    </body></html>
