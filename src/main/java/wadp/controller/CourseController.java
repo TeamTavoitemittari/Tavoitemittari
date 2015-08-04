@@ -111,7 +111,11 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         courseService.sortCourseGrades(course);
         courseService.sortCourseGoals(course);
-
+        
+        if (userService.getAuthenticatedUser().getId()!=course.getTeacher().getId()){
+             throw new IllegalArgumentException("Teacher can only access his own courses");
+            
+        }
         if (course == null) {
             return "redirect:/mycourses";
         }

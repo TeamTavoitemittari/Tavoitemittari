@@ -82,7 +82,19 @@ public class CourseService {
         gradeLevelRepository.delete(OldGradeLevel2Id);
         gradeLevelRepository.delete(OldGradeLevel3Id);
     }
+    
+   public List<Course> getUsersCoursesWithTeacher(User user, User teacher) {
+        List<CourseProgressTracker> trackers = progressRepository.findByUserAndCourse_Teacher(user, teacher);
+        List<Course> courses = new ArrayList<Course>();
 
+        for (CourseProgressTracker tracker : trackers) {
+            courses.add(tracker.getCourse());
+
+        }
+
+        return courses;
+
+    }
     public List<Course> getUsersCourses(User user) {
         List<CourseProgressTracker> trackers = progressRepository.findByUser(user);
         List<Course> courses = new ArrayList<Course>();
