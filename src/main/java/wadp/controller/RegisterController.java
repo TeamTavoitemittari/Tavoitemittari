@@ -20,7 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-
+ 
+    
     @Autowired
     private UserService userService;
 
