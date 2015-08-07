@@ -51,6 +51,9 @@ public class GradeService {
     public Grade getStudentCourseGrade(User user, Course course){
         return gradeRepository.findByUserAndCourseId(user, course.getId());
     }
+    public List<Grade> getStudentGrades(User user){
+        return gradeRepository.findByUser(user);
+    }
     
     @Transactional
     public void editGrade(User user, Course course, String grade){

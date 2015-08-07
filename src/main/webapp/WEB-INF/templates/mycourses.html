@@ -11,17 +11,17 @@
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
         <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
         <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-        
+
         <script src="/js/jquery.dropotron.min.js"></script>
-        
+
         <script src="/js/jquery.min.js"></script>
         <script src="/js/bootstrap.js"></script>
         <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
         <!--DataTables initialization-->
         <script type="text/javascript" charset="utf8">
-            $(document).ready( function () {
-                $('#CoursesInUse').DataTable( {
+            $(document).ready(function() {
+                $('#CoursesInUse,completed').DataTable({
                     "language": {
                         "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
                         "zeroRecords": "Mitään ei löytynyt",
@@ -36,154 +36,164 @@
                             "previous": "Edellinen"
                         }
                     }
-                } );
-            } );
+                });
+            });
         </script>
     </head>
- 
- <body>
+
+    <body>
         <div th:replace="fragments/components :: course-navbar">navbar</div>
-        
+
         <div class="container" sec:authorize="hasRole('student')">
-    <ul class="nav nav-tabs" id="courseCommentTab">
-        <li class="active"><a data-toggle="tab" href="#allcourses">Kaikki kurssit</a></li>
-        <li><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
-    </ul>
-    <div class="tab-content">
-        
-        
+            <ul class="nav nav-tabs" id="courseCommentTab">
+                <li class="active"><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
+                <li><a data-toggle="tab" href="#allcourses">Kaikki kurssit</a></li>
+                <li><a data-toggle="tab" href="#completed">Suoritukset</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="owncourses" class="active tab-pane fade in active"><br></br>
+                    <div class="container"></div>  
 
-        <div id="allcourses" class="tab-pane fade in active">
+                    <div th:if="${owncourses != null}">
+                        <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${owncourses}">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading clearfix">
+                                    <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p th:text="${course.description}">Course description</p> 
+                                </div>
+                                <div class="panel-footer">
+                                    <form th:method="GET" th:action="'/course/' + ${course.id}">
+                                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" th:id="'tavoitemittari' + ${course.id}">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                                    </form>
+                                </div>
 
-           <br></br>
-            <div th:if="${alreadyJoinedMessage != null}">
-                    <br/>
-                    <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
-                </div>
-            <div th:if="${joinedSuccessMessage != null}">
-                    <br/>
-                    <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
-                </div>
-            <!--Dummy hard-coded courses for demonstration-->
-        <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
-                </div>
-                <div class="panel-body">
-                    <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p>
-                </div>
-                <div class="panel-footer">
-                    <button class="btn btn-success" role="button">Liity kurssille</button> <button class="btn btn-default" role="button">Lisätietoja</button>
-                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                <div id="allcourses" class="tab-pane fade">
+
+                    <br></br>
+                    <div th:if="${alreadyJoinedMessage != null}">
+                        <br/>
+                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
+                    </div>
+                    <div th:if="${joinedSuccessMessage != null}">
+                        <br/>
+                        <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
+                    </div>
+                    <!--Dummy hard-coded courses for demonstration-->
+                    <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading clearfix">
+                                <h3 class="panel-title"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Todennäköisyyslaskennan teoreettiset ja historialliset perusteet</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>Tällä kurssilla perehdytään tilastollisiin jakaumiin ja niiden tunnuslukuihin. Nämä auttavat klassisen ja tilastollisen todennäköisyyden käsitteiden ymmärtämistä.</p>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-success" role="button">Liity kurssille</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!--List of courses found in database-->
+
+                    <div th:if="${courses != null}">
+                        <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${courses}">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading clearfix">
+                                    <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Opettaja: <b th:text="${course.teacher.name}">teacher</b> </p>
+                                    <p th:text="${course.description}">Course description</p> 
+                                </div>
+                                <div class="panel-footer">
+                                    <form th:method="POST" th:action="@{'/course/' + ${course.id} + '/join'}">
+                                        <button class="btn btn-success" type="submit" th:id="'join' + ${course.id}">Liity kurssille!</button> <button class="btn btn-default" role="button">Lisätietoja</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div id="completed" class="tab-pane fade in active">
+                    <div th:if="${completed != null}"> 
+                        <table>
+                            <tbody>
+                                <tr th:each="completedCourse : ${completed}">
+                                    <td th:text="${completedCourse.courseName}"> </td>
+                                    <td th:text="${completedCourse.grade}">  </td>   
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:if="${completed == null}">Ei suorituksia</div>
+                </div>
             </div>
+            <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
+            <script>
+                $(document).ready(function() {
+                    if (location.hash) {
+                        $('a[href=' + location.hash + ']').tab('show');
+                    }
+                    $(document.body).on("click", "a[data-toggle]", function(event) {
+                        location.hash = this.getAttribute("href");
+                    });
+                });
+                $(window).on('popstate', function() {
+                    var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+                    $('a[href=' + anchor + ']').tab('show');
+                });
+            </script>
+
         </div>
 
+        <div sec:authorize="hasRole('teacher')">
 
-        <!--List of courses found in database-->
+            <div class="container">
+                <br></br>
+                <div th:if="${CourseHasNoStudentsMessage != null}">     
+                    <div class="alert alert-danger" role="alert" th:text="${CourseHasNoStudentsMessage}">.</div>         
+                </div>
 
-        <div th:if="${courses != null}">
-            <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${courses}">
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
+                <div class="panel panel-primary">    
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><span>Omat kurssini:</span></h3>
                     </div>
+
+
                     <div class="panel-body">
-                        <p>Opettaja: <b th:text="${course.teacher.name}">teacher</b> </p>
-                        <p th:text="${course.description}">Course description</p> 
-                    </div>
-                    <div class="panel-footer">
-                        <form th:method="POST" th:action="@{'/course/' + ${course.id} + '/join'}">
-                         <button class="btn btn-success" type="submit" th:id="'join' + ${course.id}">Liity kurssille!</button> <button class="btn btn-default" role="button">Lisätietoja</button>
-                        </form>
-                    </div>
+                        <table id="CoursesInUse" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Kurssin nimi:</th>
+                                    <th>Oppilasmäärä:</th>
+                                    <th>Tavoitemittarit:</th>
 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="course : ${teachersCourses}">
+                                    <td th:text="${course.name}"> </td>
+                                    <td th:text="${counts.get(course.id)}">  </td>
+                                    <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success">Tavoitemittareihin</a></td>      
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-    </div>
-        
-        <div id="owncourses" class="tab-pane fade"><br></br>
-            <div class="container"></div>  
-            
-                 <div th:if="${owncourses != null}">
-            <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${owncourses}">
-                <div class="panel panel-primary">
-                    <div class="panel-heading clearfix">
-                        <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
-                    </div>
-                    <div class="panel-body">
-                        <p th:text="${course.description}">Course description</p> 
-                    </div>
-                    <div class="panel-footer">
-                        <form th:method="GET" th:action="'/course/' + ${course.id}">
-                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" th:id="'tavoitemittari' + ${course.id}">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-            
-        </div>
-   </div>  
-             <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-    <script>
-        $(document).ready(function() {
-            if(location.hash) {
-                $('a[href=' + location.hash + ']').tab('show');
-            }
-            $(document.body).on("click", "a[data-toggle]", function(event) {
-                location.hash = this.getAttribute("href");
-            });
-        });
-        $(window).on('popstate', function() {
-            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
-            $('a[href=' + anchor + ']').tab('show');
-        });
-    </script>
-
-  </div>
-  <div sec:authorize="hasRole('teacher')">
-     
-      <div class="container">
-            <br></br>
-           <div th:if="${CourseHasNoStudentsMessage != null}">     
-             <div class="alert alert-danger" role="alert" th:text="${CourseHasNoStudentsMessage}">.</div>         
-           </div>
-            
-            <div class="panel panel-primary">    
-            
-               <div class="panel-heading">
-                <h3 class="panel-title"><span>Omat kurssini:</span></h3>
-               </div>
-            
-            
-               <div class="panel-body">
-                   <table id="CoursesInUse" class="table table-striped">
-                    <thead>
-                     <tr>
-                      <th>Kurssin nimi:</th>
-                      <th>Oppilasmäärä:</th>
-                      <th>Tavoitemittarit:</th>
-                        
-                     </tr>
-                    </thead>
-                     <tbody>
-                        <tr th:each="course : ${teachersCourses}">
-                          <td th:text="${course.name}"> </td>
-                          <td th:text="${counts.get(course.id)}">  </td>
-                          <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success">Tavoitemittareihin</a></td>      
-                        </tr>
-                     </tbody>
-                    </table>
-                </div>
-             </div>
-          </div>
-  </div>       
-
- 
- </body>
+        </div>       
+    </body>
 </html>

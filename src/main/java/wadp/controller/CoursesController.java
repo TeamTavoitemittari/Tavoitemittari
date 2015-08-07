@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wadp.domain.Course;
 import wadp.service.CourseService;
+import wadp.service.GradeService;
 import wadp.service.UserService;
 
 @Controller
@@ -21,12 +22,19 @@ public class CoursesController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private GradeService gradeService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showCoursesPage(Model model) {
         if (userService.getAuthenticatedUser().getUserRole().equals("student")) {
             model.addAttribute("courses", courseService.getCoursesInUse());
             model.addAttribute("owncourses", courseService.getUsersCourses(userService.getAuthenticatedUser()));
+            model.addAttribute("completed", gradeService.getStudentGrades(userService.getAuthenticatedUser()));
+            System.out.println(gradeService.getStudentGrades(userService.getAuthenticatedUser()).size());
+            System.out.println(gradeService.getStudentGrades(userService.getAuthenticatedUser()).size());
+            System.out.println(gradeService.getStudentGrades(userService.getAuthenticatedUser()).size());
 
         }
         if (userService.getAuthenticatedUser().getUserRole().equals("teacher")) {

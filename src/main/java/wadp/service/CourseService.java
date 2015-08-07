@@ -100,8 +100,9 @@ public class CourseService {
         List<Course> courses = new ArrayList<Course>();
 
         for (CourseProgressTracker tracker : trackers) {
+            if(tracker.getCompleted()==false){
             courses.add(tracker.getCourse());
-
+            }
         }
 
         return courses;
