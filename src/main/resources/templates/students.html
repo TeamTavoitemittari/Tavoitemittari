@@ -18,7 +18,7 @@
         <!--DataTables initialization-->
         <script type="text/javascript" charset="utf8">
             $(document).ready( function () {
-                $('#example').DataTable( {
+                $('#students-table').DataTable( {
                     "language": {
                         "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
                         "zeroRecords": "Mitään ei löytynyt",
@@ -49,7 +49,7 @@
             <div class="panel-body">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Dropdown
+                        Rajaa listausta kurssikohtaisesti
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -59,7 +59,7 @@
                 </div>
                 <br/>
                 
-                <table id="example" class="table table-striped">
+                <table id="students-table" class="table table-striped">
                     <thead>
                     <tr>
                         <th>Nimi</th>
