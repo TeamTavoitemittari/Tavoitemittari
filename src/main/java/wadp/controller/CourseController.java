@@ -256,9 +256,9 @@ public class CourseController {
 
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{userId}/{courseId}/grade", method = RequestMethod.POST)
-    public String giveGrade(@PathVariable Long courseId, @PathVariable Long userId, @RequestParam String grade) {
+    public String giveGrade(@PathVariable Long courseId, @PathVariable Long userId, @RequestParam String textGrade) {
         if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())) {
-            gradeService.giveGrade(userService.findById(userId), courseService.getCourseById(courseId), grade);
+            gradeService.giveGrade(userService.findById(userId), courseService.getCourseById(courseId), textGrade);
         }
         return "redirect:/course/" + courseId + "/goalometer";
     }

@@ -68,10 +68,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="user : ${users}">
-                        <td><a th:text="${user.name}" th:href="@{'/student/' + ${user.id}}"></a></td>
-                        <td th:text="${user.email}"></td>
-                        <td th:text="${user.userRole}"></td>
+                    <tr th:each="student : ${students}">
+                        <td><a th:text="${student.name}" th:href="@{'/student/' + ${student.id}}"></a></td>
+                        <td th:text="${student.email}"></td>
+                        <td th:text="${student.userRole}"></td>
                     </tr>
                     </tbody>
                 </table>
