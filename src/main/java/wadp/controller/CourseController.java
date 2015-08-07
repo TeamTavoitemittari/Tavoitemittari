@@ -129,7 +129,7 @@ public class CourseController {
         User user = userService.findById(studentId);
         CourseProgressTracker tracker = progressService.getProgress(user, course);
         model.addAttribute("tracker", tracker);
-        List<User> students= courseService.getCourseStudents(course);
+        List<User> students = courseService.getCourseStudents(course);
         HashMap<User, Grade> studentGrades = new HashMap();
         for (User student : students) {
             studentGrades.put(student, gradeService.getStudentCourseGrade(student, course));
@@ -137,6 +137,7 @@ public class CourseController {
         model.addAttribute("users", courseService.getCourseStudents(course));
         model.addAttribute("studentGrades", studentGrades);
         model.addAttribute("currentStudent", user);
+        model.addAttribute("currentGrade", gradeService.getStudentCourseGrade(user,course));
         return "course";
     }
 
@@ -263,4 +264,12 @@ public class CourseController {
         return "redirect:/course/" + courseId + "/goalometer";
     }
 
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value = "/{userId}/{courseId}/grade/edit", method = RequestMethod.POST)
+    public String editGrade(@PathVariable Long courseId, @PathVariable Long userId, @RequestParam String updatedGrade) {
+        if (courseService.getCourseById(courseId).getTeacher().equals(userService.getAuthenticatedUser())) {
+            gradeService.editGrade(userService.findById(userId), courseService.getCourseById(courseId), updatedGrade);
+        }
+        return "redirect:/course/" + courseId + "/goalometer";
+    }
 }

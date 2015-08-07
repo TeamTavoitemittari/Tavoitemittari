@@ -52,4 +52,11 @@ public class GradeService {
         return gradeRepository.findByUserAndCourseId(user, course.getId());
     }
     
+    @Transactional
+    public void editGrade(User user, Course course, String grade){
+        Grade editable = gradeRepository.findByUserAndCourseId(user, course.getId());
+        editable.setGrade(grade);
+        gradeRepository.save(editable);
+    }
+    
 }
