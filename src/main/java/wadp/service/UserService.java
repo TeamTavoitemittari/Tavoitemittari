@@ -27,11 +27,11 @@ public class UserService {
 
     @Autowired
     private CourseService courseService;
-    
+
     @Autowired
     private GradeService gradeService;
-    
-    @Autowired 
+
+    @Autowired
     private CommentService commentService;
 
     public List<User> list() {
@@ -110,6 +110,15 @@ public class UserService {
 
     }
 
+    @Transactional
+    public User changePasswordAsAdmin(User user, String newPassword) {
+        if (newPassword == null || newPassword.isEmpty()) {
+            throw new IllegalArgumentException("New password must not be null or empty");
+        }
+        user.setPassword(newPassword);
+        return user;
+    }
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -128,33 +137,32 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id) {
-            User user = userRepository.findOne(id);
-            System.out.println(user.getName());
-            System.out.println(user.getName());
-            System.out.println(user.getName());
-            System.out.println(user.getName());
-            System.out.println(user.getName());
-            if (user.getUserRole().equals("student")) {
-                List<Course> courses = courseService.getUsersCourses(user);
-                
-                List<Grade> grades = gradeService.getStudentGrades(user);
-                gradeService.deleteGrades(grades);
-                for (Course course : courses) {
-                    courseService.RemoveUserFromCourse(course.getId(), id);
-                }
-              
-                userRepository.delete(user);
-                
-                
-            }
-            if (user.getUserRole().equals("teacher")) {
-                List<Course> courses = courseService.getCoursesByTeacher(user);
-                for (Course course : courses) {
-                    courseService.deleteCourse(course.getId());
-                }
-                userRepository.delete(id);
+        User user = userRepository.findOne(id);
+        System.out.println(user.getName());
+        System.out.println(user.getName());
+        System.out.println(user.getName());
+        System.out.println(user.getName());
+        System.out.println(user.getName());
+        if (user.getUserRole().equals("student")) {
+            List<Course> courses = courseService.getUsersCourses(user);
 
-            }   
+            List<Grade> grades = gradeService.getStudentGrades(user);
+            gradeService.deleteGrades(grades);
+            for (Course course : courses) {
+                courseService.RemoveUserFromCourse(course.getId(), id);
+            }
+
+            userRepository.delete(user);
+
+        }
+        if (user.getUserRole().equals("teacher")) {
+            List<Course> courses = courseService.getCoursesByTeacher(user);
+            for (Course course : courses) {
+                courseService.deleteCourse(course.getId());
+            }
+            userRepository.delete(id);
+
+        }
     }
 
 }

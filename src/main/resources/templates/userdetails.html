@@ -27,10 +27,10 @@
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span>Omat tiedot</span></h3>
-                </div> <form th:action="@{/userdetails}"  method="post">
+                </div> 
+                <form th:action="@{/userdetails}"  method="post">
                 <div class="panel-body"><div th:if="${user != null}">
                     <div th:if="${message != null}">  <p><b th:text="${message}">message</b></p>
-
                     </div>
                     <p>Nimesi: <b  th:if="${user != null}" th:text="${user.name}"> user name</b> </p>
                     <p>Sähköpostisi: <b th:if="${user != null}" th:text="${user.email}">user email </b> </p>

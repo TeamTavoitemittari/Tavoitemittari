@@ -30,8 +30,8 @@
                                     <li><a href="#" id="dd-c">Tietoturva</a></li>
                                 </ul>
                             </li>
-                             
-                             <li class="dropdown" sec:authorize="hasRole('teacher')">
+
+                            <li class="dropdown" sec:authorize="hasRole('teacher')">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" id="hallinnointi-toggle-menu">Hallinnointi <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/course" id="hdd-a">Kurssit</a></li>
@@ -39,6 +39,8 @@
                                     <li><a href="#" id="hdd-c">Muuta</a></li>
                                 </ul>
                             </li>
+
+                            <li sec:authorize="hasRole('admin')"><a href="/admin/passwords">Salasanat</a></li>
                         </ul>
                         <form class="navbar-form navbar-left" role="search">
                             <div class="form-group">
