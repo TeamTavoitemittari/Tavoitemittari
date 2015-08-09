@@ -23,12 +23,10 @@
                         <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span>Omat tiedot</span></h3>
                     </div> 
                         <div class="panel-body">
-                                <div th:if="${message != null}">  <p th:text="${message}">message</p>
-                               
+                                <div th:if="${message != null}">
+                                    <p th:text="${message}">message</p>
                                 </div>
-                  
-                        
-                    </div>
+                        </div>
                     <div class="panel-footer">
                         <a href="/userdetails"><button type="button" class="btn btn-default" role="button">Takaisin omiin tietoihin</button></a>
                         

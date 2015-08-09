@@ -1,7 +1,5 @@
 package wadp.controller;
 
-import java.util.*;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,20 +9,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import wadp.domain.Course;
-import wadp.domain.Goal;
-import wadp.domain.Skill;
-import wadp.domain.User;
 import wadp.domain.form.ProperPasswordForm;
-import wadp.domain.form.UserForm;
-import wadp.service.AuthenticatedUserIsNullException;
-import wadp.service.CourseService;
-import wadp.service.EmailAlreadyRegisteredException;
-import wadp.service.GoalService;
-import wadp.service.SkillService;
-import wadp.service.UserService;
+import wadp.service.*;
 
 // Any request not handled by other controllers is redirected to index
 @Controller
@@ -35,11 +22,8 @@ public class UserDetailsController {
     @Autowired
     private UserService userService;
 
-   
-    
-   
-
-    
+    @Autowired
+    private PasswordForgettingService passwordForgettingService;
    
         
     @RequestMapping(value = "/userdetails", method = RequestMethod.GET)
@@ -87,6 +71,24 @@ public class UserDetailsController {
         redirectAttributes.addFlashAttribute("message", "Salasana vaihdettu.");
         
         return "redirect:userdetails_passwordchanged";
+    }
+
+    @RequestMapping(value="/passwordretrieval", method=RequestMethod.GET)
+    public String getPasswordRetrievalPage(){
+        return "passwordretrieval";
+    }
+
+    @RequestMapping(value="/passwordretrieval", method=RequestMethod.POST)
+    public String sendPasswordForgottenReport(RedirectAttributes redirectAttributes, @ModelAttribute("email") String email){
+        if(userService.findUserByEmail(email)==null){
+            redirectAttributes.addFlashAttribute("sentFailureMessage", "Lähetys epäonnistui, käyttäjää ei löytynyt tällä sähköpostiosoitteella");
+        } else if (passwordForgettingService.userHasForgottenPassword(userService.findUserByEmail(email))) {
+            redirectAttributes.addFlashAttribute("sentFailureMessage", "Ilmoitus on jo tehty!");
+        } else{
+            passwordForgettingService.reportPasswordForgotten(userService.findUserByEmail(email));
+            redirectAttributes.addFlashAttribute("sentSuccessMessage", "Ilmoitus lähetetty ylläpitäjälle!");
+        }
+        return "redirect:/passwordretrieval";
     }
 
 
