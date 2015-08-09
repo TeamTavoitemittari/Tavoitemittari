@@ -72,8 +72,8 @@
 
         <div class="container">
             <div th:if="${currentStudent !=null} and ${course != null}">
-                <h1><b><span th:text="${course.name}"></span></b> : <b><span th:text="${currentStudent.name}"></span></b>&nbsp; <span><a th:if="${currentGrade==null}" th:href="'#'+${currentStudent.id}+'grade'" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${currentStudent.id}+'grade'">Arvostele</a></span></h1>
-                <h2><span th:if="${currentGrade!=null}" th:text="'Arvosana: '+${currentGrade.grade}+' '"></span><span><a th:if="${currentGrade!=null}" th:href="'#'+${currentStudent.id}+'updateGrade'" class="btn btn-default" data-toggle="modal" th:attr="data-target='#'+${currentStudent.id}+'updateGrade'">Muokkaa</a></span></h2>
+                <h1><b><span th:text="${course.name}"></span></b> : <b><span th:text="${currentStudent.name}"></span></b>&nbsp; </h1>
+                <h2><span th:if="${currentGrade!=null}" th:text="'Arvosana: '+${currentGrade.grade}+' '"></span></h2>
             </div>
             <div class="row" th:if="${course != null}">
                 <ul class="nav nav-tabs" id="courseCommentTab">
@@ -292,7 +292,7 @@
                                                 <td><a th:text="${studentGrade.key.name}" th:href="@{'/course/'+${course.id}+'/' + ${studentGrade.key.id}}"></a></td>
                                                 <td th:text="${studentGrade.key.email}"></td>
                                                 <td><div><span th:if="${studentGrade.value!=null}" th:text="''+${studentGrade.value.grade}+'  '"></span>
-                                                        <span><a th:if="${studentGrade.value!=null}" th:href="'#'+${studentGrade.key.id}+'updateGrade'" class="btn btn-default" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'updateGrade'">Muokkaa</a></span></div>
+                                                        <span><button type="button" th:if="${studentGrade.value!=null}" th:href="'#'+${studentGrade.key.id}+'updateGrade'" class="glyphicon glyphicon-pencil" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'updateGrade'"></button></span></div>
                                                     <a th:if="${studentGrade.value==null}" th:href="'#'+${studentGrade.key.id}+'grade'" class="btn btn-default" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'grade'">Arvostele</a>
                                                 </td>
                                                 <div th:id="${studentGrade.key.id}+'updateGrade'" class="modal fade">
@@ -309,7 +309,7 @@
                                                             <div class="modal-footer">
 
                                                                 <form th:method="post" th:action="'/course/'+${studentGrade.key.id}+'/' + ${course.id}+'/grade/edit'" id="updateGrade">
-                                                                    <input type="text" name="updatedGrade" id="updatedGrade"/>
+                                                                    <input th:if="${studentGrade.value!=null}" th:value="${studentGrade.value.grade}" type="text" name="updatedGrade" id="updatedGrade"/>
                                                                     <button class="btn btn-primary" type="submit" name="updateButton">Arvostele</button>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                                 </form>  
