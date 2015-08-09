@@ -52,7 +52,15 @@
             </ul>
             <div class="tab-content">
                 <div id="owncourses" class="active tab-pane fade in active"><br></br>
-                    <div class="container"></div>  
+                          
+                    <div th:if="${alreadyJoinedMessage != null}">
+                        <br/>
+                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
+                    </div>
+                    <div th:if="${joinedSuccessMessage != null}">
+                        <br/>
+                        <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
+                    </div>
 
                     <div th:if="${owncourses != null}">
                         <div class="row  center-block col-xs-12 col-sm-5 col-md-4 col-lg-3" th:each="course : ${owncourses}">
@@ -77,14 +85,7 @@
                 <div id="allcourses" class="tab-pane fade">
 
                     <br></br>
-                    <div th:if="${alreadyJoinedMessage != null}">
-                        <br/>
-                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
-                    </div>
-                    <div th:if="${joinedSuccessMessage != null}">
-                        <br/>
-                        <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
-                    </div>
+               
                     <!--Dummy hard-coded courses for demonstration-->
                     <div class="row center-block col-xs-12 col-sm-5 col-md-4 col-lg-3">
                         <div class="panel panel-primary">
@@ -126,18 +127,27 @@
 
                 </div>
                 
-                <div id="completed" class="tab-pane fade in active">
-                    <div th:if="${completed != null}"> 
-                        <table>
+                <div id="completed" class="tab-pane fade">
+                    <div  th:if="!${#lists.isEmpty(completed)}">
+                      
+                               <table  class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Kurssin nimi:</th>
+                                    <th>Arvosanasi:</th>
+
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr th:each="completedCourse : ${completed}">
                                     <td th:text="${completedCourse.courseName}"> </td>
-                                    <td th:text="${completedCourse.grade}">  </td>   
+                                    <td th:text="${completedCourse.grade}">  </td>
                                 </tr>
                             </tbody>
                         </table>
+                        
                     </div>
-                    <div th:if="${completed == null}">Ei suorituksia</div>
+                    <div th:if="${#lists.isEmpty(completed)}">Ei suorituksia</div>
                 </div>
             </div>
             <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
