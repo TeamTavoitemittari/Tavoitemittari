@@ -62,4 +62,9 @@ public class GradeService {
         gradeRepository.save(editable);
     }
     
+    @Transactional
+    public void deleteGrades(List<Grade> grades){
+        gradeRepository.delete(grades);
+    }
+    
 }

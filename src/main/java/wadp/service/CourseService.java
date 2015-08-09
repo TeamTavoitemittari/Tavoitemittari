@@ -95,7 +95,7 @@ public class CourseService {
         return courses;
 
     }
-    public List<Course> getUsersCourses(User user) {
+    public List<Course> getUsersUncompletedCourses(User user) {
         List<CourseProgressTracker> trackers = progressRepository.findByUser(user);
         List<Course> courses = new ArrayList<Course>();
 
@@ -103,6 +103,20 @@ public class CourseService {
             if(tracker.getCompleted()==false){
             courses.add(tracker.getCourse());
             }
+        }
+
+        return courses;
+
+    }
+    
+      public List<Course> getUsersCourses(User user) {
+        List<CourseProgressTracker> trackers = progressRepository.findByUser(user);
+        List<Course> courses = new ArrayList<Course>();
+
+        for (CourseProgressTracker tracker : trackers) {
+            
+            courses.add(tracker.getCourse());
+            
         }
 
         return courses;
