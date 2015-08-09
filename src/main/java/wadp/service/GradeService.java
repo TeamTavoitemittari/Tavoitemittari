@@ -55,11 +55,20 @@ public class GradeService {
         return gradeRepository.findByUser(user);
     }
     
+ 
     @Transactional
     public void editGrade(User user, Course course, String grade){
+        if (grade == null || grade.trim().isEmpty()) {
+          Grade editable = gradeRepository.findByUserAndCourseId(user, course.getId());  
+          gradeRepository.delete(editable);
+          courseProgressRepository.findByUserAndCourse(user, course).get(0).setCompleted(false);
+          
+        }
+        else  {
         Grade editable = gradeRepository.findByUserAndCourseId(user, course.getId());
         editable.setGrade(grade);
         gradeRepository.save(editable);
+        }
     }
     
     @Transactional
