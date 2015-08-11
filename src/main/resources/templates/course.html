@@ -41,7 +41,7 @@
         <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
         <!--DataTables initialization-->
         <script type="text/javascript" charset="utf8">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#example').DataTable({
                     "language": {
                         "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
@@ -78,7 +78,7 @@
             <div class="row" th:if="${course != null}">
                 <ul class="nav nav-tabs" id="courseCommentTab">
                     <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>
-                    <li><a data-toggle="tab" href="#comments" name="commenttab">Kommentit</a></li>
+                    <li><a data-toggle="tab" id="clickMe" href="#comments" name="commenttab">Kommentit</a></li>
                     <li sec:authorize="hasRole('teacher')"><a data-toggle="tab" href="#students" name="studenttab" >Oppilaat</a></li>
                 </ul>
                 <!-- Goal-o-meter tab where students mark their progress and the teacher confirms them  -->
@@ -240,13 +240,13 @@
                     </div>
 
                     <!-- Comments tab where students comment on a specific goal -->
-                    <div id="comments" class="tab-pane fade">
+                    <div id="comments" class="tab-pane fade" >
                         <div class="center-block col-xs-11 col-sm-11 col-md-11 col-lg-11" th:each="gradeLevel : ${tracker.gradeLevels}">
                             <h1 th:text="${gradeLevel.key.grade}">4-10</h1>
                             <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" th:href="'#' + ${goal.key.id} + 'comment'" th:text="${goal.key.name}">Ympyrä</a>
+                                        <a data-toggle="collapse" th:href="'#' + ${goal.key.id} + 'comment'" th:text="${goal.key.name}" >Ympyrä</a>
                                     </h4>
                                 </div>
                                 <div th:id="${goal.key.id} + 'comment'" class="panel-collapse collapse">
@@ -257,11 +257,13 @@
                                             </div>
                                             <div class="panel-footer">
                                                 <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${tracker.user.id} + '/'+ ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
-                                                    <textarea  class="form-control" th:name="comment" th:text="${goal.value.comments.get(skill).comment}" th:id="'comment'+ ${skill.id}" rows="5" style="resize: none; margin: 8px" th:readonly="true"></textarea>
-                                                    <button class="btn btn-success" th:id="'save'+ ${skill.id}" style="visibility: hidden" type="submit">Tallenna</button>
-                                                    <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
-                                                    <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" style="visibility: hidden">Peruuta</a>
-                                                    <button type="button" th:onclick="'enableEdit(\''+ ${skill.id} + '\');'" class="btn btn-primary pull-right" th:id="'edit'+${skill.id}" >Muokkaa</button>
+                                                    <textarea th:text="${goal.value.comments.get(skill).comment}" class="form-control" style="resize: none; margin: 8px" th:readonly="true" rows="5"></textarea>
+                                                    <input type="text" class="form-control"   th:name="comment"  th:id="'comment'+ ${skill.id}"/>
+                                                    <div class="btn-group" style="margin:8px">
+                                                        <button class="btn btn-success" th:id="'save'+ ${skill.id}" type="submit">Tallenna</button>
+                                                        <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" >Peruuta</a>
+                                                        <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" >Peruuta</a>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -399,19 +401,19 @@
 
             <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     if (location.hash) {
                         $('a[href=' + location.hash + ']').tab('show');
                     }
-                    $(document.body).on("click", "a[data-toggle]", function(event) {
+                    $(document.body).on("click", "a[data-toggle]", function (event) {
                         location.hash = this.getAttribute("href");
                     });
+
                 });
-                $(window).on('popstate', function() {
+                $(window).on('popstate', function () {
                     var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
                     $('a[href=' + anchor + ']').tab('show');
                 });
             </script>
-
         </div>
     </body></html>

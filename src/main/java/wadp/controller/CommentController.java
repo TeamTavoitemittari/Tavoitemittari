@@ -31,8 +31,11 @@ public class CommentController {
     @RequestMapping(value="/{userId}/{courseId}/{commentId}", method=RequestMethod.POST)
     public String postOrUpdateComment(@PathVariable long userId, @PathVariable long courseId, @PathVariable long commentId, @RequestParam String comment){
         Comment com = commentService.findCommentById(commentId);
-        commentService.updateComment(com, comment);
+        String old = com.getComment();
         User user = userService.getAuthenticatedUser();
+        String newComment=(old+"\n"+user.getName()+": " +comment);
+        System.out.println(com.getComment());
+        commentService.updateComment(com, newComment);
         if("teacher".equals(user.getUserRole())){
             return "redirect:/course/"+courseId+"/"+userId+"#comments";
         }
