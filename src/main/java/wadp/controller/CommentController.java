@@ -1,20 +1,17 @@
 
 package wadp.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wadp.domain.Comment;
-import wadp.domain.Skill;
 import wadp.domain.User;
 import wadp.service.CommentService;
-import wadp.service.CourseService;
-import wadp.service.SkillService;
 import wadp.service.UserService;
 
 @Controller
@@ -33,8 +30,7 @@ public class CommentController {
         Comment com = commentService.findCommentById(commentId);
         String old = com.getComment();
         User user = userService.getAuthenticatedUser();
-        String newComment=(old+"\n"+user.getName()+": " +comment);
-        System.out.println(com.getComment());
+        String newComment=("("+new SimpleDateFormat("dd.MM.yy ':' HH:mm").format(new Date())+") " + user.getName()+": " +comment+"\n"+old);
         commentService.updateComment(com, newComment);
         if("teacher".equals(user.getUserRole())){
             return "redirect:/course/"+courseId+"/"+userId+"#comments";
