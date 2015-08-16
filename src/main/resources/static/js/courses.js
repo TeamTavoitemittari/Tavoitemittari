@@ -5,10 +5,19 @@ $(document).ready(function () {
         };
     });
 
-    $("#testbutton").click(function() {
-        var search = $("#testinput").val();
-        $("#allcourses .row:not(:Contains(" +search+ "))").hide();
-    })
+    searchFunctionality("#ownsearch", "#owncourses");
+    searchFunctionality("#allsearch", "#allcourses");
+
+    function searchFunctionality(inputField, searchArea) {
+        $(inputField).keyup(function(event) {
+            var search = $(inputField).val();
+            $(searchArea + " .row").show();
+            $(searchArea + " .row:not(:Contains(" +search+ "))").hide();
+            event.preventDefault();
+        });
+    }
+
+
 
 
 });

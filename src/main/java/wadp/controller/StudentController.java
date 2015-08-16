@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.Course;
 import wadp.domain.User;
 import wadp.service.CourseService;
-import wadp.service.ProgressService;
 import wadp.service.UserService;
 
 @Controller
@@ -20,9 +19,6 @@ public class StudentController {
 
     @Autowired
     private UserService userService;
-    
-    @Autowired
-    private ProgressService progressService;
 
     @Autowired
     private CourseService courseService;
