@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,8 @@ public class AdminController {
 
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(method = RequestMethod.GET)
-    public String getStudents(Model model) {
+    public String getStudents(HttpSession session, Model model) {
+        session.setMaxInactiveInterval(60 * 60 * 3);
         model.addAttribute("users", userService.list());
         model.addAttribute("courses", courseService.getCourses());
         return "admin_index";

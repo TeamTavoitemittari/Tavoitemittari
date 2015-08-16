@@ -46,8 +46,8 @@ public class IndexController implements ErrorController {
     private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showIndex(HttpSession request) {
-        request.setMaxInactiveInterval(10);
+    public String showIndex(HttpSession session) {
+        session.setMaxInactiveInterval(60 * 60 * 3);
         createDummyCourse();
         createDummyCourseWithoutUsers();
         if (userService.getAuthenticatedUser() != null) {
