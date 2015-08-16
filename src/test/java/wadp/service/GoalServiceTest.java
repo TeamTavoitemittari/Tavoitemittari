@@ -37,11 +37,10 @@ public class GoalServiceTest {
         Goal tavoite1 = new Goal();
         tavoite1.setName("todari");
         service.addGoal(tavoite1);
-        List<Goal> tavoitteet= service.getGoals();         
+        List<Goal> tavoitteet = service.getGoals();
         assertEquals(tavoitteet.size(), 1);
    
     }
- 
 
-    
+
 }

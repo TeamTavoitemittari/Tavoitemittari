@@ -17,13 +17,6 @@ import wadp.repository.CourseProgressRepository;
 import wadp.repository.GradeRepository;
 
 
-/**
- *
- * @author Blackstorm
- */
-
-
-
 @Service
 public class GradeService {
     

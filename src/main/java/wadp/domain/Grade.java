@@ -21,12 +21,15 @@ public class Grade extends AbstractPersistable<Long> {
         return user;
     }
     
-    public Grade(){}
+    public Grade(){
+
+    }
 //Tähän luokka ja suorituspäivämäärä??
 
     public void setUser(User user) {
         this.user = user;
     }
+
 
     public String getCourseName() {
         return courseName;
@@ -36,15 +39,18 @@ public class Grade extends AbstractPersistable<Long> {
         this.courseName=courseName;
     }
     
-    public Long courseId(){
+    public Long getCourseId(){
         return courseId;
     }
+
     public void setCourseId(Long courseId){
         this.courseId=courseId;
     }
+
     public String getGrade(){
         return grade;
     }
+
     public void setGrade(String grade){
         this.grade=grade;
     }
