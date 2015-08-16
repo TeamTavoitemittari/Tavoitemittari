@@ -7,26 +7,12 @@
     <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/addcourse.css"/>
-    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
 
-
-
-    <script src="/js/jquery.min.js"></script>
-
-    <script src="/js/dynamicform.js"></script>
-    <script src="/js/bootstrap.js"></script>
 
 
 
 </head>
 <body>
-<script type="text/javascript" th:inline="javascript">
-
- 
-    updateCourseAsJson=[[${updateCourseAsJson}]];
-    invalidCourseAsJson=[[${invalidCourseAsJson}]];
-</script>
-
 
 <div th:replace="fragments/components :: course-navbar">navbar</div>
 
@@ -44,12 +30,12 @@
                     <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                 </ul>
             </div>
-            
+
             <div th:if="${creationSuccessMessage != null}">
-                  <hr></hr>
-                    <div class="alert alert-success" role="alert" th:text="${creationSuccessMessage}">.</div>
-                </div>
-            
+                <hr></hr>
+                <div class="alert alert-success" role="alert" th:text="${creationSuccessMessage}">.</div>
+            </div>
+
             <div th:if="${updateCourseAsJson == null}">
                 <form th:action="@{/course}"  method="post">
 
@@ -136,181 +122,181 @@
             <br/>
 
         </div>
-        
-         <div id="owncourses" class="tab-pane fade">
-        
-            
-                      
-       
-             <br></br>
-      <div th:if="${deleteSuccessMessage != null}">
-                   <hr></hr>
-                    <div class="alert alert-success" role="alert" th:text="${deleteSuccessMessage}">.</div>
-                    <hr></hr>
-        </div>
-             
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title"><span>Julkaisettomat kurssit</span></h3>
+
+        <div id="owncourses" class="tab-pane fade">
+
+
+
+
+            <br></br>
+            <div th:if="${deleteSuccessMessage != null}">
+                <hr></hr>
+                <div class="alert alert-success" role="alert" th:text="${deleteSuccessMessage}">.</div>
+                <hr></hr>
             </div>
-            <div class="panel-body">
-                  
-               
-                
-                
-                <table id="CoursesNotInUse" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Kurssin nimi:</th>
-                        <th>Julkaise:</th>
-                        <th>Muokkaa:</th>
-                        <th>Poista:</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span>Julkaisettomat kurssit</span></h3>
+                </div>
+                <div class="panel-body">
+
+
+
+
+                    <table id="CoursesNotInUse" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Kurssin nimi:</th>
+                            <th>Julkaise:</th>
+                            <th>Muokkaa:</th>
+                            <th>Poista:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         <tr th:each="course : ${coursesNotInUse}">
-                        <td th:text="${course.name}"> </td>
-                        <td>  <a th:href="'#'+${course.id}+'publish'" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${course.id}+'publish'">Julkaise</a>  
-                        </td>
-  
+                            <td th:text="${course.name}"> </td>
+                            <td>  <a th:href="'#'+${course.id}+'publish'" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${course.id}+'publish'">Julkaise</a>
+                            </td>
 
-                        <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" >Muokkaa</a></td>      
 
-                        <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>      
-                        </td>
-                        
-                        
-                                           
-                       <div th:id="${course.id}+'remove'" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                               <div class="modal-header">
-                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                 <h4 class="modal-title">Vahvistus</h4>
-                               </div>
-                                <div class="modal-body">
-                                    <p>Halutatko varmasti poistaa valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
-                                  <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
-                               </div>
-                                <div class="modal-footer">
-                                   <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
-                                    <button class="btn btn-danger" type="submit" name="remove">Poista</button>
-                                   </form>          
-                                 </div>
+                            <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" >Muokkaa</a></td>
+
+                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>
+                            </td>
+
+
+
+                            <div th:id="${course.id}+'remove'" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Vahvistus</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Halutatko varmasti poistaa valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
+                                            <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                                <button class="btn btn-danger" type="submit" name="remove">Poista</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
-                         </div>
-                        
-                         <div th:id="${course.id}+'publish'" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                               <div class="modal-header">
-                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                 <h4 class="modal-title">Vahvistus</h4>
-                               </div>
-                                <div class="modal-body">
-                                    <p>Halutatko varmasti julkaista valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
-                                  <p>Julkaistuasi kurssin sille voi liittyä oppilaita minkä jälkeen sitä ei voi enää muokata.</p>
-                               </div>
-                                <div class="modal-footer">
-                                    <form th:method="put" th:action="'/course/'+${course.id}+'/publish'">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
-                                        <button class="btn btn-primary" type="submit" name="publish">Julkaise</button>
-                                    </form>  
-                                    
-                                    
-                                 </div>
+                            </div>
+
+                            <div th:id="${course.id}+'publish'" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Vahvistus</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Halutatko varmasti julkaista valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
+                                            <p>Julkaistuasi kurssin sille voi liittyä oppilaita minkä jälkeen sitä ei voi enää muokata.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form th:method="put" th:action="'/course/'+${course.id}+'/publish'">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                                <button class="btn btn-primary" type="submit" name="publish">Julkaise</button>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
-                         </div>
-                        
-                        
-                    </tr>
-                    </tbody>
-                </table>
-                
-                
-  
-   
+                            </div>
+
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
             </div>
-        </div>
-             <br></br>
-         <div class="panel panel-primary">    
-            
-            <div class="panel-heading">
-                <h3 class="panel-title"><span>Käytössä olevat kurssit</span></h3>
-            </div>
-            
-            
-             <div class="panel-body">
-                  
-              
-                
-                
-                <table id="CoursesInUse" class="table table-striped">
-                    <thead>
-                    <tr>
-                    <th>Kurssin nimi:</th>
-                        <th>Julkaise:</th>
-                        <th>Muokkaa:</th>
-                        <th>Poista:</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <br></br>
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span>Käytössä olevat kurssit</span></h3>
+                </div>
+
+
+                <div class="panel-body">
+
+
+
+
+                    <table id="CoursesInUse" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Kurssin nimi:</th>
+                            <th>Julkaise:</th>
+                            <th>Muokkaa:</th>
+                            <th>Poista:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         <tr th:each="course : ${coursesInUse}">
-                         <td th:text="${course.name}"> </td>
-                        <td> <button class="btn btn-primary disabled" >Julkaise</button>                  
-                       </td>
-  
+                            <td th:text="${course.name}"> </td>
+                            <td> <button class="btn btn-primary disabled" >Julkaise</button>
+                            </td>
 
-                        <td> <button class="btn btn-success disabled" >Muokkaa</button></td>      
 
-                        <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>      
-                        </td>
-                        
-                        
-                                           
-                       <div th:id="${course.id}+'remove'" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                               <div class="modal-header">
-                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                 <h4 class="modal-title">Vahvistus</h4>
-                               </div>
-                                <div class="modal-body">
-                                    <p>Halutatko varmasti poistaa valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
-                                    <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
-                               </div>
-                                <div class="modal-footer">
-                                   <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
-                                    <button class="btn btn-danger" type="submit" name="remove">Poista</button>
-                                   </form>          
-                                 </div>
+                            <td> <button class="btn btn-success disabled" >Muokkaa</button></td>
+
+                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>
+                            </td>
+
+
+
+                            <div th:id="${course.id}+'remove'" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Vahvistus</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Halutatko varmasti poistaa valitsemasi kurssin <b th:text="${course.name}">nimi</b>?</p>
+                                            <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                                <button class="btn btn-danger" type="submit" name="remove">Poista</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
-                         </div>
-                        
-                        
-                    </tr>
-                    </tbody>
-                </table>
-                
-                
-  
-   
-             </div>
-            
-           </div>
-          
-                            
-    
-    
- 
-                        
-               
-                
+                            </div>
+
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
         </div>
 
         <div id="update" class="tab-pane fade">
@@ -334,13 +320,13 @@
 
 
                 <div th:if="${updateCourseAsJson != null}">
-                  <div th:object="${course}">
-                  <ul th:if="${#fields.hasErrors('*')}">
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-                  </ul>
-                 </div>
-                    
-                    
+                    <div th:object="${course}">
+                        <ul th:if="${#fields.hasErrors('*')}">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                        </ul>
+                    </div>
+
+
                     <form th:action="@{'/course/'+${updateCourse.id}+'/update'}"  method="post">
 
                         <input type="hidden" name="gradeLevels[0].grade" id="gradeLevels[0].grade" value="9-10"/>
@@ -429,15 +415,23 @@
         </div>
     </div>
     <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
+    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/dynamicform.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        updateCourseAsJson=[[${updateCourseAsJson}]];
+        invalidCourseAsJson=[[${invalidCourseAsJson}]];
+    </script>
     <script>
         $(document).ready(function() {
-            
+
             $('#GetNewCourseTab').click(function() {
 
-	        window.location.href = '/course';
+                window.location.href = '/course';
 
-	    });
-               
+            });
+
             if(location.hash) {
                 $('a[href=' + location.hash + ']').tab('show');
             }
