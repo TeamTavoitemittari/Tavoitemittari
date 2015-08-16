@@ -25,24 +25,6 @@
                 <button class="btn btn-success round center-block" type="submit">Kirjaudu sisään!</button> 
                 </form>
                 <hr></hr>
-                
-            <p>(Lista
-                käyttäjistä herokun testaamista varten)</p>
-                
-                
-    <table border="1">
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-      </tr>
-      <tr th:each="x : ${users}">
-        <td th:text="${x.name}">Name</td>
-        <td th:text="${x.email}">Email</td>
-        <td th:text="${x.userRole}">Role</td>
-      </tr>
-    </table>
-  
-    
+
             </div></div>
   </body></html>

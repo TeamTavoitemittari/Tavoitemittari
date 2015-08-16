@@ -65,13 +65,6 @@ public class AdminController {
         userService.deleteUser(userId);
         return "redirect:/admin";
     }
-
-    @PreAuthorize("hasAuthority('admin')")
-    @RequestMapping(value = "/newuser")
-    public String createNewuser() {
-        return "register";
-    }
-
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "filter/{id}", method = RequestMethod.GET)
     public String getFilteredUsers(Model model, @PathVariable Long id) {

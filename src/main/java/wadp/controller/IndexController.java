@@ -2,6 +2,7 @@ package wadp.controller;
 
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class IndexController implements ErrorController {
     private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showIndex() {
+    public String showIndex(HttpSession request) {
+        request.setMaxInactiveInterval(10);
         createDummyCourse();
         createDummyCourseWithoutUsers();
         if (userService.getAuthenticatedUser() != null) {
@@ -60,7 +62,6 @@ public class IndexController implements ErrorController {
 
     @RequestMapping(value = PATH)
     public String error(Model model, HttpServletRequest request, Exception exception) {
-        System.out.println(exception.getStackTrace()[0]);
         return "error";
     }
 

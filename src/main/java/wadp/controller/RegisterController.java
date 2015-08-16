@@ -40,7 +40,7 @@ public class RegisterController {
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-
+            
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
             redirectAttributes.addFlashAttribute("user", user);
             return "redirect:/register";
@@ -62,7 +62,7 @@ public class RegisterController {
     @RequestMapping(value = "/as_admin", method = RequestMethod.POST)
     public String createUserAsAdmin(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-
+            
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
             redirectAttributes.addFlashAttribute("user", user);
             return "redirect:/register";
@@ -76,13 +76,14 @@ public class RegisterController {
             return "register";
         }
 
-        return "redirect:admin";
+        return "redirect:/admin";
 
     }
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/as_admin", method = RequestMethod.GET)
     public String RegisterAsAdmin(Model model) {
         if (!model.containsAttribute("user")) {
+            model.addAttribute("post_address", "/register/as_admin");
             model.addAttribute("user", new UserForm());
         }
         return "register";
@@ -91,6 +92,7 @@ public class RegisterController {
     @RequestMapping(method = RequestMethod.GET)
     public String Register(Model model) {
         if (!model.containsAttribute("user")) {
+            model.addAttribute("post_address" ,"/register");
             model.addAttribute("user", new UserForm());
         }
         return "register";
