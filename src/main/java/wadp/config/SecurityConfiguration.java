@@ -2,7 +2,6 @@ package wadp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -36,12 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .permitAll();
-
-      /*  http.logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/index")
-                .permitAll()
-                .invalidateHttpSession(true);*/
 
         // ensure that any inputs are treated as utf-8
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
