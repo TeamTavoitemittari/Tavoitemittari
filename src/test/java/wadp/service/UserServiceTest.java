@@ -3,10 +3,8 @@ package wadp.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +33,6 @@ import wadp.repository.UserRepository;
 public class UserServiceTest {
 
     @Autowired
-    private CommentService commentService;
-
-    @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
@@ -45,9 +40,6 @@ public class UserServiceTest {
 
     @Autowired
     private CourseRepository courseRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private CourseProgressRepository coProgressRepository;

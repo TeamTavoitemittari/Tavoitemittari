@@ -2,15 +2,10 @@
 package integrationtest;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 import wadp.*;
-import wadp.auth.*;
-import wadp.service.*;
-import wadp.domain.*;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -18,13 +13,6 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.*;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import wadp.controller.IndexController;
-import wadp.repository.CourseRepository;
-import wadp.repository.UserRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -69,8 +57,6 @@ public class ChangePasswordTest {
         assertTrue(hasMessage("Salasanojen pitää olla samoja!"));
     }
 
-
-    
     @Test
     public void cannotChangeTooShortPassword() {
         login(name, password);

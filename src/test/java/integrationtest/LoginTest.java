@@ -1,25 +1,18 @@
 
 package integrationtest;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import wadp.Application;
-import wadp.repository.UserRepository;
-import wadp.service.UserService;
-
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,10 +26,6 @@ public class LoginTest {
     private HtmlUnitDriver driver;
     private WebElement element;
 
-    
-    public LoginTest() {
-    }
-    
     @Before
     public void setUp() {
 
