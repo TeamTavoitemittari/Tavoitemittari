@@ -60,7 +60,7 @@ public class IndexController implements ErrorController {
 
     @RequestMapping(value = PATH)
     public String error(Model model) {
-        return "return error";
+        return "error";
     }
 
     @Override
