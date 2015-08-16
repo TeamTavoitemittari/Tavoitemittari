@@ -1,9 +1,11 @@
 package wadp.controller;
 
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +19,10 @@ import wadp.service.ProgressService;
 import wadp.service.SkillService;
 import wadp.service.UserService;
 
-
 // Any request not handled by other controllers is redirected to index
 @Controller
 @RequestMapping("*")
-public class IndexController {
+public class IndexController implements ErrorController {
 
     @Autowired
     private UserService userService;
@@ -43,8 +44,6 @@ public class IndexController {
 
     @Autowired
     private CommentService commentService;
-    
-    
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex() {
@@ -55,6 +54,19 @@ public class IndexController {
         } else {
             return "index";
         }
+    }
+
+    private static final String PATH = "/error";
+
+    @RequestMapping(value = PATH)
+    public String error(Model model, HttpServletRequest request, Exception exception) {
+        System.out.println(exception.getStackTrace()[0]);
+        return "error";
+    }
+
+    @Override
+    public String getErrorPath() {
+        return PATH;
     }
 
     @RequestMapping(value = "loginerror", method = RequestMethod.GET)
@@ -196,10 +208,10 @@ public class IndexController {
         levels.add(level3);
 
         course.setGradeLevels(levels);
-        
+
         User teacher = userService.findUserByEmail("ope@a.com");
         course.setTeacher(teacher);
-        
+
         courseService.addCourse(course);
 
         User user = userService.findUserByEmail("oppilas@a.com");

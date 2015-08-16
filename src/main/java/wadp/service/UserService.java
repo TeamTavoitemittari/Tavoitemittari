@@ -16,7 +16,6 @@ import javax.transaction.Transactional;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import wadp.domain.Course;
 import wadp.domain.Grade;
-
 import wadp.domain.User;
 
 @Service
@@ -30,9 +29,6 @@ public class UserService {
 
     @Autowired
     private GradeService gradeService;
-
-    @Autowired
-    private CommentService commentService;
 
     public List<User> list() {
         List<User> list = userRepository.findByUserRole("student");

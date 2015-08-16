@@ -4,11 +4,9 @@ package wadp.domain;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 

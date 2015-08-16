@@ -52,7 +52,13 @@
                 <li><a data-toggle="tab" href="#completed">Suoritukset</a></li>
             </ul>
             <div class="tab-content">
-                <div id="owncourses" class="active tab-pane fade in active"><br></br>
+                <div id="owncourses" class="active tab-pane fade in active">
+                    <br/>
+
+                    <form class="form-group">
+                        <label>Kurssihaku:</label>
+                        <input class="form-control" id="ownsearch" type="text" placeholder="Hae kurssia kurssin nimellä, opettajan nimellä tai luokallasi"/>
+                    </form>
                           
                     <div th:if="${alreadyJoinedMessage != null}">
                         <br/>
@@ -84,10 +90,11 @@
 
                 </div>
                 <div id="allcourses" class="tab-pane fade">
+                    <br/>
 
-                    <form>
-                        <input id="testinput" type="text"/>
-                        <button type="button" id="testbutton" placeholder="Kurssin Nimi...">Hae Kursseja</button>
+                    <form class="form-group">
+                        <label>Kurssihaku:</label>
+                        <input class="form-control" id="allsearch" type="text" placeholder="Hae kurssia kurssin nimellä, opettajan nimellä tai luokallasi"/>
                     </form>
 
                     <br></br>

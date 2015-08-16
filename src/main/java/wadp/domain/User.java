@@ -9,10 +9,6 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-/**
- *
- * @author OP
- */
 @Table(name = "User_table")
 @Entity
 public class User extends AbstractPersistable<Long> {

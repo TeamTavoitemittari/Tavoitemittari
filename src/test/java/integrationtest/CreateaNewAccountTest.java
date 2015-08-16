@@ -1,25 +1,19 @@
 
 package integrationtest;
 
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import wadp.*;
-import wadp.auth.*;
-import wadp.service.*;
-import wadp.domain.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import wadp.repository.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -31,10 +25,6 @@ public class CreateaNewAccountTest{
     private HtmlUnitDriver driver;
     private WebElement element;
 
-    
-    public CreateaNewAccountTest() {
-    }
-    
     @Before
     public void setUp() {
 

@@ -1,19 +1,12 @@
 
 package integrationtest;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
-
 import org.openqa.selenium.interactions.Actions;
 import wadp.*;
-import wadp.domain.*;
-import wadp.service.*;
-import wadp.auth.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.boot.test.IntegrationTest;
@@ -35,12 +28,7 @@ public class ViewPersonalCourseProgressTest {
         this.driver = new HtmlUnitDriver();
         this.builder = new Actions(driver);
     }
-
-    @After
-    public void tearDown() {
-
-    }
-
+    
     @Test
     public void studentCanViewPersonalCourseProgress() {
         login("oppilas@a.com", "oppilas");

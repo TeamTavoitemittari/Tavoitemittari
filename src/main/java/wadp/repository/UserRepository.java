@@ -7,11 +7,6 @@ import wadp.domain.User;
 
 import java.util.List;
 
-/**
- *
- * @author OP
- */
-
 public interface UserRepository extends JpaRepository <User, Long> {
     
   /// no  username so users identified by email address

@@ -24,8 +24,6 @@ public class Grade extends AbstractPersistable<Long> {
     public Grade(){
 
     }
-//Tähän luokka ja suorituspäivämäärä??
-
     public void setUser(User user) {
         this.user = user;
     }
