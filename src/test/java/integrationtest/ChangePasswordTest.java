@@ -97,11 +97,8 @@ public class ChangePasswordTest {
     }
     
     private void getUserdetailsPage() {
-        element = driver.findElement(By.id("dropdown-toggle-menu"));
+        element = driver.findElement(By.id("userdetails"));
         element.click();
-        element = driver.findElement(By.id("dd-a"));
-        element.click();
-
     }
 
     private void passwordChange(String password, String confirmPassword) {
