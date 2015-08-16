@@ -3,7 +3,6 @@ package wadp.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 

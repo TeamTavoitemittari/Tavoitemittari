@@ -2,7 +2,6 @@
 
 package wadp.domain;
 import java.util.ArrayList;
-import javax.persistence.Entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.util.List;
 import javax.persistence.CascadeType;
