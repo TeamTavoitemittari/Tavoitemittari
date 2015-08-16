@@ -1,11 +1,8 @@
 package wadp.domain.form;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 import wadp.validation.FieldMatch;
-
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Email;
 
 /**
  * Form object for new user creation. Necessary fields are passed to UserService that will create User object that will
