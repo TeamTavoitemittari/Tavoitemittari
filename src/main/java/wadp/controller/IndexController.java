@@ -57,7 +57,8 @@ public class IndexController implements ErrorController {
     private static final String PATH = "/error";
 
     @RequestMapping(value = PATH)
-    public String error(Model model) {
+    public String error(Model model, HttpServletRequest request, Exception exception) {
+        System.out.println(exception.getStackTrace()[0]);
         return "error";
     }
 

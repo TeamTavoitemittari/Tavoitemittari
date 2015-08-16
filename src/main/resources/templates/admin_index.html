@@ -52,11 +52,11 @@
                 <div class="panel-body">
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Dropdown
+                             Rajaa listausta kurssikohtaisesti
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a th:text="${'Kaikki oppilaat'}" th:href="@{'/admin'}"></a></li>
+                            <li><a th:text="${'Kaikki käyttäjät'}" th:href="@{'/admin'}"></a></li>
                             <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'/admin/filter/' +${course.id}}"></a></li>
                         </ul>
                     </div>
@@ -89,7 +89,7 @@
                             <p>Jos poistat käyttäjän menetät kaikki kyseiseen käyttäjään liittyvät tiedot.</p>
                         </div>
                         <div class="modal-footer">
-                            <form th:method="delete" th:action="'admin/'+${user.id}+'/delete'">
+                            <form th:method="delete" th:action="@{'/admin/'+${user.id}+'/delete'}">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                 <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                             </form>          
