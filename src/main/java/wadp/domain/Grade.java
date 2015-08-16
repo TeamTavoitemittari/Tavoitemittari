@@ -20,7 +20,7 @@ public class Grade extends AbstractPersistable<Long> {
     public User getUser() {
         return user;
     }
-    
+
     public Grade(){
 
     }
