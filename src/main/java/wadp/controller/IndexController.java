@@ -55,10 +55,7 @@ public class IndexController implements ErrorController {
 
     private static final String PATH = "/error";
 
-    @PostConstruct
-    public void init(){
-        courseService.createDummyCourse();
-    }
+
     
     
     @RequestMapping(value = PATH)
