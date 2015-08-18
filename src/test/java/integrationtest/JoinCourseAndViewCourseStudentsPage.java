@@ -11,13 +11,16 @@ import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import wadp.Application;
 import wadp.service.CourseService;
+import wadp.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @WebAppConfiguration
 @IntegrationTest({"server.port=8080"})
 public class JoinCourseAndViewCourseStudentsPage {
@@ -25,6 +28,9 @@ public class JoinCourseAndViewCourseStudentsPage {
     private HtmlUnitDriver driver;
     private WebElement element;
     private Actions builder;
+    
+    @Autowired
+    private UserService userService;
     
     @Autowired
     private CourseService courseService;
@@ -36,7 +42,7 @@ public class JoinCourseAndViewCourseStudentsPage {
 
     @Before
     public void setUp() {
-        
+        createDummys();
     }
 
     //Test structure became irrelevant due to changes in the teacher's mycourses view
@@ -53,8 +59,7 @@ public class JoinCourseAndViewCourseStudentsPage {
 
     @Test
     public void studentCantSeeCourseStudentPage() {
-        courseService.createDummyCourse();
-        courseService.createDummyCourseWithoutUsers();
+        
         studentLogin();
         getCourseProgressPage();
         assertTrue(driver.getPageSource().contains("studenttab")==false);
@@ -104,5 +109,13 @@ public class JoinCourseAndViewCourseStudentsPage {
         WebElement commenttab = driver.findElement(By.name("studenttab"));
         builder.moveToElement(coursecomment).moveToElement(commenttab).click().build().perform();
     }
+    
+     private void createDummys() {
+        userService.createUser("s@a.com", "oppilas", "Ossi Oppilas", "student");
+        userService.createUser("t@a.com", "ope", "Olli Oppilas", "teacher");
+       courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
+
+    }
+    
 
 }

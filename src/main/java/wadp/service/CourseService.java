@@ -234,9 +234,6 @@ public class CourseService {
       @Transactional
     public void createDummyCourse() {
 
-        if (getCourses().size() > 0) {
-            return;
-        }
 
         Course course = new Course();
         course.setInUse(true);
@@ -383,11 +380,8 @@ public class CourseService {
     }
 
     @Transactional
-    public void createDummyCourseWithoutUsers() {
+    public void createDummyCourseWithoutUsers(User teacher) {
 
-        if (getCourses().size() > 1) {
-            return;
-        }
 
         Course course = new Course();
         course.setInUse(true);
@@ -492,12 +486,13 @@ public class CourseService {
         levels.add(level1);
         levels.add(level2);
         levels.add(level3);
-
+        
         course.setGradeLevels(levels);
-        User teacher = userService.findUserByEmail("ope@a.com");
-        course.setTeacher(teacher);
+                course.setTeacher(teacher);
         addCourse(course);
 
     }
+    
+
 
 }

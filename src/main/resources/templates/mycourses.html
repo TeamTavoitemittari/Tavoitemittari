@@ -194,7 +194,7 @@
                                 <tr th:each="course : ${teachersCourses}">
                                     <td th:text="${course.name}"> </td>
                                     <td th:text="${counts.get(course.id)}">  </td>
-                                    <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success">Tavoitemittareihin</a></td>      
+                                    <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>      
                                 </tr>
                             </tbody>
                         </table>
