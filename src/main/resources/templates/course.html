@@ -12,9 +12,7 @@
         <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
         <link rel="stylesheet" type="text/css" href="/css/course.css" />
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/course.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+
         <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
 
 
@@ -27,39 +25,7 @@
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/css/general.css"/>
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
-        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-
-        <!-- This messes with the hallinto-dropdown menu
-        <script src="/js/bootstrap.js"></script>-->
-
-
-
-        <script src="/js/jquery.dropotron.min.js"></script>
-        <!--TÄMÄ HAJOTTAA TESTIT SYYSTÄ X <script src="/js/init.js"></script><!-->
-        <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
-        <!--DataTables initialization-->
-        <script type="text/javascript" charset="utf8">
-            $(document).ready(function () {
-                $('#example').DataTable({
-                    "language": {
-                        "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
-                        "zeroRecords": "Mitään ei löytynyt",
-                        "info": "Sivu _PAGE_ / _PAGES_",
-                        "infoEmpty": "Haku ei vastaa taulun sisältöä",
-                        "infoFiltered": "(haku rajattu _MAX_ oppilaasta)",
-                        "search": "Haku",
-                        "paginate": {
-                            "first": "Ensimmäinen",
-                            "last": "Viimeinen",
-                            "next": "Seuraava",
-                            "previous": "Edellinen"
-                        }
-                    }
-                });
-            });
-        </script>
+        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>    
 
         <title>Tavoitemittari</title>
 
@@ -399,21 +365,21 @@
                 </div> -->
             </div>
 
-            <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-            <script>
-                $(document).ready(function () {
-                    if (location.hash) {
-                        $('a[href=' + location.hash + ']').tab('show');
-                    }
-                    $(document.body).on("click", "a[data-toggle]", function (event) {
-                        location.hash = this.getAttribute("href");
-                    });
 
-                });
-                $(window).on('popstate', function () {
-                    var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
-                    $('a[href=' + anchor + ']').tab('show');
-                });
-            </script>
+
+            <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+
+
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/course.js"></script>
+            <script src="/js/bootstrap.min.js"></script>
+            <script src="/js/jquery.dropotron.min.js"></script>
+            <!--TÄMÄ HAJOTTAA TESTIT SYYSTÄ X <script src="/js/init.js"></script><!-->
+            <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+            <!--DataTables initialization-->    
+            <script type="text/javascript" charset="utf8" src="/js/dataTables-language.js"></script>
+            <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
+            <script src="/js/remembertabs.js"></script>
         </div>
     </body></html>
