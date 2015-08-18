@@ -7,12 +7,14 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import wadp.Application;
+import wadp.service.CourseService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,6 +30,8 @@ public class ConfirmStudentProgressTest {
     private HtmlUnitDriver driver;
     private String teacherEmail;
     private String teacherPassword;
+        @Autowired
+    private CourseService courseService;
 
 
 
@@ -44,6 +48,7 @@ public class ConfirmStudentProgressTest {
 
     @Test
     public void teacherCanConfirmStudentReportedProgress() {
+        courseService.createDummyCourse();
         System.out.println(driver.getPageSource());
         login(teacherEmail, teacherPassword);
         getCourseProgressPageAsTeacher();

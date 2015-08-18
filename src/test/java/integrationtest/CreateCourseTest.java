@@ -7,11 +7,13 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import wadp.Application;
+import wadp.service.UserService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,6 +25,9 @@ public class CreateCourseTest {
     private HtmlUnitDriver driver;
     private WebElement element;
     private String name;
+    
+    @Autowired
+    private UserService userService;
 
     
     public CreateCourseTest() {
@@ -35,17 +40,18 @@ public class CreateCourseTest {
     @Before
     public void setUp() {
         name = "Kurssi";
+       
     }
     //FIXAA TÄMÄ   
-   /* @Test
+    @Test
     public void teacherCanAccessNewCourseCreationPageButCannotCreateCourseSinceGoalsMustBeSet() {
-        createUser("ope", "Opettaja21", "teacher");
+        userService.createUser("ope@gmail.com","Opettaja21" , "Olli Ope", "teacher");
         login("ope@gmail.com", "Opettaja21");
         getCourseCreationPage();
         assertTrue(driver.getPageSource().contains("Lisää kurssi"));
         createCourse(name, "Tällä kurssila käsitellään jotain");
         assertTrue(driver.getPageSource().contains("Tavoite ei saa olla tyhjä."));
-    }*/
+    }
 //    @Test
 //    public void teacherCanCreateaNewCourse() {
 //        createUser("ope", "Opettaja21", "teacher");

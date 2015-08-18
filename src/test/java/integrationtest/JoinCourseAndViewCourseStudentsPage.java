@@ -8,12 +8,13 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import wadp.Application;
+import wadp.service.CourseService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -24,6 +25,9 @@ public class JoinCourseAndViewCourseStudentsPage {
     private HtmlUnitDriver driver;
     private WebElement element;
     private Actions builder;
+    
+    @Autowired
+    private CourseService courseService;
 
     public JoinCourseAndViewCourseStudentsPage() {
         this.driver = new HtmlUnitDriver();
@@ -32,7 +36,7 @@ public class JoinCourseAndViewCourseStudentsPage {
 
     @Before
     public void setUp() {
-
+        
     }
 
     //Test structure became irrelevant due to changes in the teacher's mycourses view
@@ -49,6 +53,8 @@ public class JoinCourseAndViewCourseStudentsPage {
 
     @Test
     public void studentCantSeeCourseStudentPage() {
+        courseService.createDummyCourse();
+        courseService.createDummyCourseWithoutUsers();
         studentLogin();
         getCourseProgressPage();
         assertTrue(driver.getPageSource().contains("studenttab")==false);
