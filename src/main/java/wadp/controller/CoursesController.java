@@ -32,9 +32,6 @@ public class CoursesController {
             model.addAttribute("courses", courseService.getCoursesInUse());
             model.addAttribute("owncourses", courseService.getUsersUncompletedCourses(userService.getAuthenticatedUser()));
             model.addAttribute("completed", gradeService.getStudentGrades(userService.getAuthenticatedUser()));
-            System.out.println(gradeService.getStudentGrades(userService.getAuthenticatedUser()).size());
-            System.out.println(gradeService.getStudentGrades(userService.getAuthenticatedUser()).size());
-            System.out.println(gradeService.getStudentGrades(userService.getAuthenticatedUser()).size());
 
         }
         if (userService.getAuthenticatedUser().getUserRole().equals("teacher")) {

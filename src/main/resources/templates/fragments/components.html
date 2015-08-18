@@ -21,15 +21,8 @@
                         <ul class="nav navbar-nav">
                             <li><a href="/mycourses">Minun kurssini</a></li>
                             <li><a href="/userdetails" id="userdetails">Omat tiedot</a></li>
-
-                            <li class="dropdown" sec:authorize="hasRole('teacher')">
-                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" id="hallinnointi-toggle-menu">Hallinnointi <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/course" id="hdd-a">Kurssit</a></li>
-                                    <li><a href="/student" id="hdd-b">Oppilaat</a></li>
-                                </ul>
-                            </li>
-
+                            <li sec:authorize="hasRole('teacher')"><a href="/course" id="hdd-a">Kurssit</a></li>
+                            <li sec:authorize="hasRole('teacher')"><a href="/student" id="hdd-b">Oppilaat</a></li>
                             <li sec:authorize="hasRole('admin')"><a href="/admin/passwords">Salasanat</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">

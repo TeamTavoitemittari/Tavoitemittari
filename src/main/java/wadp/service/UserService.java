@@ -74,7 +74,6 @@ public class UserService {
         User user = userRepository.findByEmail(email);
 
         if (user == null || !user.passwordEquals(password)) {
-            System.out.println("Error in user authentication");
             throw new AuthenticationException("Unable to authenticate user with email" + email) {
             };
         }
@@ -134,11 +133,6 @@ public class UserService {
     @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findOne(id);
-        System.out.println(user.getName());
-        System.out.println(user.getName());
-        System.out.println(user.getName());
-        System.out.println(user.getName());
-        System.out.println(user.getName());
         if (user.getUserRole().equals("student")) {
             List<Course> courses = courseService.getUsersCourses(user);
 

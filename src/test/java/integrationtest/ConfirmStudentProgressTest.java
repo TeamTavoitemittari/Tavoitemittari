@@ -67,8 +67,6 @@ public class ConfirmStudentProgressTest {
     }
 
     private void getCourseProgressPageAsTeacher() {
-        element = driver.findElement(By.id("hallinnointi-toggle-menu"));
-        element.click();
         element = driver.findElement(By.id("hdd-b"));
         element.click();
         element = driver.findElement(By.partialLinkText("Matti"));

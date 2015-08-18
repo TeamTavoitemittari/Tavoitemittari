@@ -36,8 +36,8 @@ public class CreateCourseTest {
     public void setUp() {
         name = "Kurssi";
     }
-
-  /*  @Test
+    //FIXAA TÄMÄ   
+   /* @Test
     public void teacherCanAccessNewCourseCreationPageButCannotCreateCourseSinceGoalsMustBeSet() {
         createUser("ope", "Opettaja21", "teacher");
         login("ope@gmail.com", "Opettaja21");
@@ -103,8 +103,6 @@ public class CreateCourseTest {
     }
 
     private void getCourseCreationPage() {
-        element = driver.findElement(By.id("hallinnointi-toggle-menu"));
-        element.click();
         element = driver.findElement(By.id("hdd-a"));
         element.click();
         driver.getPageSource();
