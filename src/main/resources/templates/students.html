@@ -10,73 +10,54 @@
         <link rel="stylesheet" type="text/css" href="/css/general.css"/>
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
         <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+    </head>
+    <body>
+        <div th:replace="fragments/components    :: course-navbar">navbar</div>
+        <div class ="container">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span>Oppilaat</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Rajaa listausta kurssikohtaisesti
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a th:text="${'Kaikki oppilaat'}" th:href="@{'/student'}"></a></li>
+                            <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'/student/filter/' +${course.id}}"></a></li>
+                        </ul>
+                    </div>
+                    <br/>
+
+                    <table id="example" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nimi</th>
+                                <th>Sähköposti</th>
+                                <th>Rooli</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="student : ${students}">
+                                <td><a th:text="${student.name}" th:href="@{'/student/' + ${student.id}}"></a></td>
+                                <td th:text="${student.email}"></td>
+                                <td th:text="${student.userRole}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
         <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>        
+        <script src="/js/bootstrap.min.js"></script>
         <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>               
+        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
         <!--DataTables initialization-->
-        <script type="text/javascript" charset="utf8">
-            $(document).ready( function () {
-                $('#students-table').DataTable( {
-                    "language": {
-                        "lengthMenu": "Näytä _MENU_ oppilasta per sivu",
-                        "zeroRecords": "Mitään ei löytynyt",
-                        "info": "Sivu _PAGE_ / _PAGES_",
-                        "infoEmpty": "Haku ei vastaa taulun sisältöä",
-                        "infoFiltered": "(haku rajattu _MAX_ oppilaasta)",
-                        "search": "Haku",
-                        "paginate": {
-                            "first": "Ensimmäinen",
-                            "last": "Viimeinen",
-                            "next": "Seuraava",
-                            "previous": "Edellinen"
-                        }
-                    }
-                } );
-            } );
-        </script>
-    </head>    
-<body>
-    <div th:replace="fragments/components    :: course-navbar">navbar</div>
-    <div class ="container">
-
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title"><span>Oppilaat</span></h3>
-            </div>
-            <div class="panel-body">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Rajaa listausta kurssikohtaisesti
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a th:text="${'Kaikki oppilaat'}" th:href="@{'/student'}"></a></li>
-                        <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'/student/filter/' +${course.id}}"></a></li>
-                    </ul>
-                </div>
-                <br/>
-                
-                <table id="students-table" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Nimi</th>
-                        <th>Sähköposti</th>
-                        <th>Rooli</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="student : ${students}">
-                        <td><a th:text="${student.name}" th:href="@{'/student/' + ${student.id}}"></a></td>
-                        <td th:text="${student.email}"></td>
-                        <td th:text="${student.userRole}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-    </div>
-        </div>
-</body>
+        <script type="text/javascript" charset="utf8" src="/js/dataTables-language.js"></script>
+    </body>
 
 </html>

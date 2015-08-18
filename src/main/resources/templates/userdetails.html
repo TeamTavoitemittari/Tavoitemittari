@@ -9,52 +9,50 @@
         <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" type="text/css" href="/css/general.css"/>
         <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
-        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/jquery.dropotron.min.js"></script>
     </head>
     <body>
 
         <div th:replace="fragments/components :: course-navbar">navbar</div>
-                <div class="container">
+        <div class="container">
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span>Omat tiedot</span></h3>
                 </div> 
                 <form th:action="@{/userdetails}"  method="post">
-                <div class="panel-body"><div th:if="${user != null}">
-                    <div th:if="${message != null}">  <p><b th:text="${message}">message</b></p>
-                    </div>
-                    <p>Nimesi: <b  th:if="${user != null}" th:text="${user.name}"> user name</b> </p>
-                    <p>Sähköpostisi: <b th:if="${user != null}" th:text="${user.email}">user email </b> </p>
-                    <p>Roolisi on: <b  th:if="${user != null}" th:text="${user.userRole}"> user role</b> </p><br></br><br></br> </div>
-                    <p> <b>Vaihda salasanasi:</b></p><br></br>
-                    <p th:if="${#fields.hasErrors('newpassword.password')}" th:errors="*{newpassword.password}">Error message</p>
-                    <p th:if="${#fields.hasErrors('newpassword')}" th:errors="*{newpassword}">Error message</p>
+                    <div class="panel-body"><div th:if="${user != null}">
+                            <div th:if="${message != null}">  <p><b th:text="${message}">message</b></p>
+                            </div>
+                            <p>Nimesi: <b  th:if="${user != null}" th:text="${user.name}"> user name</b> </p>
+                            <p>Sähköpostisi: <b th:if="${user != null}" th:text="${user.email}">user email </b> </p>
+                            <p>Roolisi on: <b  th:if="${user != null}" th:text="${user.userRole}"> user role</b> </p><br></br><br></br> </div>
+                        <p> <b>Vaihda salasanasi:</b></p><br></br>
+                        <p th:if="${#fields.hasErrors('newpassword.password')}" th:errors="*{newpassword.password}">Error message</p>
+                        <p th:if="${#fields.hasErrors('newpassword')}" th:errors="*{newpassword}">Error message</p>
 
-                    <div class="form-group">
-                        <label for="password">Uusi salasana:</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Salasana"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Uusi salasana uudelleen:</label>
-                        <input type="password" class="form-control" name="confirmpassword" id="confirmpasswordpassword" placeholder="Salasana uudelleen"/>
-                    </div>
+                        <div class="form-group">
+                            <label for="password">Uusi salasana:</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Salasana"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Uusi salasana uudelleen:</label>
+                            <input type="password" class="form-control" name="confirmpassword" id="confirmpasswordpassword" placeholder="Salasana uudelleen"/>
+                        </div>
 
-                </div>
-                <div class="panel-footer">
-                    <button class="btn btn-success" role="button" type="submit">Vaihda salasana</button>  <a href="/userdetails_info"><button type="button" class="btn btn-default" role="button">Lisätietoja</button></a>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-success" role="button" type="submit">Vaihda salasana</button>  <a href="/userdetails_info"><button type="button" class="btn btn-default" role="button">Lisätietoja</button></a>
 
-                </div>
-            </form>
+                    </div>
+                </form>
 
             </div>
-        
 
-</div>
+
+        </div>
+        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
         <script src="/js/bootstrap.js"></script>
         <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.dropotron.min.js"></script>
     </body>
 
 </html>
