@@ -1,16 +1,14 @@
 package wadp.controller;
 
-import java.util.*;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import wadp.domain.*;
 import wadp.service.CommentService;
 import wadp.service.CourseService;
 import wadp.service.GoalService;
@@ -47,7 +45,6 @@ public class IndexController implements ErrorController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex(HttpSession session) {
-        courseService.createDummyCourse();
         session.setMaxInactiveInterval(60 * 60 * 3);
         if (userService.getAuthenticatedUser() != null) {
             return "redirect:mycourses";
@@ -58,6 +55,12 @@ public class IndexController implements ErrorController {
 
     private static final String PATH = "/error";
 
+    @PostConstruct
+    public void init(){
+        courseService.createDummyCourse();
+    }
+    
+    
     @RequestMapping(value = PATH)
     public String error(Model model, HttpServletRequest request, Exception exception) {
         return "error";

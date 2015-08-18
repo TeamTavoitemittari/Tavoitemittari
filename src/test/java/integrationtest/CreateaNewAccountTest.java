@@ -87,43 +87,7 @@ public class CreateaNewAccountTest{
         createUser(name, "Wrongpass0");
         assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
     }
-    
-    /*@Test
-    public void teacherCanCreateUserWithValidUsernameAndPassword() {
-        registerSetup();
-        createUser("test9", "passWord1", "student");
-        assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
-    }
-    
-    @Test
-    public void teacherCanCreateUserWithValidUsernameAndPasswordAndLogin() {
-        registerSetup();
-        createUser("test8", "passWord1", "teacher");
-        assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
-        login("test8", "passWord1");
-        assertTrue(hasMessage("Minun kurssini"));
-        assertTrue(hasMessage("Hallinnointi"));
-    }
-    
-    @Test
-    public void teacherCannotCreateUserWithoutValidPassword() {
-        registerSetup();
-        createUser("test4", "pass", "teacher");
-        assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
-        login("test4", "pass");
-        assertTrue(hasMessage("Tarkista syöttämäsi tiedot!"));
-    }
-    
-    @Test
-    public void teacherCannotCreateUserWithAlreadyTakenEmail() {
-        registerSetup();
-        createUser(name, "TestPassword0", "teacher");
-
-        registerSetup();
-        createUser(name, "Wrongpass0", "teacher");
-        assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
-    }*/
-    
+     
     
     private void registerSetup() {
         driver = new HtmlUnitDriver();
