@@ -38,14 +38,14 @@ public class CreateaNewAccountTest{
     @Test
     public void studentCanCreateUserWithValidUsernameAndPassword() {
         registerSetup();
-        createUser(name, "passWord1", "student");
+        createUser(name, "passWord1");
         assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
     }
     
     @Test
     public void studentCanCreateUserWithValidUsernameAndPasswordAndLogin() {
         registerSetup();
-        createUser("test3", "passWord1", "student");
+        createUser("test3", "passWord1");
         assertTrue(hasMessage("Sinut on rekisteröity palveluun sähköpostiosoitteella "));
         login("test3", "passWord1");
         assertTrue(hasMessage("Minun kurssini"));
@@ -55,7 +55,7 @@ public class CreateaNewAccountTest{
     @Test
     public void studentCannotCreateUserWithoutValidPassword() {
         registerSetup();
-        createUser("test4", "pass", "student");
+        createUser("test4", "pass");
         assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
         login("test4", "pass");
         assertTrue(hasMessage("Tarkista syöttämäsi tiedot!"));
@@ -81,10 +81,10 @@ public class CreateaNewAccountTest{
     @Test
     public void studentCannotCreateUserWithAlreadyTakenEmail() {
         registerSetup();
-        createUser(name, "TestPassword0", "student");
+        createUser(name, "TestPassword0");
 
         registerSetup();
-        createUser(name, "Wrongpass0", "student");
+        createUser(name, "Wrongpass0");
         assertTrue(hasMessage("Sähköpostiosoite on jo rekisteröity palveluun!"));
     }
     
@@ -132,7 +132,7 @@ public class CreateaNewAccountTest{
         element.click();
     }
 
-    private void createUser(String mailName, String password, String role) {
+    private void createUser(String mailName, String password) {
         driver.get("http://localhost:8080/index");
         element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy!')]"));
         element.click();
@@ -142,8 +142,6 @@ public class CreateaNewAccountTest{
         element.sendKeys(mailName + "@gmail.com");
         element = driver.findElementByName("confirmemail");
         element.sendKeys(mailName + "@gmail.com");
-        Select select = new Select(driver.findElement(By.name("userRole")));
-        select.selectByVisibleText(role);
         element = driver.findElement(By.id("password"));
         element.sendKeys(password);
         element = driver.findElement(By.id("confirmpassword"));

@@ -65,7 +65,7 @@ public class CreateCourseTest {
     
     @Test
     public void studentCannotCreateaNewCourse() {
-        createUser("oppilas", "Oppilas21", "student");
+        createUser("oppilas", "Oppilas21");
         login("oppilas@gmail.com", "Oppilas21");
         assertFalse(driver.getPageSource().contains("Hallinnointi"));
         try {
@@ -82,7 +82,7 @@ public class CreateCourseTest {
     
     @Test
     public void studentCannotBypassRoleChuckByGoingStraightToCourseCreation() {
-        createUser("oppilas", "Oppilas21", "student");
+        createUser("oppilas", "Oppilas21");
         login("oppilas@gmail.com", "Oppilas21");
         try {
             driver.get("http://localhost:8080/courses");
@@ -123,7 +123,7 @@ public class CreateCourseTest {
         element.submit();
     }
 
-    private void createUser(String mailName, String password, String role) {
+    private void createUser(String mailName, String password) {
         driver.get("http://localhost:8080/index");
         element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy!')]"));
         element.click();
@@ -133,8 +133,6 @@ public class CreateCourseTest {
         element.sendKeys(mailName + "@gmail.com");
         element = driver.findElementByName("confirmemail");
         element.sendKeys(mailName + "@gmail.com");
-        Select select = new Select(driver.findElement(By.name("userRole")));
-        select.selectByVisibleText(role);
         element = driver.findElement(By.id("password"));
         element.sendKeys(password);
         element = driver.findElement(By.id("confirmpassword"));

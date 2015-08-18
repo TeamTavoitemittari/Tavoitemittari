@@ -48,7 +48,7 @@ public class RegisterController {
         }
 
         try {
-            userService.createUser(user.getEmail(), user.getPassword(), user.getName(), user.getUserRole());
+            userService.createUser(user.getEmail(), user.getPassword(), user.getName(), "student");
         } catch (EmailAlreadyRegisteredException ex) {
             bindingResult.addError(new FieldError("user", "email", "Sähköpostiosoite on jo rekisteröity palveluun!"));
             return "register";

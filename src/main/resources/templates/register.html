@@ -41,14 +41,16 @@
 
 
 
-                    <div class="form-group">
+                    <div sec:authorize="hasRole('admin')" class="form-group">
                         <label for="password">Käyttäjän rooli</label>
                         <select name="userRole"  class="form-control">
-                            <option sec:authorize="hasRole('admin')" value="teacher">teacher</option>
-                            <option value="student">student</option>
+                            <option value="teacher">teacher</option>
+                            <option selected="selected" value="student">student</option>
                             
                         </select> 
                     </div>
+
+
 
                     <b th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">Error message</b>
                     <div class="form-group">
