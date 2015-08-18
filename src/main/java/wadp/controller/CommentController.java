@@ -4,11 +4,13 @@ package wadp.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.Comment;
 import wadp.domain.User;
 import wadp.service.CommentService;
@@ -23,6 +25,15 @@ public class CommentController {
 
     @Autowired
     private UserService userService;
+    
+    
+    @PreAuthorize("hasAuthority('teacher')")
+    @RequestMapping(value ="/{userId}/{courseId}/{commentId}/clean", method = RequestMethod.POST)
+    public String deleteComment(RedirectAttributes redirectAttributes, @PathVariable long userId, @PathVariable long courseId, @PathVariable long commentId) {
+         commentService.cleanCommentById(commentId);
+      
+         return "redirect:/course/"+courseId+"/"+userId+"#comments";
+    }
     
     
     @RequestMapping(value="/{userId}/{courseId}/{commentId}", method=RequestMethod.POST)

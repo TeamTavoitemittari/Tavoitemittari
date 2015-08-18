@@ -18,6 +18,14 @@ public class CommentService {
     private CommentRepository commentRepository;
    
     
+    @Transactional
+    public void cleanCommentById(long id){
+        
+        Comment comment  = commentRepository.findOne(id);
+        comment.setComment("");
+        commentRepository.save(comment);
+    }
+    
     public Comment findCommentById(long id){
         return commentRepository.findOne(id);
     }

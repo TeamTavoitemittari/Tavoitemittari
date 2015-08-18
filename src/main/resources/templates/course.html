@@ -229,10 +229,33 @@
                                                         <button class="btn btn-success" th:id="'save'+ ${skill.id}" type="submit">Tallenna</button>
                                                         <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" >Peruuta</a>
                                                         <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" >Peruuta</a>
+                                                        <button sec:authorize="hasRole('teacher')" type="button" th:href="'#'+${skill.id}+'empty'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${skill.id}+'empty'">Tyhjennä</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
+                                        <div sec:authorize="hasRole('teacher')" th:id="${skill.id}+'empty'" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Vahvistus</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Haluatko varmasti tyhjentää kommenttikentän? Tätä ei voi perua. </p>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                              
+                                                                    
+                                                                    <form th:method="post" th:action="@{'/comment/' + ${tracker.user.id} + '/' + ${course.id} + '/' + ${goal.value.comments.get(skill).id} + '/clean'}"> <button class="btn btn-danger" type="submit">Tyhjennä</button>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+                                                                </form>  
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                     </div>
                                 </div>
                             </div>
