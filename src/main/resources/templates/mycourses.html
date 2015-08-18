@@ -19,8 +19,8 @@
         <div class="container" sec:authorize="hasRole('student')">
             <ul class="nav nav-tabs" id="courseCommentTab">
                 <li class="active"><a data-toggle="tab" href="#owncourses" name="updatetab">Omat kurssit</a></li>
-                <li><a data-toggle="tab" href="#allcourses">Kaikki kurssit</a></li>
-                <li><a data-toggle="tab" href="#completed">Suoritukset</a></li>
+                <li><a data-toggle="tab" href="#allcourses" id="allcourses">Kaikki kurssit</a></li>
+                <li><a data-toggle="tab" href="#completed" id="completed">Suoritukset</a></li>
             </ul>
             <div class="tab-content">
                 <div id="owncourses" class="active tab-pane fade in active">
