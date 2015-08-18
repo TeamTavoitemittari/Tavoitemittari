@@ -69,10 +69,10 @@ public class ViewPersonalCourseProgressTest {
 
     private void getCourseProgressPage() {
         driver.setJavascriptEnabled(true);
-        WebElement courseCommentTab = driver.findElement(By.id("courseCommentTab"));
-        WebElement owncourses = driver.findElement(By.name("updatetab"));
+        WebElement mycoursesTab = driver.findElement(By.id("mycoursesTab"));
+        WebElement owncourses = driver.findElement(By.name("owncourses"));
         WebElement tavoitemittariin = driver.findElement(By.id("tavoitemittari1"));
-        builder.moveToElement(courseCommentTab).moveToElement(owncourses).
+        builder.moveToElement(mycoursesTab).moveToElement(owncourses).
                 moveToElement(tavoitemittariin).click().build().perform();
     }
 }
