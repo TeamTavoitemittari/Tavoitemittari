@@ -61,7 +61,9 @@ public class JoinCourseAndViewCourseStudentsPage {
     public void studentCantSeeCourseStudentPage() {
         
         studentLogin();
+        joinCourse();
         getCourseProgressPage();
+
         assertTrue(driver.getPageSource().contains("studenttab")==false);
         assertTrue(driver.getPageSource().contains("commenttab")==true);
     }
@@ -90,7 +92,14 @@ public class JoinCourseAndViewCourseStudentsPage {
     }
 
     private void joinCourse() {
-        driver.findElement(By.id("join1")).click();
+        driver.setJavascriptEnabled(true);
+        WebElement mycoursesTab = driver.findElement(By.id("mycoursesTab"));
+        WebElement owncourses = driver.findElement(By.name("owncourses"));
+        WebElement allcourses = driver.findElement(By.name("allcourses"));
+        WebElement join = driver.findElement(By.id("join1"));
+        builder.moveToElement(mycoursesTab).moveToElement(owncourses).
+                moveToElement(allcourses).moveToElement(join).click().build().perform();
+
     }
 
     private void getCourseProgressPage() {
@@ -105,15 +114,15 @@ public class JoinCourseAndViewCourseStudentsPage {
     }
 
     private void getCourseStudentPage() {
-        WebElement coursecomment = driver.findElement(By.id("courseCommentTab"));
+        WebElement mycoursesTab = driver.findElement(By.id("mycoursesTab"));
         WebElement commenttab = driver.findElement(By.name("studenttab"));
-        builder.moveToElement(coursecomment).moveToElement(commenttab).click().build().perform();
+        builder.moveToElement(mycoursesTab).moveToElement(commenttab).click().build().perform();
     }
     
      private void createDummys() {
         userService.createUser("s@a.com", "oppilas", "Ossi Oppilas", "student");
         userService.createUser("t@a.com", "ope", "Olli Oppilas", "teacher");
-       courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
+        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
 
     }
     
