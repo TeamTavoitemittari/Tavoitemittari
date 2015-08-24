@@ -280,7 +280,7 @@
                                         </thead>
                                         <tbody>                                    
                                             <tr th:each="studentGrade : ${studentGrades}">
-                                                <td><a th:text="${studentGrade.key.name}" th:href="@{'/course/'+${course.id}+'/' + ${studentGrade.key.id}}"></a></td>
+                                                <td><a th:text="${studentGrade.key.name}" th:href="@{'/course/'+${course.id}+'/' + ${studentGrade.key.id}}" th:id="goalometer+${studentGrade.key.id}"></a></td>
                                                 <td th:text="${studentGrade.key.email}"></td>
                                                 <td><div><span th:if="${studentGrade.value!=null}" th:text="''+${studentGrade.value.grade}+'  '"></span>
                                                         <span><button type="button" th:if="${studentGrade.value!=null}" th:href="'#'+${studentGrade.key.id}+'updateGrade'" class="glyphicon glyphicon-pencil" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'updateGrade'"></button></span></div>

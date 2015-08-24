@@ -28,10 +28,10 @@ public class JoinCourseAndViewCourseStudentsPage {
     private HtmlUnitDriver driver;
     private WebElement element;
     private Actions builder;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private CourseService courseService;
 
@@ -46,26 +46,27 @@ public class JoinCourseAndViewCourseStudentsPage {
     }
 
     //Test structure became irrelevant due to changes in the teacher's mycourses view
-//    @Test
-//    public void teacherCanViewCourseStudentPage() {
-//        teacherLogin();
-//        joinCourse();
-//        assertTrue(driver.getPageSource().contains("Sinut on liitetty kurssille!"));
-//        getCourseProgressPage();
-//        getCourseStudentPage();
-//        assertTrue(driver.getPageSource().contains("Olli Opettaja"));
-//    }
-    
+    @Test
+    public void teacherCanViewCourseStudentPage() {
+        studentLogin();
+        joinCourse();
+        logout();
+        teacherLogin();
+        getCourseProgressPageAsTeacher();
+        getCourseStudentPage();
+        System.out.println(driver.getCurrentUrl());
+        assertTrue(driver.getPageSource().contains("Tähtikuviot"));
+    }
 
     @Test
     public void studentCantSeeCourseStudentPage() {
-        
+
         studentLogin();
         joinCourse();
         getCourseProgressPage();
 
-        assertTrue(driver.getPageSource().contains("studenttab")==false);
-        assertTrue(driver.getPageSource().contains("commenttab")==true);
+        assertTrue(driver.getPageSource().contains("studenttab") == false);
+        assertTrue(driver.getPageSource().contains("commenttab") == true);
     }
 
     @After
@@ -74,11 +75,11 @@ public class JoinCourseAndViewCourseStudentsPage {
     }
 
     private void studentLogin() {
-        login("oppilas@a.com", "oppilas");
+        login("s@a.com", "oppilas");
     }
 
     private void teacherLogin() {
-        login("ope@a.com", "ope");
+        login("t@a.com", "ope");
     }
 
     private void login(String email, String password) {
@@ -113,18 +114,26 @@ public class JoinCourseAndViewCourseStudentsPage {
 
     }
 
-    private void getCourseStudentPage() {
-        WebElement mycoursesTab = driver.findElement(By.id("mycoursesTab"));
-        WebElement commenttab = driver.findElement(By.name("studenttab"));
-        builder.moveToElement(mycoursesTab).moveToElement(commenttab).click().build().perform();
+    private void getCourseProgressPageAsTeacher() {
+        driver.setJavascriptEnabled(true);
+        driver.findElement(By.id("goalometers1")).click();
     }
-    
-     private void createDummys() {
+
+    private void getCourseStudentPage() {
+        driver.findElementById("goalometer" + userService.findUserByEmail("s@a.com").getId()).click();
+    }
+
+    private void createDummys() {
         userService.createUser("s@a.com", "oppilas", "Ossi Oppilas", "student");
         userService.createUser("t@a.com", "ope", "Olli Oppilas", "teacher");
         courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
 
     }
-    
+     private void logout(){
+        this.driver.close();
+        this.builder = new Actions(driver);
+        this.driver = new HtmlUnitDriver();
+        this.builder = new Actions(driver);
+    }
 
 }
