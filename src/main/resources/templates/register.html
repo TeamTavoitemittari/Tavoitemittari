@@ -19,20 +19,20 @@
                 <h1 class="text-center">Tavoitemittari</h1>
                 <br/>
                 <form th:action="@{${post_address}}"  method="post">
-                    <b th:if="${#fields.hasErrors('user')}" th:errors="*{user}">Error message</b>
+                    <b class="errorMsg" th:if="${#fields.hasErrors('user')}" th:errors="*{user}">Error message</b>
                     <br></br>
-                    <b th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}">Error message</b>
+                    <b class="errorMsg" th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}">Error message</b>
                     <div class="form-group">
                         <label for="text">Nimi</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Matti Meikäläinen"/>
                     </div>
 
-                    <b th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">Error message</b>
+                    <b class="errorMsg" th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">Error message</b>
                     <div class="form-group">
                         <label for="email">Sähköpostiosoite</label>
                         <input type="email" name="email" class="form-control" id="email" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
                     </div>
-                    <b th:if="${#fields.hasErrors('user.confirmemail')}" th:errors="*{user.confirmemail}">Error message</b>
+                    <b class="errorMsg" th:if="${#fields.hasErrors('user.confirmemail')}" th:errors="*{user.confirmemail}">Error message</b>
                     <div class="form-group">
                         <label for="email">Sähköpostiosoite uudelleen</label>
                         <input type="email" name="confirmemail" class="form-control" id="confirmemail" placeholder="Esim. matti.meikalainen@edu.hel.fi"/>
@@ -52,12 +52,12 @@
 
 
 
-                    <b th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">Error message</b>
+                    <b class="errorMsg" th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">Error message</b>
                     <div class="form-group">
                         <label for="password">Salasana</label>
                         <input type="password" name="password" class="form-control" id="password" placeholder="Salasana"/>
                     </div>
-                    <b th:if="${#fields.hasErrors('user.confirmpassword')}" th:errors="*{user.confirmpassword}">Error message</b>
+                    <b class="errorMsg" th:if="${#fields.hasErrors('user.confirmpassword')}" th:errors="*{user.confirmpassword}">Error message</b>
                     <div class="form-group">
                         <label for="password">Salasana uudelleen</label>
                         <input type="password" name="confirmpassword"  class="form-control" id="confirmpassword" placeholder="Salasana"/>
