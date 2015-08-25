@@ -188,6 +188,31 @@ public class UserServiceTest {
     }
 
     @Test
+    public void usersCanChangeTheirSchoolClass() {
+        service.changeSchoolClass("12D");
+        User user = service.getAuthenticatedUser();
+        assertEquals("12D", user.getSchoolClass());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void schoolClassCannotBeEmpty() {
+        service.changeSchoolClass("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void schoolClassCannotBeNull() {
+        service.changeSchoolClass(null);
+    }
+
+    @Test(expected = AuthenticatedUserIsNullException.class)
+    public void CurrentUserDoesntreturnSC() {
+
+        SecurityContextHolder.clearContext();
+        service.changeSchoolClass("2D");
+
+    }
+
+    @Test
     public void CanDeleteUsersWithNoCourses() {
         int initUsers = service.list().size();
         service.createUser("keke@meikalainen.com", "salasana", "keke meikalainen", "teacher");

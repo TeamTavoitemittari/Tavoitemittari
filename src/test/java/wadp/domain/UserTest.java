@@ -97,4 +97,18 @@ public class UserTest {
         
     }
 
+    @Test
+    public void testSetAndGetSchoolClass() {
+        User user = new User();
+        user.setSchoolClass("5B");
+
+        assertEquals("5B", user.getSchoolClass());
+    }
+
+    @Test
+    public void testSchoolClassDefault() {
+        User user = new User();
+        assertEquals("00", user.getSchoolClass());
+    }
+
 }
