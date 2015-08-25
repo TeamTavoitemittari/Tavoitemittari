@@ -6,8 +6,10 @@ $(document).ready(function() {
     $(document.body).on("click", "a[data-toggle]", function(event) {
         location.hash = this.getAttribute("href");
     });
-});
-$(window).on('popstate', function() {
     var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
     $('a[href=' + anchor + ']').tab('show');
 });
+/*$(window).on('popstate', function() {
+    var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+    $('a[href=' + anchor + ']').tab('show');
+});*/

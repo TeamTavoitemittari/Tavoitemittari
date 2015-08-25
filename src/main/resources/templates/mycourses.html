@@ -30,11 +30,6 @@
                         <label>Kurssihaku:</label>
                         <input class="form-control" id="ownsearch" type="text" placeholder="Hae kurssia kurssin nimellä, opettajan nimellä tai luokallasi"/>
                     </form>
-
-                    <div th:if="${alreadyJoinedMessage != null}">
-                        <br/>
-                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
-                    </div>
                     <div th:if="${joinedSuccessMessage != null}">
                         <br/>
                         <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
@@ -62,7 +57,10 @@
                 </div>
                 <div id="allcourses" class="tab-pane fade">
                     <br/>
-
+                    <div th:if="${alreadyJoinedMessage != null}">
+                        <br/>
+                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
+                    </div>
                     <form class="form-group">
                         <label>Kurssihaku:</label>
                         <input class="form-control" id="allsearch" type="text" placeholder="Hae kurssia kurssin nimellä, opettajan nimellä tai luokallasi"/>

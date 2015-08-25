@@ -222,7 +222,7 @@ public class CourseController {
         if (progressService.getProgress(userService.getAuthenticatedUser(), courseService.getCourseById(courseId)) != null) {
 
             redirectAttributes.addFlashAttribute("alreadyJoinedMessage", "Olet jo liittynyt kurssille!");
-            return "redirect:/mycourses";
+            return "redirect:/mycourses#allcourses";
         }
         if (courseService.getCourseById(courseId).getInUse() == true) {
             courseService.joinCourse(userService.getAuthenticatedUser(), courseService.getCourseById(courseId));
