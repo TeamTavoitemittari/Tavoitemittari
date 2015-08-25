@@ -13,13 +13,14 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 @Entity
 public class User extends AbstractPersistable<Long> {
     
-    /// no username since students will be identifyed by email address(?)
-     
+    /// no username since students will be identifyed by email address
+
     @Column(unique = true)
     private String email;    
    ///  teacher or a student 
     private String userRole;    
-    private String name;   
+    private String name;
+    private String schoolClass = "00";
     private String password;
 
     
@@ -66,7 +67,15 @@ public class User extends AbstractPersistable<Long> {
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
-    
+
+    public String getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(String schoolClass) {
+        this.schoolClass = schoolClass;
+    }
+
     public boolean passwordEquals(String plaintextPassword){
         return BCrypt.checkpw(plaintextPassword, password);
     }

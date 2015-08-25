@@ -106,6 +106,21 @@ public class UserService {
     }
 
     @Transactional
+    public User changeSchoolClass(String schoolClass) {
+        if (schoolClass == null || schoolClass.isEmpty()) {
+            throw new IllegalArgumentException("schoolClass must not be null or empty");
+        }
+
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            throw new AuthenticatedUserIsNullException();
+        }
+        User user = getAuthenticatedUser();
+        user.setSchoolClass(schoolClass);
+
+        return user;
+    }
+
+    @Transactional
     public User changePasswordAsAdmin(User user, String newPassword) {
         if (newPassword == null || newPassword.isEmpty()) {
             throw new IllegalArgumentException("New password must not be null or empty");

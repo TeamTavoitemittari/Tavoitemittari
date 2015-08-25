@@ -37,14 +37,14 @@
                             <tr>
                                 <th>Nimi</th>
                                 <th>Sähköposti</th>
-                                <th>Rooli</th>
+                                <th>Luokka</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="student : ${students}">
                                 <td><a th:text="${student.name}" th:href="@{'/student/' + ${student.id}}"></a></td>
                                 <td th:text="${student.email}"></td>
-                                <td th:text="${student.userRole}"></td>
+                                <td th:text="${student.schoolClass}"></td>
                             </tr>
                         </tbody>
                     </table>
