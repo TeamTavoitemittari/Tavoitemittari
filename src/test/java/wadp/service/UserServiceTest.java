@@ -68,6 +68,14 @@ public class UserServiceTest {
 
     }
 
+    private void loginAsAdmin() {
+        loggedInUser = service.createUser("mara@meikalainen.com", "salasana", "mara meikalainen", "admin");
+        List<GrantedAuthority> grantedAuths = new ArrayList<>();
+        grantedAuths.add(new SimpleGrantedAuthority(loggedInUser.getUserRole()));
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(loggedInUser.getEmail(), loggedInUser.getPassword(), grantedAuths));
+    }
+
     @Test
     public void testList() {
 
@@ -130,6 +138,16 @@ public class UserServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void cannotCreateUserWithNullEmail() {
         service.createUser(null, "salasana", "jukka meikalainen", "teacher");
+    }
+
+    @Test
+    public void testFindUserByRole() {
+        service.createUser("jusse@meikalainen.com", "salasana", "Yusuf meikalainen", "teacher");
+        service.createUser("tartsa@meikalainen.com", "salasana", "Tariq meikalainen", "teacher");
+        List<User> teachers = service.findUserByRole("teacher");
+        for (User teacher : teachers) {
+            assertEquals("teacher", teacher.getUserRole());
+        }
     }
 
     @Test
@@ -258,6 +276,31 @@ public class UserServiceTest {
         service.deleteUser(user.getId());
         assertTrue(courseRepository.findAll().isEmpty());
 
+    }
+
+    @Test
+    public void testGetAdmins() {
+        loginAsAdmin();
+        List<User> admins = service.getAdmins();
+        for (User admin : admins) {
+            assertEquals("admin", admin.getUserRole());
+        }
+    }
+
+    @Test
+    public void changePasswordAsAdminSuccess() {
+        service.createUser("jermu@meikalainen.com", "salasana", "eki meikalainen", "student");
+        loginAsAdmin();
+        User user = service.changePasswordAsAdmin(repo.findByEmail("jermu@meikalainen.com"), "parempisalasana");
+
+        assertFalse(user.passwordEquals("salasana"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotChangePasswordAsAdminToAEmptyOne() {
+        service.createUser("jermu@meikalainen.com", "salasana", "eki meikalainen", "student");
+        loginAsAdmin();
+        service.changePasswordAsAdmin(repo.findByEmail("jermu@meikalainen.com"), "");
     }
 
 }
