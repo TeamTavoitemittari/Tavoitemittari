@@ -25,7 +25,7 @@ public class UserForm {
     private String email;
     
     @NotNull(message="Nimeä ei voi jättää tyhjäksi!")
-    @NotBlank(message="Nimeä ei voi jättää tyhjäksi! !")
+    @NotBlank(message="Nimeä ei voi jättää tyhjäksi!")
     private String name;
 
     @NotNull(message="Salasanaa ei voi jättää tyhjäksi!")

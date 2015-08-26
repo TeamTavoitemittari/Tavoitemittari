@@ -17,7 +17,7 @@ public class CourseForm {
 
     
     @NotNull(message="Nimeä ei voi jättää tyhjäksi!")
-    @NotBlank(message="Nimeä ei voi jättää tyhjäksi! !")
+    @NotBlank(message="Nimeä ei voi jättää tyhjäksi!")
     private String name;
 
     private String description;

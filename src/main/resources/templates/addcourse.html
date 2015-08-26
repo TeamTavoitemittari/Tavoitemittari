@@ -246,11 +246,10 @@
                         <tbody>
                         <tr th:each="course : ${coursesInUse}">
                             <td th:text="${course.name}"> </td>
-                            <td> <button class="btn btn-primary disabled" >Julkaise</button>
-                            </td>
+                            <td> </td>
 
 
-                            <td> <button class="btn btn-success disabled" >Muokkaa</button></td>
+                            <td> </td>
 
                             <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>
                             </td>
