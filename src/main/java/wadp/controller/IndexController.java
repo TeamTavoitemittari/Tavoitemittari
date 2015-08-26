@@ -45,8 +45,6 @@ public class IndexController implements ErrorController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showIndex(HttpSession session) {
-//        courseService.createDummyCourse();
-//        courseService.createDummyCourseWithoutUsers();
         session.setMaxInactiveInterval(60 * 60 * 3);
         if (userService.getAuthenticatedUser() != null) {
             return "redirect:mycourses";
