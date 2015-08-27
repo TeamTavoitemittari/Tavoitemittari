@@ -18,7 +18,9 @@
         <div class="container">
             <div>
                 <h1 class="text-center">Tavoitemittari</h1>
-                <br/> <b th:text="${error}"> </b>
+                <br/>
+                <b class="errorMsg" th:if="${error != null}" th:text="${error}">Error message</b>
+
                 <form method="POST" class="form-horizontal extra-padding" role="form" th:action="@{/authenticate}">
                     <div class="form-group">
                         <label for="email">Sähköpostiosoite</label>
@@ -39,7 +41,7 @@
                 </form>
                 <br/>
                 <form action="/passwordretrieval">
-                    <button class="btn btn-default round center-block" type="submit">Salasana unohtunut</button>
+                    <button class="btn btn-default round center-block" type="submit" id="restorepw">Salasana unohtunut</button>
                 </form>
             </div>
         </div>

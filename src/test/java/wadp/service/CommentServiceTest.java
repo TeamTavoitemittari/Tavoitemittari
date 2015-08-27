@@ -20,6 +20,8 @@ import wadp.repository.CourseRepository;
 import wadp.repository.SkillRepository;
 import wadp.repository.UserRepository;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @DirtiesContext (classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -81,6 +83,30 @@ public class CommentServiceTest {
         
         commentService.updateComment(comment, "comment2");
         assertEquals("comment2", commentRepository.findOne(comment.getId()).getComment());
+    }
+
+    @Test
+    public void testCleanComment() {
+        Comment comment = new Comment(skill,user, course);
+        comment.setComment("comment");
+        commentRepository.save(comment);
+        assertEquals("comment", comment.getComment());
+
+        commentService.cleanCommentById(comment.getId());
+        comment = commentRepository.findOne(comment.getId());
+        assertEquals("", comment.getComment());
+    }
+
+    @Test
+    public void testGetCommentsByUser() {
+        commentService.addComment(skill, user, course);
+        commentService.addComment(skill, user, course);
+
+        List<Comment> userComments = commentService.getCommentsByUser(user);
+        for (Comment userComment : userComments) {
+            assertEquals(user, userComment.getUser());
+        }
+
     }
     
 }

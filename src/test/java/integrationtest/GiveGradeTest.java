@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import wadp.Application;
@@ -20,22 +21,22 @@ import wadp.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @WebAppConfiguration
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @IntegrationTest({"server.port=8080"})
-public class JoinCourseAndViewCourseStudentsPage {
+public class GiveGradeTest {
 
     private HtmlUnitDriver driver;
     private WebElement element;
     private Actions builder;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private CourseService courseService;
 
-    public JoinCourseAndViewCourseStudentsPage() {
+    @Autowired
+    private UserService userService;
+
+    public GiveGradeTest() {
         this.driver = new HtmlUnitDriver();
         this.builder = new Actions(driver);
     }
@@ -45,41 +46,25 @@ public class JoinCourseAndViewCourseStudentsPage {
         createDummys();
     }
 
-    //Test structure became irrelevant due to changes in the teacher's mycourses view
-    @Test
-    public void teacherCanViewCourseStudentPage() {
-        studentLogin();
-        joinCourse();
-        logout();
-        teacherLogin();
-        getCourseProgressPageAsTeacher();
-        getCourseStudentPage();
-        System.out.println(driver.getCurrentUrl());
-        assertTrue(driver.getPageSource().contains("Tähtikuviot"));
-    }
-
-    @Test
-    public void studentCantSeeCourseStudentPage() {
-
-        studentLogin();
-        joinCourse();
-        getCourseProgressPage();
-
-        assertTrue(driver.getPageSource().contains("studenttab") == false);
-        assertTrue(driver.getPageSource().contains("commenttab") == true);
-    }
-
     @After
     public void tearDown() {
-
     }
 
-    private void studentLogin() {
+    @Test
+    public void teacherCanGiveGrade() {
         login("s@a.com", "oppilas");
-    }
-
-    private void teacherLogin() {
+        joinCourse();
+        logout();
         login("t@a.com", "ope");
+        element = driver.findElement(By.id("goalometers1"));
+        element.click();
+        giveGrade("testgrade");
+        assertTrue(driver.getPageSource().contains("testgrade"));
+        logout();
+        login("s@a.com", "oppilas");
+        System.out.println(driver.getPageSource());
+        assertTrue(driver.getPageSource().contains("testgrade"));
+        
     }
 
     private void login(String email, String password) {
@@ -93,34 +78,21 @@ public class JoinCourseAndViewCourseStudentsPage {
     }
 
     private void joinCourse() {
-        driver.setJavascriptEnabled(true);
         WebElement mycoursesTab = driver.findElement(By.id("mycoursesTab"));
-        WebElement owncourses = driver.findElement(By.name("owncourses"));
-        WebElement allcourses = driver.findElement(By.name("allcourses"));
-        WebElement join = driver.findElement(By.id("join1"));
-        builder.moveToElement(mycoursesTab).moveToElement(owncourses).
-                moveToElement(allcourses).moveToElement(join).click().build().perform();
+        WebElement allcourses = driver.findElement(By.id("allcourses"));
+        WebElement tavoitemittariin = driver.findElement(By.id("join1"));
 
-    }
-
-    private void getCourseProgressPage() {
-        driver.setJavascriptEnabled(true);
-        WebElement mycoursesTab = driver.findElement(By.id("mycoursesTab"));
-        WebElement owncourses = driver.findElement(By.name("owncourses"));
-        WebElement tavoitemittariin = driver.findElement(By.id("tavoitemittari1"));
-
-        builder.moveToElement(mycoursesTab).moveToElement(owncourses).
+        builder.moveToElement(mycoursesTab).moveToElement(allcourses).
                 moveToElement(tavoitemittariin).click().build().perform();
-
     }
 
-    private void getCourseProgressPageAsTeacher() {
-        driver.setJavascriptEnabled(true);
-        driver.findElement(By.id("goalometers1")).click();
-    }
+    private void giveGrade(String grade) {
+        System.out.println(driver.getPageSource());
+        driver.findElement(By.id("openGrading" + userService.findUserByEmail("s@a.com").getId())).click();
+        element = driver.findElement(By.id("textGrade"));
+        element.sendKeys(grade);
+        driver.findElement(By.name("asd")).click();
 
-    private void getCourseStudentPage() {
-        driver.findElementById("goalometer" + userService.findUserByEmail("s@a.com").getId()).click();
     }
 
     private void createDummys() {
@@ -129,7 +101,8 @@ public class JoinCourseAndViewCourseStudentsPage {
         courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
 
     }
-     private void logout(){
+
+    private void logout() {
         this.driver.close();
         this.builder = new Actions(driver);
         this.driver = new HtmlUnitDriver();

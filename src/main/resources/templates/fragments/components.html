@@ -19,11 +19,11 @@
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="/mycourses">Minun kurssini</a></li>
+                            <li><a href="/mycourses" id="mycourses">Minun kurssini</a></li>
                             <li><a href="/userdetails" id="userdetails">Omat tiedot</a></li>
                             <li sec:authorize="hasRole('teacher')"><a href="/course" id="hdd-a">Kurssit</a></li>
                             <li sec:authorize="hasRole('teacher')"><a href="/student" id="hdd-b">Oppilaat</a></li>
-                            <li sec:authorize="hasRole('admin')"><a href="/admin/passwords">Salasanat</a></li>
+                            <li sec:authorize="hasRole('admin')"><a href="/admin/passwords" id="passwords">Salasanat</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#" onclick="document.forms['logout'].submit();">Kirjaudu ulos</a></li>

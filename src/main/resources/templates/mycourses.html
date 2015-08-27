@@ -20,7 +20,7 @@
             <ul class="nav nav-tabs" id="mycoursesTab">
                 <li class="active"><a data-toggle="tab" href="#owncourses" name="owncourses">Omat kurssit</a></li>
                 <li><a data-toggle="tab" href="#allcourses" name="allcourses">Kaikki kurssit</a></li>
-                <li><a data-toggle="tab" href="#completed">Suoritukset</a></li>
+                <li><a data-toggle="tab" href="#completed" name="completed">Suoritukset</a></li>
             </ul>
             <div class="tab-content">
                 <div id="owncourses" class="active tab-pane fade in active">
@@ -30,11 +30,6 @@
                         <label>Kurssihaku:</label>
                         <input class="form-control" id="ownsearch" type="text" placeholder="Hae kurssia kurssin nimellä, opettajan nimellä tai luokallasi"/>
                     </form>
-
-                    <div th:if="${alreadyJoinedMessage != null}">
-                        <br/>
-                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
-                    </div>
                     <div th:if="${joinedSuccessMessage != null}">
                         <br/>
                         <div class="alert alert-success" role="alert" th:text="${joinedSuccessMessage}">.</div>
@@ -62,7 +57,10 @@
                 </div>
                 <div id="allcourses" class="tab-pane fade">
                     <br/>
-
+                    <div th:if="${alreadyJoinedMessage != null}">
+                        <br/>
+                        <div class="alert alert-danger" role="alert" th:text="${alreadyJoinedMessage}">.</div>
+                    </div>
                     <form class="form-group">
                         <label>Kurssihaku:</label>
                         <input class="form-control" id="allsearch" type="text" placeholder="Hae kurssia kurssin nimellä, opettajan nimellä tai luokallasi"/>
@@ -79,9 +77,9 @@
                                 <div class="panel-heading clearfix">
                                     <h3 class="panel-title"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <span th:text="${course.name}">nimi</span></h3>
                                 </div>
-                                <div class="panel-body">
+                                <div class="panel-body" style="max-height: 200px; min-height: 200px; overflow: hidden">
                                     <p>Opettaja: <b th:text="${course.teacher.name}">teacher</b> </p>
-                                    <p th:text="${course.description}">Course description</p> 
+                                    <p th:text="${course.description}">Course description</p>
                                 </div>
                                 <div class="panel-footer">
                                     <form th:method="POST" th:action="@{'/course/' + ${course.id} + '/join'}">

@@ -90,4 +90,24 @@ public class GradeServiceTest {
         assertEquals("7", repository.findByUserAndCourseId(user2, course.getId()).getGrade());
     }
 
+
+    @Test
+    public void getGradesByCourse() {
+        Course course2 = new Course();
+        course2.setName("Astronomy");
+        course2.setDescription("Best course ever");
+        courseService.addCourse(course2);
+
+        gradeService.giveGrade(user, course, "10");
+        gradeService.giveGrade(user, course, "8");
+        User user2 = userService.createUser("kimmo@gmail.com", "kimmo123", "Kimmo", "student");
+        progressService.createProgressTracker(user2, course);
+        gradeService.giveGrade(user2, course, "7");
+
+        List<Grade> grades = gradeService.getCourseGrades(course);
+        for (Grade courseGrade : grades) {
+            assertEquals(course.getId(), courseGrade.getCourseId());
+        }
+
+    }
 }

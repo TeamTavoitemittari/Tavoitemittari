@@ -14,25 +14,28 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.UUID;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest({"server.port=8080"})
-public class ChangePasswordTest {
-    
+public class ChangeUserDetailsTest {
+
     private String password;
     private String name;
     private HtmlUnitDriver driver;
     private WebElement element;
-    
-    public ChangePasswordTest() {
+
+    public ChangeUserDetailsTest() {
     }
 
     @Before
     public void setUp() {
-        name = "test1";
-        password = "Testpassword1";
+        //Create random string using UUID to insure that each test method is independent.
+        name = UUID.randomUUID().toString().substring(0,8);
+        password = UUID.randomUUID().toString().substring(0, 10);
         createUser();
     }
 
@@ -40,7 +43,7 @@ public class ChangePasswordTest {
     public void tearDown() {
         driver.close();
     }
-    
+
     @Test
     public void canChangePasswordAfterLogin() {
         login(name, password);
@@ -48,10 +51,10 @@ public class ChangePasswordTest {
         passwordChange("Testpassword2", "Testpassword2");
         assertTrue(hasMessage("Salasana vaihdettu."));
     }
-    
+
     @Test
     public void cannotChangePasswordWithoutMatchingPasswords() {
-        login(name, "Testpassword2");
+        login(name, password);
         getUserdetailsPage();
         passwordChange("Testipassword2", "Testpassword3");
         assertTrue(hasMessage("Salasanojen pitää olla samoja!"));
@@ -63,6 +66,31 @@ public class ChangePasswordTest {
         getUserdetailsPage();
         passwordChange("aasi", "aasi");
         assertTrue(hasMessage("Salasanan pitää olla ainakin 8 kirjainta!"));
+    }
+
+    @Test
+    public void canChangeSchoolClassAfterLogin() {
+        login(name, password);
+        getUserdetailsPage();
+        schoolClassChange("12D");
+        assertTrue(hasMessage("12D"));
+
+    }
+
+    @Test
+    public void cannotChangeTooShortSchoolClass() {
+        login(name, password);
+        getUserdetailsPage();
+        schoolClassChange("1");
+        assertTrue(hasMessage("Luokkatunnuksen pitää olla vähintään 2 ja enintään 4 merkkiä pitkä!"));
+    }
+
+    @Test
+    public void cannotChangeTooLongSchoolClass() {
+        login(name, password);
+        getUserdetailsPage();
+        schoolClassChange("12ABC");
+        assertTrue(hasMessage("Luokkatunnuksen pitää olla vähintään 2 ja enintään 4 merkkiä pitkä!"));
     }
 
     private void createUser() {
@@ -84,7 +112,7 @@ public class ChangePasswordTest {
         element = driver.findElement(By.xpath("//button[contains(.,'Rekisteröidy')]"));
         element.submit();
     }
-    
+
     private void login(String name, String password) {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/");
@@ -95,7 +123,7 @@ public class ChangePasswordTest {
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
         element.click();
     }
-    
+
     private void getUserdetailsPage() {
         element = driver.findElement(By.id("userdetails"));
         element.click();
@@ -107,6 +135,12 @@ public class ChangePasswordTest {
         element = driver.findElement(By.id("confirmpasswordpassword"));
         element.sendKeys(confirmPassword);
         element = driver.findElement(By.xpath("//button[contains(.,'Vaihda salasana')]"));
+        element.submit();
+    }
+
+    private void schoolClassChange(String schoolClass) {
+        element = driver.findElement(By.id("schoolClass"));
+        element.sendKeys(schoolClass);
         element.submit();
     }
 

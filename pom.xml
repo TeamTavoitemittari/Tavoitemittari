@@ -29,6 +29,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- for tomcat war deployment -->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -154,6 +161,7 @@
                             <!-- Entities -->
                             <exclude>wadp/domain/form/UserForm.class</exclude>
                             <exclude>wadp/domain/form/CourseForm.class</exclude>
+                            <exclude>wadp/domain/form/SchoolClassForm</exclude>
                             <exclude>wadp/auth/UserAuthenticationProvider.class</exclude>
                             <!-- Other -->
                             <exclude>wadp/profiles/ProdProfile.class</exclude>
