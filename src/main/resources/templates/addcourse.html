@@ -156,13 +156,13 @@
                         <tbody>
                         <tr th:each="course : ${coursesNotInUse}">
                             <td th:text="${course.name}"> </td>
-                            <td>  <a th:href="'#'+${course.id}+'publish'" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${course.id}+'publish'">Julkaise</a>
+                            <td>  <a th:href="'#'+${course.id}+'publish'" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${course.id}+'publish'" th:id="openPublish+${course.id}">Julkaise</a>
                             </td>
 
 
-                            <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" >Muokkaa</a></td>
+                            <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" th:id="openEdit+${course.id}">Muokkaa</a></td>
 
-                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>
+                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
 
 
@@ -251,7 +251,7 @@
 
                             <td> </td>
 
-                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'">Poista</a>
+                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
 
 
