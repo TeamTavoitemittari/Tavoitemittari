@@ -227,8 +227,6 @@
                                                     <input type="text" class="form-control"   th:name="comment"  th:id="'comment'+ ${skill.id}"/>
                                                     <div class="btn-group" style="margin:8px">
                                                         <button class="btn btn-success" th:id="'save'+ ${skill.id}" type="submit">Tallenna</button>
-                                                        <a sec:authorize="hasRole('teacher')" th:href="@{'/comment/' + ${course.id} + '/' + ${tracker.user.id} + '/cancel'}" th:id="'cancelteacher'+ ${skill.id}" class="btn btn-default" >Peruuta</a>
-                                                        <a sec:authorize="hasRole('student')" th:href="@{'/comment/' + ${course.id} + '/cancel'}" th:id="'cancelstudent'+ ${skill.id}" class="btn btn-default" >Peruuta</a>
                                                         <button sec:authorize="hasRole('teacher')" type="button" th:href="'#'+${skill.id}+'empty'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${skill.id}+'empty'">Tyhjennä</button>
                                                     </div>
                                                 </form>
