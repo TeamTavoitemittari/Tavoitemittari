@@ -13,6 +13,9 @@ import wadp.domain.User;
 import wadp.service.CourseService;
 import wadp.service.UserService;
 
+/**
+ * Controller for student administration functions
+ */
 @Controller
 @RequestMapping(value = "/student")
 public class StudentController {
@@ -23,17 +26,22 @@ public class StudentController {
     @Autowired
     private CourseService courseService;
 
+    /**
+     * @return view of all students and courses
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
-    public String getStudents(Model model) {
+    public String getStudentsAndCourses(Model model) {
         model.addAttribute("students", userService.findUserByRole("student"));
         model.addAttribute("courses", courseService.getCoursesInUseByTeacher(userService.getAuthenticatedUser()));
         return "students";
     }
-    
 
-    
 
+    /**
+     * @param id user id
+     * @return specific student view
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getStudent(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
@@ -41,6 +49,13 @@ public class StudentController {
         model.addAttribute("courses", courseService.getUsersCoursesWithTeacher(user, userService.getAuthenticatedUser()));
         return "student";
     }
+
+    /**
+     * Removes a student from a specific course
+     * @param courseId
+     * @param userId
+     * @return course goalometer
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/{userId}/remove", method = RequestMethod.DELETE)
     public String removeStudentFromCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @PathVariable Long userId) {
@@ -49,7 +64,12 @@ public class StudentController {
       }
        return "redirect:/course/" + courseId + "/goalometer";
     }
-    
+
+    /**
+     *
+     * @param id course id
+     * @return a view of students on a specific course.
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "filter/{id}", method = RequestMethod.GET)
     public String getFilteredStudents(Model model, @PathVariable Long id) {

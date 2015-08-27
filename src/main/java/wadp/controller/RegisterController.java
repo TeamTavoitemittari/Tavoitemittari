@@ -17,6 +17,9 @@ import javax.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controller that handles requests related to the creation of new users.
+ */
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
@@ -25,10 +28,9 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
-    //testausta varten
+    //only for testing
     @PostConstruct
     private void init() {
-        //poistetaan vanhat herokua varten
         if (userService.list().isEmpty()) {
             userService.clearUsers();
             userService.createUser("ope@a.com", "ope", "Olli Opettaja", "teacher");
@@ -37,6 +39,11 @@ public class RegisterController {
         }
     }
 
+    /**
+     * Creates a new user
+     * @param user registration information object
+     * @return registration view
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -58,6 +65,12 @@ public class RegisterController {
         return "redirect:welcome";
 
     }
+
+    /**
+     * Allows the admin to use the registration form to create new teachers/students
+     * @param user object for registration info
+     * @return registration view
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/as_admin", method = RequestMethod.POST)
     public String createUserAsAdmin(RedirectAttributes redirectAttributes, @ModelAttribute("user") @Valid UserForm user, BindingResult bindingResult) {
@@ -79,6 +92,11 @@ public class RegisterController {
         return "redirect:/admin";
 
     }
+
+    /**
+     * Returns the registration form used by the admin to create new students/teachers
+     * @return registration view
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/as_admin", method = RequestMethod.GET)
     public String RegisterAsAdmin(Model model) {
@@ -89,6 +107,10 @@ public class RegisterController {
         return "register";
     }
 
+    /**
+     * Returns the registration view for non-admin users.
+     * @return registration view.
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String Register(Model model) {
         if (!model.containsAttribute("user")) {

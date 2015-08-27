@@ -2,9 +2,11 @@ package wadp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wadp.domain.*;
 import wadp.service.*;
 
+/**
+ * Controller that handles all non-admin operations related to a specific course.
+ */
 @Controller
 @RequestMapping(value = "/course")
 public class CourseController {
@@ -44,6 +49,9 @@ public class CourseController {
     @Autowired
     private GradeService gradeService;
 
+    /**
+     * @return view where a new course is created
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.GET)
     public String ShowCreateCoursePage(Model model) {
@@ -56,6 +64,11 @@ public class CourseController {
         return "addcourse";
     }
 
+    /**
+     * Creates a new course
+     *
+     * @param course object of the new course (is validated)
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(method = RequestMethod.POST)
     public String createCourse(RedirectAttributes redirectAttributes, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException {
@@ -77,6 +90,10 @@ public class CourseController {
 
     }
 
+    /**
+     * @param id the course id
+     * @return the goalometer for a specific course when the user is a student
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getCourse(Model model, @PathVariable Long id) {
         Course course = courseService.getCourseById(id);
@@ -96,6 +113,10 @@ public class CourseController {
         return "course";
     }
 
+    /**
+     * @param courseId the course id
+     * @return the goalometer for a specific course when the user is a teacher
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/goalometer", method = RequestMethod.GET)
     public String getStudentGoalOMeterDefault(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
@@ -110,6 +131,11 @@ public class CourseController {
 
     }
 
+    /**
+     * @param id the course id
+     * @param studentId
+     * @return the view for the goalometer for a specific student
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{id}/{studentId}", method = RequestMethod.GET)
     public String getStudentGoalOMeter(Model model, @PathVariable Long id, @PathVariable Long studentId) {
@@ -137,10 +163,18 @@ public class CourseController {
         model.addAttribute("users", courseService.getCourseStudents(course));
         model.addAttribute("studentGrades", studentGrades);
         model.addAttribute("currentStudent", user);
-        model.addAttribute("currentGrade", gradeService.getStudentCourseGrade(user,course));
+        model.addAttribute("currentGrade", gradeService.getStudentCourseGrade(user, course));
         return "course";
     }
 
+    /**
+     * Confirms that the student has, in their own opinion, attained a specific skill
+     * @param courseId
+     * @param levelId grade level id
+     * @param goalId
+     * @param skillId
+     * @return the student goalometer
+     */
     @RequestMapping(value = "/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
     public String confirmCourseSkillAsStudent(
             @PathVariable Long courseId,
@@ -158,6 +192,15 @@ public class CourseController {
         return "redirect:/course" + "/" + courseId;
     }
 
+    /**
+     * Teacher confirms that the skill has been attained by the student
+     * @param userId
+     * @param courseId
+     * @param levelId
+     * @param goalId
+     * @param skillId
+     * @return the teacher goalometer view for the specific student
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "{userId}/{courseId}/{levelId}/{goalId}/{skillId}", method = RequestMethod.POST)
     public String confirmCourseSkillAsTeacher(
@@ -177,6 +220,11 @@ public class CourseController {
         return "redirect:/course/" + courseId + "/" + userId;
     }
 
+    /**
+     * Gets a course that is to be updated
+     * @param courseId
+     * @return the course update view
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/update", method = RequestMethod.GET)
     public String getCourseForUpdate(RedirectAttributes redirectAttributes, @PathVariable Long courseId) throws JsonProcessingException {
@@ -197,6 +245,12 @@ public class CourseController {
 
     }
 
+    /**
+     * Updates an existing course
+     * @param courseId
+     * @param course
+     * @return the course update view
+     */
     @RequestMapping(value = "/{courseId}/update", method = RequestMethod.POST)
     public String updateCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @Valid @ModelAttribute Course course, BindingResult bindingResult) throws JsonProcessingException {
 
@@ -217,6 +271,11 @@ public class CourseController {
         return "redirect:/course#update";
     }
 
+    /**
+     * Enrolls the student to a course
+     * @param courseId
+     * @return the view of all the students courses
+     */
     @RequestMapping(value = "/{courseId}/join", method = RequestMethod.POST)
     public String joinCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
         if (progressService.getProgress(userService.getAuthenticatedUser(), courseService.getCourseById(courseId)) != null) {
@@ -232,6 +291,11 @@ public class CourseController {
 
     }
 
+    /**
+     * Deletes an ecisting course
+     * @param courseId
+     * @return the view which has the teacher's courses
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/delete", method = RequestMethod.DELETE)
     public String deleteCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
@@ -244,6 +308,11 @@ public class CourseController {
 
     }
 
+    /**
+     * Publishes a course so that is visible and enrollable for students
+     * @param courseId
+     * @return the view which has the teacher's courses
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{courseId}/publish", method = RequestMethod.PUT)
     public String publishCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId) {
@@ -255,6 +324,13 @@ public class CourseController {
         return "redirect:/course#owncourses";
     }
 
+    /**
+     * Gives a course grade for a student
+     * @param courseId
+     * @param userId
+     * @param textGrade grade as text (f.e. "A" or "10")
+     * @return the course view
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{userId}/{courseId}/grade", method = RequestMethod.POST)
     public String giveGrade(@PathVariable Long courseId, @PathVariable Long userId, @RequestParam String textGrade) {
@@ -264,6 +340,13 @@ public class CourseController {
         return "redirect:/course/" + courseId + "/goalometer";
     }
 
+    /**
+     * Edits an existing grade
+     * @param courseId
+     * @param userId
+     * @param updatedGrade new grade as text
+     * @return the course view
+     */
     @PreAuthorize("hasAuthority('teacher')")
     @RequestMapping(value = "/{userId}/{courseId}/grade/edit", method = RequestMethod.POST)
     public String editGrade(@PathVariable Long courseId, @PathVariable Long userId, @RequestParam String updatedGrade) {

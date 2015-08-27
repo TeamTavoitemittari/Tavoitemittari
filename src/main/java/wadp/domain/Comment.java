@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+/**
+ * Represents comments made on a skill.
+ * Comments can be made by either the student to which the skill is related or the teacher of the course.
+ */
 @Entity
 public class Comment extends AbstractPersistable<Long>{
     
@@ -22,6 +26,13 @@ public class Comment extends AbstractPersistable<Long>{
     
     public Comment(){
     }
+
+    /**
+     * Creates an empty comment object when the user signs up for the course.
+     * @param skill to which the comment is related
+     * @param user student whose skill is commented on
+     * @param course course to which the comment is related
+     */
       public Comment(Skill skill, User user, Course course){
         this.user = user;
         this.course = course;

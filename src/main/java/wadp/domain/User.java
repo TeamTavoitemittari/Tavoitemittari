@@ -9,11 +9,14 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+/**
+ * Represents an admin, teacher or a student.
+ */
 @Table(name = "User_table")
 @Entity
 public class User extends AbstractPersistable<Long> {
     
-    /// no username since students will be identifyed by email address
+    /// no username since students will be identified by email address
 
     @Column(unique = true)
     private String email;    

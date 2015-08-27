@@ -18,6 +18,10 @@ import wadp.service.CourseService;
 import wadp.service.PasswordForgettingService;
 import wadp.service.UserService;
 
+/**
+ * Controller that handles all functions that are only available
+ * to the admin.
+ */
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
@@ -31,15 +35,26 @@ public class AdminController {
     @Autowired
     private PasswordForgettingService passwordService;
 
+    /**
+     * Returns all users and courses in the system.
+     * @param session the session of the admin.
+     * @param model
+     * @return
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(method = RequestMethod.GET)
-    public String getStudents(HttpSession session, Model model) {
+    public String getStudentsAndCourses(HttpSession session, Model model) {
         session.setMaxInactiveInterval(60 * 60 * 3);
         model.addAttribute("users", userService.list());
         model.addAttribute("courses", courseService.getCourses());
         return "admin_index";
     }
 
+    /**
+     * Returns a view of the user specifcs
+     * @param id user id
+     * @return
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getUser(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
@@ -48,6 +63,13 @@ public class AdminController {
         return "student";
     }
 
+
+    /**
+     * Removes the user's enrollment to a course
+     * @param courseId
+     * @param userId
+     * @return the course view
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/{courseId}/{userId}/remove", method = RequestMethod.DELETE)
     public String removeUserFromCourse(RedirectAttributes redirectAttributes, @PathVariable Long courseId, @PathVariable Long userId) {
@@ -55,15 +77,25 @@ public class AdminController {
         return "redirect:/course/" + courseId + "/goalometer";
     }
 
+    /**
+     * Deletes a user
+     * @param userId
+     * @return
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/{userId}/delete", method = RequestMethod.DELETE)
     public String deleteUser(RedirectAttributes redirectAttributes, @PathVariable Long userId) {
         userService.deleteUser(userId);
         return "redirect:/admin";
     }
+
+    /**
+     * Gets a view with users that are on a specific course
+     * @param id course id
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "filter/{id}", method = RequestMethod.GET)
-    public String getFilteredUsers(Model model, @PathVariable Long id) {
+    public String getUsersOnCourse(Model model, @PathVariable Long id) {
         Course course = courseService.getCourseById(id);
         List<User> users = courseService.getCourseStudents(course);
         users.add(courseService.getCourseById(id).getTeacher());
@@ -72,6 +104,9 @@ public class AdminController {
         return "admin_index";
     }
 
+    /**
+     * Returns a view with all forgotten password notices
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/passwords", method = RequestMethod.GET)
     public String getLostPasswordsView(Model model) {
@@ -82,6 +117,10 @@ public class AdminController {
         return "forgottenpasswords";
     }
 
+    /**
+     * Returns a view where the admin can reset the password of a specific user
+     * @param userId user whose password will be reset
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/password/{userId}")
     public String getAdminUpdatePasswordView(Model model, @PathVariable Long userId) {
@@ -90,6 +129,12 @@ public class AdminController {
         return "admin_updatepassword";
     }
 
+    /**
+     * Updates a specific password
+     * @param password new password
+     * @param userId id of the user whose password it is
+     * @return
+     */
     @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/password/update/{userId}")
     public String ChangeUserPassword(Model model, @RequestParam String password, @PathVariable Long userId) {

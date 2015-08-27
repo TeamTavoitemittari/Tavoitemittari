@@ -13,6 +13,9 @@ import wadp.service.CourseService;
 import wadp.service.GradeService;
 import wadp.service.UserService;
 
+/**
+ * Controller that handles requests related to more than one course.
+ */
 @Controller
 @RequestMapping("/mycourses")
 public class CoursesController {
@@ -26,6 +29,10 @@ public class CoursesController {
     @Autowired
     private GradeService gradeService;
 
+    /**
+     * Returns the view which has a list of courses which are relevant to this specific user.
+     * @return the view of the user's courses
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String showCoursesPage(Model model) {
         if (userService.getAuthenticatedUser().getUserRole().equals("student")) {

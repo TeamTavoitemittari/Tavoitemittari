@@ -14,7 +14,9 @@ import wadp.domain.form.ProperPasswordForm;
 import wadp.domain.form.SchoolClassForm;
 import wadp.service.*;
 
-// Any request not handled by other controllers is redirected to index
+/**
+ * Controller for handling updates to a user's information and password forgetting requests
+ */
 @Controller
 @RequestMapping("*")
 public class UserDetailsController {
@@ -27,6 +29,9 @@ public class UserDetailsController {
     private PasswordForgettingService passwordForgettingService;
 
 
+    /**
+     * @return view where user can update their own details
+     */
     @RequestMapping(value = "/userdetails", method = RequestMethod.GET)
     public String ShowUserDetails(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
@@ -40,19 +45,30 @@ public class UserDetailsController {
         return "userdetails";
     }
 
+    /**
+     * @return modal with additional info
+     */
     @RequestMapping(value = "/userdetails_info", method = RequestMethod.GET)
     public String ShowUserDetailsInfoPage(Model model) {
         model.addAttribute("message", "Omat tiedot -sivulla voit vaihtaa salasanasi. Uuden salasanan pitää olla vähintään 8-merkkinen.");
 
         return "userdetails_template";
     }
+
+    /**
+     * @return view that confirms the password change
+     */
     @RequestMapping(value = "/userdetails_passwordchanged", method = RequestMethod.GET)
     public String showPasswordChangedPage(Model model) {
 
         return "userdetails_template";
     }
 
-
+    /**
+     * Changes the password for a user
+     * @param newpassword
+     * @return confirmation page for password change
+     */
     @RequestMapping(value = "/userdetails", method = RequestMethod.POST)
     public String ChangeUserPassword(RedirectAttributes redirectAttributes, @ModelAttribute("newpassword") @Valid ProperPasswordForm newpassword, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -77,6 +93,11 @@ public class UserDetailsController {
         return "redirect:userdetails_passwordchanged";
     }
 
+    /**
+     * Changes the class (f.e. 7A) of a user.
+     * @param schoolClass school class form
+     * @return user details viewl
+     */
     @RequestMapping(value = "/userdetails/changeclass", method = RequestMethod.POST)
     public String changeUserClass(RedirectAttributes redirectAttributes, @ModelAttribute("schoolClass") @Valid SchoolClassForm schoolClass, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -98,11 +119,19 @@ public class UserDetailsController {
         return "redirect:/userdetails";
     }
 
+    /**
+     * @return view where users report that they have forgotten their password
+     */
     @RequestMapping(value="/passwordretrieval", method=RequestMethod.GET)
     public String getPasswordRetrievalPage(){
         return "passwordretrieval";
     }
 
+    /**
+     * Sends report of a forgotten password
+     * @param email with which the user claims to have registered
+     * @return
+     */
     @RequestMapping(value="/passwordretrieval", method=RequestMethod.POST)
     public String sendPasswordForgottenReport(RedirectAttributes redirectAttributes, @ModelAttribute("email") String email){
         if(userService.findUserByEmail(email)==null){

@@ -17,7 +17,11 @@ import wadp.service.ProgressService;
 import wadp.service.SkillService;
 import wadp.service.UserService;
 
-// Any request not handled by other controllers is redirected to index
+/**
+ * Default controller than handles errors in login and direction to the index page.
+ * Any request not handled by other controllers is redirected to index
+ */
+
 @Controller
 @RequestMapping("*")
 public class IndexController implements ErrorController {
@@ -74,22 +78,34 @@ public class IndexController implements ErrorController {
         return "index";
     }
 
+    /**
+     * @return demo page that contains a preview of the system.
+     */
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public String showPrototype() {
         return "mycourses";
     }
 
+    /**
+     * @return the welcome page
+     */
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String showWelcomePage(Model model) {
         model.addAttribute("users", userService.list());
         return "welcome";
     }
 
+    /**
+     * @return demo of the goalometer
+     */
     @RequestMapping(value = "/coursedemo", method = RequestMethod.GET)
     public String getCourseDemo(Model model) {
         return "course";
     }
 
+    /**
+     * @returns the course adding view for testing purposes
+     */
     @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
     public String getAddCourse(Model model) {
         return "addCourse";

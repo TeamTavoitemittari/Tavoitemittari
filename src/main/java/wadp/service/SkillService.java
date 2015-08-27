@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import wadp.domain.Skill;
 import wadp.repository.SkillRepository;
 
+/**
+ * Service that handles skills that are related to goals.
+ */
 @Service
 public class SkillService {
     
@@ -17,7 +20,11 @@ public class SkillService {
     public List<Skill> getSkills(){
         return skillRepository.findAll();
     }
-    
+
+    /**
+     * Adds the skill to the database.
+     * @param skill new skill to be added.
+     */
     @Transactional
     public void addSkill(Skill skill){
         skillRepository.save(skill);

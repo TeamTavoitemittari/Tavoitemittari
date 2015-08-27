@@ -9,6 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+/**
+ * Contains the information about a student's progress in a specific course.
+ *
+ */
 @Entity
 public class CourseProgressTracker extends AbstractPersistable<Long> {
 
@@ -16,6 +20,11 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
     private User user;
     @OneToOne
     private Course course;
+
+    /**
+     * Collection of progress trackers related to each grade level
+     * of the course.
+     */
     @ElementCollection
     @CollectionTable(name = "grade_level_progress")
     private Map<GradeLevel, GradeProgressTracker> gradeLevels;
@@ -26,6 +35,12 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
         this.gradeLevels=new HashMap<GradeLevel, GradeProgressTracker>();
     }
 
+    /**
+     * Creates a course progress tracker with matching grade level trackers
+     * for each grade level of the course.
+     * @param user the student
+     * @param course the course to which the progress is related
+     */
     public CourseProgressTracker(User user, Course course) {
         this.user = user;
         this.course = course;
@@ -35,6 +50,13 @@ public class CourseProgressTracker extends AbstractPersistable<Long> {
         }
     }
 
+
+    /**
+     * Updates the progress status (not ready, student confirmed, teacher confirmed) for a specific skill.
+     * @param skill
+     * @param status ready boolean
+     * @return whether the operation was successful or not.
+     */
     public boolean updateSkillStatus(Skill skill, Status status) {
         for (GradeProgressTracker tracker : gradeLevels.values()){
             boolean found = tracker.updateSkillStatus(skill, status);

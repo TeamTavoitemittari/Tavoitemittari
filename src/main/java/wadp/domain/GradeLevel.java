@@ -10,9 +10,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 
+/**
+ * Represents the collection of goals which need to be completed in order
+ * for a student to reach a specific grade level of a course. Usually bundled
+ * to grade levels: 5-6, 7-8, 9-10
+ */
 @Entity
 public class GradeLevel extends AbstractPersistable<Long> implements Comparable<GradeLevel> {
-    
+
+    // The grade to which the goals amount (f.e. 5-6)
     private String grade;
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
