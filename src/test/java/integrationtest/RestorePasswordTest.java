@@ -96,7 +96,7 @@ public class RestorePasswordTest {
         userService.createUser("s@a.com", "oppilas", "Ossi Oppilas", "student");
         userService.createUser("t@a.com", "ope", "Olli Oppilas", "teacher");
         userService.createUser("a@a.com", "admin", "Arto Admin", "admin");
-        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
+        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"),true  );
 
     }
 

@@ -380,11 +380,11 @@ public class CourseService {
     }
 
     @Transactional
-    public void createDummyCourseWithoutUsers(User teacher) {
+    public void createDummyCourseWithoutUsers(User teacher, boolean inUse) {
 
 
         Course course = new Course();
-        course.setInUse(true);
+        course.setInUse(inUse);
         course.setName("Tähtitiede 2");
         course.setDescription("Kurssilla perehdytään erinäisiin taivankappaleisiina alkaen omasta aurinkokunnastamme"
                 + "ja edeten hiljalleen galaksin muihin osiin. Kurssin jälkeen tiedät mitä eroa on mustalla aukolla"

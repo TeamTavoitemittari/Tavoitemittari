@@ -98,7 +98,7 @@ public class GiveGradeTest {
     private void createDummys() {
         userService.createUser("s@a.com", "oppilas", "Ossi Oppilas", "student");
         userService.createUser("t@a.com", "ope", "Olli Oppilas", "teacher");
-        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
+        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"),true  );
 
     }
 

@@ -68,6 +68,15 @@ public class JoinCourseAndViewCourseStudentsPage {
         assertTrue(driver.getPageSource().contains("studenttab") == false);
         assertTrue(driver.getPageSource().contains("commenttab") == true);
     }
+    
+    @Test
+    public void cannotJoinCourseTwice(){
+        studentLogin();
+        joinCourse();
+        joinCourse();
+        assertTrue(driver.getPageSource().contains("Olet jo liittynyt kurssille"));
+    }
+    
 
     @After
     public void tearDown() {
@@ -126,7 +135,7 @@ public class JoinCourseAndViewCourseStudentsPage {
     private void createDummys() {
         userService.createUser("s@a.com", "oppilas", "Ossi Oppilas", "student");
         userService.createUser("t@a.com", "ope", "Olli Oppilas", "teacher");
-        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"));
+        courseService.createDummyCourseWithoutUsers(userService.findUserByEmail("t@a.com"),true  );
 
     }
      private void logout(){
