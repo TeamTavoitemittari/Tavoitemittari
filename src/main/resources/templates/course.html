@@ -284,7 +284,7 @@
                                                 <td th:text="${studentGrade.key.email}"></td>
                                                 <td><div><span th:if="${studentGrade.value!=null}" th:text="''+${studentGrade.value.grade}+'  '"></span>
                                                         <span><button type="button" th:if="${studentGrade.value!=null}" th:href="'#'+${studentGrade.key.id}+'updateGrade'" class="glyphicon glyphicon-pencil" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'updateGrade'"></button></span></div>
-                                                    <a th:if="${studentGrade.value==null}" th:href="'#'+${studentGrade.key.id}+'grade'" class="btn btn-default" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'grade'">Arvostele</a>
+                                                    <a th:if="${studentGrade.value==null}" th:href="'#'+${studentGrade.key.id}+'grade'" class="btn btn-default" data-toggle="modal"  th:id="openGrading+${studentGrade.key.id}"   th:attr="data-target='#'+${studentGrade.key.id}+'grade'">Arvostele</a>
                                                 </td>
                                                 <div th:id="${studentGrade.key.id}+'updateGrade'" class="modal fade">
                                                     <div class="modal-dialog">
