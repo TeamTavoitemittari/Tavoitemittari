@@ -224,7 +224,7 @@
                                             <div class="panel-footer">
                                                 <form class="form-horizontal" role="form" th:action="@{'/comment/' + ${tracker.user.id} + '/'+ ${course.id} + '/' + ${goal.value.comments.get(skill).id}}" method="post">
                                                     <textarea th:text="${goal.value.comments.get(skill).comment}" class="form-control" style="resize: none; margin: 8px" th:readonly="true" rows="5"></textarea>
-                                                    <input type="text" class="form-control"   th:name="comment"  th:id="'comment'+ ${skill.id}"/>
+                                                    <input type="text" class="form-control"   th:name="comment" placeholder="Lisää kommentti"  th:id="'comment'+ ${skill.id}"/>
                                                     <div class="btn-group" style="margin:8px">
                                                         <button class="btn btn-success" th:id="'save'+ ${skill.id}" type="submit">Tallenna</button>
                                                         <button sec:authorize="hasRole('teacher')" type="button" th:href="'#'+${skill.id}+'empty'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${skill.id}+'empty'">Tyhjennä</button>
