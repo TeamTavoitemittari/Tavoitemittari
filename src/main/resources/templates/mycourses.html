@@ -4,12 +4,12 @@
         <title>Kurssit</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+        <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/general.css"/>
+        <link rel="stylesheet" type="text/css" href="css/course-panel.css"/>
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css"/>
 
     </head>
 
@@ -45,8 +45,8 @@
                                     <p th:text="${course.description}">Course description</p> 
                                 </div>
                                 <div class="panel-footer">
-                                    <form th:method="GET" th:action="'/course/' + ${course.id}">
-                                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" th:id="'tavoitemittari' + ${course.id}">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
+                                    <form th:method="GET" th:action="'course/' + ${course.id}">
+                                        <a th:href="@{'course/' + ${course.id}}" class="btn btn-success" th:id="'tavoitemittari' + ${course.id}">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                                     </form>
                                 </div>
 
@@ -82,7 +82,7 @@
                                     <p th:text="${course.description}">Course description</p>
                                 </div>
                                 <div class="panel-footer">
-                                    <form th:method="POST" th:action="@{'/course/' + ${course.id} + '/join'}">
+                                    <form th:method="POST" th:action="@{'course/' + ${course.id} + '/join'}">
                                         <button class="btn btn-success" type="submit" th:id="'join' + ${course.id}">Liity kurssille!</button> <button class="btn btn-default" role="button">Lisätietoja</button>
                                     </form>
                                 </div>
@@ -148,7 +148,7 @@
                                 <tr th:each="course : ${teachersCourses}">
                                     <td th:text="${course.name}"> </td>
                                     <td th:text="${counts.get(course.id)}">  </td>
-                                    <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>      
+                                    <td> <a th:href="@{'course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -156,17 +156,17 @@
                 </div>
             </div>
         </div>
-        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 
-        <script src="/js/jquery.dropotron.min.js"></script>
+        <script src="js/jquery.dropotron.min.js"></script>
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/courses.js"></script>
-        <script src="/js/remembertabs.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/courses.js"></script>
+        <script src="js/remembertabs.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/dataTables.bootstrap.min.js"></script>
         <!--DataTables initialization-->
-        <script type="text/javascript" charset="utf8" src="/js/dataTables-language.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/dataTables-language.js"></script>
     </body>
 </html>

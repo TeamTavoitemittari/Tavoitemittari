@@ -4,12 +4,12 @@
     <title>Admin: ohjauspaneeli</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/general.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/general.css"/>
+    <link rel="stylesheet" type="text/css" href="css/course-panel.css"/>
+    <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css"/>
 
 </head>
 <body>
@@ -28,8 +28,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a th:text="${'Kaikki käyttäjät'}" th:href="@{'/admin'}"></a></li>
-                    <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'/admin/filter/' +${course.id}}"></a></li>
+                    <li><a th:text="${'Kaikki käyttäjät'}" th:href="@{'admin'}"></a></li>
+                    <li th:each="course : ${courses}"><a th:text="${course.name}" th:href="@{'admin/filter/' +${course.id}}"></a></li>
                 </ul>
             </div>
             <br/>
@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}">
-                    <td><a th:text="${user.name}" th:href="@{'/admin/' + ${user.id}}"></a></td>
+                    <td><a th:text="${user.name}" th:href="@{'admin/' + ${user.id}}"></a></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.userRole}"></td>
                     <td> <a th:href="'#'+${user.id}+'delete'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${user.id}+'delete'">Poista</a></td>
@@ -61,7 +61,7 @@
                                     <p>Jos poistat käyttäjän menetät kaikki kyseiseen käyttäjään liittyvät tiedot.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form th:method="delete" th:action="@{'/admin/'+${user.id}+'/delete'}">
+                                    <form th:method="delete" th:action="@{'admin/'+${user.id}+'/delete'}">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                         <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                                     </form>
@@ -78,16 +78,16 @@
 
     <a id="newuser" href='register/as_admin'>Lisää uusi käyttäjä</a>
 </div>
-    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 
-    <script src="/js/jquery.dropotron.min.js"></script>
+    <script src="js/jquery.dropotron.min.js"></script>
 
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/dataTables.bootstrap.min.js"></script>
     <!--DataTables initialization-->
-    <script type="text/javascript" charset="utf8" src="/js/dataTables-language.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/dataTables-language.js"></script>
 </body>
 
 </html>

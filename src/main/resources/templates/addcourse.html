@@ -4,9 +4,9 @@
     <title>Kurssien luonti ja muokkaus</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/addcourse.css"/>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/addcourse.css"/>
 
 
 
@@ -37,7 +37,7 @@
             </div>
 
             <div th:if="${updateCourseAsJson == null}">
-                <form th:action="@{/course}"  method="post">
+                <form th:action="@{course}"  method="post">
 
                     <input type="hidden" name="gradeLevels[0].grade" id="gradeLevels[0].grade" value="9-10"/>
                     <input type="hidden" name="gradeLevels[1].grade" id="gradeLevels[1].grade" value="7-8"/>
@@ -160,7 +160,7 @@
                             </td>
 
 
-                            <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" th:id="openEdit+${course.id}">Muokkaa</a></td>
+                            <td> <a th:href="'course/'+${course.id}+'/update'" class="btn btn-success" th:id="openEdit+${course.id}">Muokkaa</a></td>
 
                             <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
@@ -179,7 +179,7 @@
                                             <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                            <form th:method="delete" th:action="'course/'+${course.id}+'/delete'">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                 <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                                             </form>
@@ -200,7 +200,7 @@
                                             <p>Julkaistuasi kurssin sille voi liittyä oppilaita minkä jälkeen sitä ei voi enää muokata.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form th:method="put" th:action="'/course/'+${course.id}+'/publish'">
+                                            <form th:method="put" th:action="'course/'+${course.id}+'/publish'">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                 <button class="btn btn-primary" type="submit" name="publish">Julkaise</button>
                                             </form>
@@ -246,7 +246,7 @@
                         <tr th:each="course : ${coursesInUse}">
                             <td th:text="${course.name}"> </td>
 
-                            <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>
+                            <td> <a th:href="@{'course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>
 
                             <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
@@ -265,7 +265,7 @@
                                             <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                            <form th:method="delete" th:action="'course/'+${course.id}+'/delete'">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                 <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                                             </form>
@@ -305,7 +305,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="courses">
-                        <li th:each="oldCourse : ${coursesNotInUse}"><a th:href="'/course/'+${oldCourse.id}+'/update'" th:text="${oldCourse.name}">Kurssi1</a></li>
+                        <li th:each="oldCourse : ${coursesNotInUse}"><a th:href="'course/'+${oldCourse.id}+'/update'" th:text="${oldCourse.name}">Kurssi1</a></li>
                     </ul>
                 </div>
 
@@ -323,7 +323,7 @@
                     </div>
 
 
-                    <form th:action="@{'/course/'+${updateCourse.id}+'/update'}"  method="post">
+                    <form th:action="@{'course/'+${updateCourse.id}+'/update'}"  method="post">
 
                         <input type="hidden" name="gradeLevels[0].grade" id="gradeLevels[0].grade" value="9-10"/>
                         <input type="hidden" name="gradeLevels[1].grade" id="gradeLevels[1].grade" value="7-8"/>
@@ -411,10 +411,10 @@
         </div>
     </div>
     <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/dynamicform.js"></script>
-    <script src="/js/bootstrap.js"></script>
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/dynamicform.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script type="text/javascript" th:inline="javascript">
         updateCourseAsJson=[[${updateCourseAsJson}]];
         invalidCourseAsJson=[[${invalidCourseAsJson}]];
@@ -424,7 +424,7 @@
 
             $('#GetNewCourseTab').click(function() {
 
-                window.location.href = '/course';
+                window.location.href = 'course';
 
             });
 
