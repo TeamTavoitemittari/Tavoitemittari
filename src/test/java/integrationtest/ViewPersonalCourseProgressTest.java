@@ -55,14 +55,14 @@ public class ViewPersonalCourseProgressTest {
         login("s@a.com", "oppilas");
         joinCourse();
         getCourseProgressPage();
-        //System.out.println(driver.getPageSource());
+        
         WebElement checkProgress = driver.findElement(By.linkText("Mustat aukot"));
         checkProgress.click();
         assertTrue(driver.getPageSource().contains("Osaan"));
         element = driver.findElement(By.xpath("//button[contains(.,'Osaan')]"));
-        //assertFalse(element.getAttribute("id").equals("done"); osaan buttoneiden specifiointi!?
+        
         element.submit();
-       assertTrue(driver.findElement(By.xpath("//button[contains(.,'Osaan')]")).getCssValue("background-color").equals("rgb(132, 219, 183)"));
+        assertTrue(driver.findElement(By.xpath("//button[contains(.,'Osaan')]")).getCssValue("background-color").equals("rgb(132, 219, 183)"));
 
     }
 

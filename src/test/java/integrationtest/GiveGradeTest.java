@@ -62,7 +62,7 @@ public class GiveGradeTest {
         assertTrue(driver.getPageSource().contains("testgrade"));
         logout();
         login("s@a.com", "oppilas");
-        System.out.println(driver.getPageSource());
+        
         assertTrue(driver.getPageSource().contains("testgrade"));
         
     }
@@ -87,7 +87,7 @@ public class GiveGradeTest {
     }
 
     private void giveGrade(String grade) {
-        System.out.println(driver.getPageSource());
+        
         driver.findElement(By.id("openGrading" + userService.findUserByEmail("s@a.com").getId())).click();
         element = driver.findElement(By.id("textGrade"));
         element.sendKeys(grade);

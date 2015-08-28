@@ -54,7 +54,7 @@ public class JoinCourseAndViewCourseStudentsPage {
         teacherLogin();
         getCourseProgressPageAsTeacher();
         getCourseStudentPage();
-        System.out.println(driver.getCurrentUrl());
+        
         assertTrue(driver.getPageSource().contains("Tähtikuviot"));
     }
 

@@ -341,12 +341,12 @@ public class CourseService {
 
         course.setGradeLevels(levels);
 
-        User teacher = userService.findUserByEmail("ope@a.com");
+        User teacher = userService.createUser("ope@a.com", "ope", "Olli Opettaja", "teacher");
         course.setTeacher(teacher);
 
         addCourse(course);
 
-        User user = userService.findUserByEmail("oppilas@a.com");
+        User user = userService.createUser("oppilas@a.com", "oppilas", "Matti Meitsi", "student");
 
         CourseProgressTracker tracker = new CourseProgressTracker(user, course);
 

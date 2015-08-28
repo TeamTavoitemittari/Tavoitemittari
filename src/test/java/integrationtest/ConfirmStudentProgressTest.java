@@ -49,7 +49,7 @@ public class ConfirmStudentProgressTest {
     @Test
     public void teacherCanConfirmStudentReportedProgress() {
         courseService.createDummyCourse();
-        System.out.println(driver.getPageSource());
+        
         login(teacherEmail, teacherPassword);
         getCourseProgressPageAsTeacher();
         assertTrue(driver.getPageSource().contains("9-10"));

@@ -237,19 +237,16 @@
                     <table id="CoursesInUse" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Kurssin nimi:</th>
-                            <th></th>
-                            <th></th>
-                            <th>Poista:</th>
+                            <th class="col-sm-3">Kurssin nimi:</th>
+                            <th class="col-sm-3">Tavoitemittareihin:</th>
+                            <th class="col-sm-2">Poista:</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="course : ${coursesInUse}">
                             <td th:text="${course.name}"> </td>
-                            <td> </td>
 
-
-                            <td> </td>
+                            <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>
 
                             <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
