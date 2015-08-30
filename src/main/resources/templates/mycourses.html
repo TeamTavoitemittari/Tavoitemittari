@@ -4,12 +4,12 @@
         <title>Kurssit</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+        <!--[if lte IE 8]><link rel="stylesheet" th:href="@{/css/ie/v8.css}" /><![endif]-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-theme.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/course-panel.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/dataTables.bootstrap.css}"/>
 
     </head>
 
@@ -18,9 +18,9 @@
 
         <div class="container" sec:authorize="hasRole('student')">
             <ul class="nav nav-tabs" id="mycoursesTab">
-                <li class="active"><a data-toggle="tab" href="#owncourses" name="owncourses">Omat kurssit</a></li>
-                <li><a data-toggle="tab" href="#allcourses" name="allcourses">Kaikki kurssit</a></li>
-                <li><a data-toggle="tab" href="#completed" name="completed">Suoritukset</a></li>
+                <li class="active"><a data-toggle="tab" th:href="@{#owncourses}" name="owncourses">Omat kurssit</a></li>
+                <li><a data-toggle="tab" th:href="@{#allcourses}" name="allcourses">Kaikki kurssit</a></li>
+                <li><a data-toggle="tab" th:href="@{#completed}" name="completed">Suoritukset</a></li>
             </ul>
             <div class="tab-content">
                 <div id="owncourses" class="active tab-pane fade in active">
@@ -45,7 +45,7 @@
                                     <p th:text="${course.description}">Course description</p> 
                                 </div>
                                 <div class="panel-footer">
-                                    <form th:method="GET" th:action="'/course/' + ${course.id}">
+                                    <form th:method="GET" th:action="@{'/course/' + ${course.id}}">
                                         <a th:href="@{'/course/' + ${course.id}}" class="btn btn-success" th:id="'tavoitemittari' + ${course.id}">Tavoitemittariin</a> <button class="btn btn-default" role="button">Lisätietoja</button>
                                     </form>
                                 </div>
@@ -156,17 +156,18 @@
                 </div>
             </div>
         </div>
-        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+        <!--[if lte IE 8]><script th:src="@{/css/ie/html5shiv.js}"></script><![endif]-->
 
-        <script src="/js/jquery.dropotron.min.js"></script>
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/courses.js"></script>
-        <script src="/js/remembertabs.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+
+        <script th:src="@{/js/jquery.min.js}"></script>
+        <script th:src="@{/js/jquery.dropotron.min.js}"></script>
+        <script th:src="@{/js/bootstrap.js}"></script>
+        <script th:src="@{/js/courses.js}"></script>
+        <script th:src="@{/js/remembertabs.js}"></script>
+        <script type="text/javascript" charset="utf8" th:src="@{/js/jquery.dataTables.min.js}"></script>
+        <script type="text/javascript" charset="utf8" th:src="@{/js/dataTables.bootstrap.min.js}"></script>
         <!--DataTables initialization-->
-        <script type="text/javascript" charset="utf8" src="/js/dataTables-language.js"></script>
+        <script type="text/javascript" charset="utf8" th:src="@{/js/dataTables-language.js}"></script>
     </body>
 </html>

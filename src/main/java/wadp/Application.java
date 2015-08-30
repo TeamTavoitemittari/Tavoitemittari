@@ -18,15 +18,15 @@ import wadp.profiles.ProdProfile;
 @EnableScheduling
 @EnableAutoConfiguration
 @ComponentScan
-//@SpringBootApplication
+@SpringBootApplication
 @Import({DevProfile.class, ProdProfile.class})
 
-public class Application /*extends SpringBootServletInitializer*/ {
+public class Application extends SpringBootServletInitializer {
 
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//        return application.sources(Application.class);
-//    }
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

@@ -7,9 +7,9 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content=""/>
         <meta name="author" content=""/>
-        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="/css/narrow.css"/>
+        <!--[if lte IE 8]><link rel="stylesheet" th:href="@{/css/ie/v8.css}" /><![endif]-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/narrow.css}"/>
         <title>Tavoitemittari</title>
     </head>
 
@@ -73,14 +73,15 @@
                     
                 </form>
                 <br/>
-                <form action="/index">
+                <form th:action="@{/index}">
                     <button class="btn btn-xs btn-default center-block" type="submit">Takaisin</button>
                 </form>
                 <br/><br/>
 
             </div>
         </div>
-         <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/jquery.dropotron.min.js"></script>
+
+        <script th:src="@{/js/jquery.min.js}"></script>
+        <script th:src="@{/js/bootstrap.js}"></script>
+        <script th:src="@{/js/jquery.dropotron.min.js}"></script>
     </body></html>

@@ -4,11 +4,11 @@
         <title>Omat tiedot</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
+        <!--[if lte IE 8]><link rel="stylesheet" th:href="@{/css/ie/v8.css}" /><![endif]-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-theme.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/course-panel.css}"/>
     </head>
     <body>
 
@@ -50,7 +50,7 @@
                             <input type="password" class="form-control" name="confirmpassword" id="confirmpasswordpassword" placeholder="Salasana uudelleen"/>
                         </div>
                         <div>
-                            <button class="btn btn-success" role="button" type="submit">Vaihda salasana</button>  <a href="/userdetails_info"><button type="button" class="btn btn-default" role="button">Lisätietoja</button></a>
+                            <button class="btn btn-success" role="button" type="submit">Vaihda salasana</button>  <a th:href="@{/userdetails_info}"><button type="button" class="btn btn-default" role="button">Lisätietoja</button></a>
                         </div>
                     </form>
                 </div>
@@ -61,10 +61,10 @@
 
 
         </div>
-        <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/jquery.dropotron.min.js"></script>
+        <!--[if lte IE 8]><script th:src="@{/css/ie/html5shiv.js}"></script><![endif]-->
+        <script th:src="@{/js/jquery.min.js}"></script>
+        <script th:src="@{/js/bootstrap.js}"></script>
+        <script th:src="@{/js/jquery.dropotron.min.js}"></script>
     </body>
 
 </html>

@@ -9,12 +9,9 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content=""/>
         <meta name="author" content=""/>
-        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-        <link rel="stylesheet" type="text/css" href="/css/course.css" />
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-
-        <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-
+        <!--[if lte IE 8]><link rel="stylesheet" th:href="@{/css/ie/v8.css}" /><![endif]-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/course.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
 
         <!--These seem to interfere with css files needed for teacher 
         confirming  students' progress
@@ -22,10 +19,10 @@
         <!-->
 
 
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/general.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/course-panel.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>    
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/course-panel.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/dataTables.bootstrap.css}"/>
 
         <title>Tavoitemittari</title>
 
@@ -43,9 +40,9 @@
             </div>
             <div class="row" th:if="${course != null}">
                 <ul class="nav nav-tabs" id="courseCommentTab">
-                    <li class="active"><a data-toggle="tab" href="#goalometer">Tavoitemittari</a></li>
-                    <li><a data-toggle="tab" id="clickMe" href="#comments" name="commenttab">Kommentit</a></li>
-                    <li sec:authorize="hasRole('teacher')"><a data-toggle="tab" href="#students" name="studenttab" >Oppilaat</a></li>
+                    <li class="active"><a data-toggle="tab" th:href="@{#goalometer}">Tavoitemittari</a></li>
+                    <li><a data-toggle="tab" id="clickMe" th:href="@{#comments}" name="commenttab">Kommentit</a></li>
+                    <li sec:authorize="hasRole('teacher')"><a data-toggle="tab" th:href="@{#students}" name="studenttab" >Oppilaat</a></li>
                 </ul>
                 <!-- Goal-o-meter tab where students mark their progress and the teacher confirms them  -->
                 <div class="tab-content">
@@ -56,7 +53,7 @@
                                 <div th:case="'TEACHER_CONFIRMED'" class="panel panel-primary" style="border-color: #4EC748">
                                     <div class="panel-heading" style="background-color: #4EC748; border-bottom-color: #4EC748">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                            <a data-toggle="collapse" th:href="@{'#' + ${goal.id}}" th:text="${goal.name}">Ympyrä</a>
                                         </h4>
                                     </div>
                                     <div th:id="${goal.id}" class="panel-collapse collapse">
@@ -105,7 +102,7 @@
                                 <div th:case="'STUDENT_CONFIRMED'" class="panel panel-primary" style="border-color: #84DBB7">
                                     <div class="panel-heading" style="background-color: #84DBB7; border-bottom-color: #84DBB7">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                            <a data-toggle="collapse" th:href="@{'#' + ${goal.id}}" th:text="${goal.name}">Ympyrä</a>
                                         </h4>
                                     </div>
                                     <div th:id="${goal.id}" class="panel-collapse collapse">
@@ -154,7 +151,7 @@
                                 <div th:case="*" class="panel panel-primary">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" th:href="'#' + ${goal.id}" th:text="${goal.name}">Ympyrä</a>
+                                            <a data-toggle="collapse" th:href="@{'#' + ${goal.id}}" th:text="${goal.name}">Ympyrä</a>
                                         </h4>
                                     </div>
                                     <div th:id="${goal.id}" class="panel-collapse collapse">
@@ -212,7 +209,7 @@
                             <div class="panel panel-success" th:each="goal : ${gradeLevel.value.goals}">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" th:href="'#' + ${goal.key.id} + 'comment'" th:text="${goal.key.name}" >Ympyrä</a>
+                                        <a data-toggle="collapse" th:href="@{'#' + ${goal.key.id} + 'comment'}" th:text="${goal.key.name}" >Ympyrä</a>
                                     </h4>
                                 </div>
                                 <div th:id="${goal.key.id} + 'comment'" class="panel-collapse collapse">
@@ -227,7 +224,7 @@
                                                     <input type="text" class="form-control"   th:name="comment" placeholder="Lisää kommentti"  th:id="'comment'+ ${skill.id}"/>
                                                     <div class="btn-group" style="margin:8px">
                                                         <button class="btn btn-success" th:id="'save'+ ${skill.id}" type="submit">Tallenna</button>
-                                                        <button sec:authorize="hasRole('teacher')" type="button" th:href="'#'+${skill.id}+'empty'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${skill.id}+'empty'">Tyhjennä</button>
+                                                        <button sec:authorize="hasRole('teacher')" type="button" th:href="@{'#'+${skill.id}+'empty'}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${skill.id}+'empty'">Tyhjennä</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -281,8 +278,8 @@
                                                 <td><a th:text="${studentGrade.key.name}" th:href="@{'/course/'+${course.id}+'/' + ${studentGrade.key.id}}" th:id="goalometer+${studentGrade.key.id}"></a></td>
                                                 <td th:text="${studentGrade.key.email}"></td>
                                                 <td><div><span th:if="${studentGrade.value!=null}" th:text="''+${studentGrade.value.grade}+'  '"></span>
-                                                        <span><button type="button" th:if="${studentGrade.value!=null}" th:href="'#'+${studentGrade.key.id}+'updateGrade'" class="glyphicon glyphicon-pencil" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'updateGrade'"></button></span></div>
-                                                    <a th:if="${studentGrade.value==null}" th:href="'#'+${studentGrade.key.id}+'grade'" class="btn btn-default" data-toggle="modal"  th:id="openGrading+${studentGrade.key.id}"   th:attr="data-target='#'+${studentGrade.key.id}+'grade'">Arvostele</a>
+                                                        <span><button type="button" th:if="${studentGrade.value!=null}" th:href="@{'#'+${studentGrade.key.id}+'updateGrade'}" class="glyphicon glyphicon-pencil" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'updateGrade'"></button></span></div>
+                                                    <a th:if="${studentGrade.value==null}" th:href="@{'#'+${studentGrade.key.id}+'grade'}" class="btn btn-default" data-toggle="modal"  th:id="openGrading+${studentGrade.key.id}"   th:attr="data-target='#'+${studentGrade.key.id}+'grade'">Arvostele</a>
                                                 </td>
                                                 <div th:id="${studentGrade.key.id}+'updateGrade'" class="modal fade">
                                                     <div class="modal-dialog">
@@ -297,7 +294,7 @@
                                                             </div>
                                                             <div class="modal-footer">
 
-                                                                <form th:method="post" th:action="'/course/'+${studentGrade.key.id}+'/' + ${course.id}+'/grade/edit'" id="updateGrade">
+                                                                <form th:method="post" th:action="@{'/course/'+${studentGrade.key.id}+'/' + ${course.id}+'/grade/edit'}" id="updateGrade">
                                                                     <input th:if="${studentGrade.value!=null}" th:value="${studentGrade.value.grade}" type="text" name="updatedGrade" id="updatedGrade"/>
                                                                     <button class="btn btn-primary" type="submit" name="updateButton">Arvostele</button>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
@@ -322,7 +319,7 @@
                                                             </div>
                                                             <div class="modal-footer">
 
-                                                                <form th:method="post" th:action="'/course/'+${studentGrade.key.id}+'/' + ${course.id}+'/grade'" id="postGrade">
+                                                                <form th:method="post" th:action="@{'/course/'+${studentGrade.key.id}+'/' + ${course.id}+'/grade'}" id="postGrade">
                                                                     <input type="text" name="textGrade" id="textGrade"/>
                                                                     <button class="btn btn-primary" type="submit" name="asd">Arvostele</button>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
@@ -336,7 +333,7 @@
 
 
 
-                                                <td> <a th:href="'#'+${studentGrade.key.id}+'update'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'update'">Poista</a>      
+                                                <td> <a th:href="@{'#'+${studentGrade.key.id}+'update'}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${studentGrade.key.id}+'update'">Poista</a>
                                                 </td>
 
                                                 <div th:id="${studentGrade.key.id}+'update'" class="modal fade">
@@ -352,7 +349,7 @@
                                                             </div>
                                                             <div class="modal-footer">
 
-                                                                <form th:method="delete" th:action="'/student/'+${course.id}+'/' + ${studentGrade.key.id}+'/remove'">
+                                                                <form th:method="delete" th:action="@{'/student/'+${course.id}+'/' + ${studentGrade.key.id}+'/remove'}">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                                     <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                                                                 </form>  
@@ -388,19 +385,19 @@
 
 
 
-            <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+            <!--[if lte IE 8]><script th:src="@{/css/ie/html5shiv.js}"></script><![endif]-->
 
 
-            <script src="/js/jquery.min.js"></script>
-            <script src="/js/course.js"></script>
-            <script src="/js/bootstrap.min.js"></script>
-            <script src="/js/jquery.dropotron.min.js"></script>
-            <!--TÄMÄ HAJOTTAA TESTIT SYYSTÄ X <script src="/js/init.js"></script><!-->
-            <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.min.js"></script>
-            <script type="text/javascript" charset="utf8" src="/js/dataTables.bootstrap.min.js"></script>
+            <script th:src="@{/js/jquery.min.js}"></script>
+            <script th:src="@{/js/course.js}"></script>
+            <script th:src="@{/js/bootstrap.min.js}"></script>
+            <script th:src="@{/js/jquery.dropotron.min.js}"></script>
+            <!--{TÄMÄ HAJOTTAA TESTIT SYYSTÄ X <script th:src="/js/init.js"></script><!}-->
+            <script type="text/javascript" charset="utf8" th:src="@{/js/jquery.dataTables.min.js}"></script>
+            <script type="text/javascript" charset="utf8" th:src="@{/js/dataTables.bootstrap.min.js}"></script>
             <!--DataTables initialization-->    
-            <script type="text/javascript" charset="utf8" src="/js/dataTables-language.js"></script>
+            <script type="text/javascript" charset="utf8" th:src="@{/js/dataTables-language.js}"></script>
             <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-            <script src="/js/remembertabs.js"></script>
+            <script th:src="@{/js/remembertabs.js}"></script>
         </div>
     </body></html>

@@ -4,9 +4,9 @@
     <title>Kurssien luonti ja muokkaus</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/addcourse.css"/>
+    <!--[if lte IE 8]><link rel="stylesheet" th:href="@{/css/ie/v8.css}" /><![endif]-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/addcourse.css}"/>
 
 
 
@@ -18,9 +18,10 @@
 
 <div class="container">
     <ul class="nav nav-tabs" id="courseCommentTab">
+        <!-- the empty href will break the page on the server. So I had to change it -->
         <li class="active"><a data-toggle="tab" href="" name="new"  id="GetNewCourseTab" >Luo uusi kurssi</a></li>
-        <li><a data-toggle="tab" href="#owncourses" name="owncourses">Omat kurssit</a></li>
-        <li><a data-toggle="tab" href="#update" name="update">Muokkaa kurssia</a></li>
+        <li><a data-toggle="tab" th:href="@{#owncourses}" name="owncourses">Omat kurssit</a></li>
+        <li><a data-toggle="tab" th:href="@{#update}" name="update">Muokkaa kurssia</a></li>
     </ul>
     <div class="tab-content">
 
@@ -156,13 +157,13 @@
                         <tbody>
                         <tr th:each="course : ${coursesNotInUse}">
                             <td th:text="${course.name}"> </td>
-                            <td>  <a th:href="'#'+${course.id}+'publish'" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${course.id}+'publish'" th:id="openPublish+${course.id}">Julkaise</a>
+                            <td>  <a th:href="@{'#'+${course.id}+'publish'}" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#'+${course.id}+'publish'" th:id="openPublish+${course.id}">Julkaise</a>
                             </td>
 
 
-                            <td> <a th:href="'/course/'+${course.id}+'/update'" class="btn btn-success" th:id="openEdit+${course.id}">Muokkaa</a></td>
+                            <td> <a th:href="@{'/course/'+${course.id}+'/update'}" class="btn btn-success" th:id="openEdit+${course.id}">Muokkaa</a></td>
 
-                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
+                            <td> <a th:href="@{'#'+${course.id}+'remove'}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
 
 
@@ -179,7 +180,7 @@
                                             <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                            <form th:method="delete" th:action="@{'/course/'+${course.id}+'/delete'}">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                 <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                                             </form>
@@ -200,7 +201,7 @@
                                             <p>Julkaistuasi kurssin sille voi liittyä oppilaita minkä jälkeen sitä ei voi enää muokata.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form th:method="put" th:action="'/course/'+${course.id}+'/publish'">
+                                            <form th:method="put" th:action="@{'/course/'+${course.id}+'/publish'}">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                 <button class="btn btn-primary" type="submit" name="publish">Julkaise</button>
                                             </form>
@@ -248,7 +249,7 @@
 
                             <td> <a th:href="@{'/course/' +${course.id}+ '/goalometer'}" class="btn btn-success" th:id="'goalometers' + ${course.id}">Tavoitemittareihin</a></td>
 
-                            <td> <a th:href="'#'+${course.id}+'remove'" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
+                            <td> <a th:href="@{'#'+${course.id}+'remove'}" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#'+${course.id}+'remove'" th:id="openDelete+${course.id}">Poista</a>
                             </td>
 
 
@@ -265,7 +266,7 @@
                                             <p>Jos poistat kurssit menetät kaikki kyseiseen kurssiin liittyvät tiedot.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form th:method="delete" th:action="'/course/'+${course.id}+'/delete'">
+                                            <form th:method="delete" th:action="@{'/course/'+${course.id}+'/delete'}">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
                                                 <button class="btn btn-danger" type="submit" name="remove">Poista</button>
                                             </form>
@@ -305,7 +306,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="courses">
-                        <li th:each="oldCourse : ${coursesNotInUse}"><a th:href="'/course/'+${oldCourse.id}+'/update'" th:text="${oldCourse.name}">Kurssi1</a></li>
+                        <li th:each="oldCourse : ${coursesNotInUse}"><a th:href="@{'/course/'+${oldCourse.id}+'/update'}" th:text="${oldCourse.name}">Kurssi1</a></li>
                     </ul>
                 </div>
 
@@ -411,23 +412,23 @@
         </div>
     </div>
     <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh-->
-    <!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/dynamicform.js"></script>
-    <script src="/js/bootstrap.js"></script>
+    <!--[if lte IE 8]><script th:src="@{/css/ie/html5shiv.js}"></script><![endif]-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/dynamicform.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
     <script type="text/javascript" th:inline="javascript">
         updateCourseAsJson=[[${updateCourseAsJson}]];
         invalidCourseAsJson=[[${invalidCourseAsJson}]];
     </script>
+    the script causes issues with course creation when packaged inside a war file
     <script>
         $(document).ready(function() {
 
             $('#GetNewCourseTab').click(function() {
 
-                window.location.href = '/course';
+                window.location.href = 'course';
 
             });
-
             if(location.hash) {
                 $('a[href=' + location.hash + ']').tab('show');
             }
