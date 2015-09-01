@@ -16,6 +16,8 @@ The application is programmed in Java, HTML and JavaScript.
 An executable jar with an in-memory database and embedded tomcat server can be found the google drive link below. If you want to make changes and build your own, just change the pom to create jar files and build the jar file with maven.
 
 ### Using your postgresql database
+this setup has been tested with tomcat 8 and postgresql versions 9.3.9 and 9.4.1
+
 clone the database ready version with
 
 ```
@@ -46,7 +48,6 @@ On bash this should work
 ```
 mvn clean -Dmaven.test.skip=true install
 ```
-
 # Development information
 
 [Google Drive - dokumentaatio ja luonnokset](https://drive.google.com/folderview?id=0Bx5J5FlNtXT7fkFiaU5LUlQyMzVnT3RCekU2OGZWNFRkNE1tLW51c2VCUmtnZmhjS2Nka0k&usp=sharing_eid&invite=CKftxeIE)
