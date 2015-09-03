@@ -33,7 +33,7 @@ public class RegisterController {
     private void init() {
         if (userService.list().isEmpty()) {
             userService.clearUsers();
-            userService.createUser("admin@a.com", "admin", "Eve Lappalainen", "admin");
+            userService.createUser("eventavoitemittari", "admin", "Eve Lappalainen", "admin");
         }
     }
 
