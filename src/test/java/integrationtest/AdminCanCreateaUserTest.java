@@ -11,19 +11,26 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.openqa.selenium.StaleElementReferenceException;
 import wadp.Application;
 
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import wadp.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @WebAppConfiguration
 @IntegrationTest({"server.port=8080"})
 public class AdminCanCreateaUserTest {
 
     private HtmlUnitDriver driver;
     private WebElement element;
+    
+    @Autowired
+    private UserService userService;
 
 
     public AdminCanCreateaUserTest() {
@@ -31,6 +38,11 @@ public class AdminCanCreateaUserTest {
         driver.setJavascriptEnabled(true);
     }
 
+      @Before
+    public void setUp() {
+        createDummyAdmin();
+    }
+    
     @Test
     public void AdminCanCreateaTeacherAccount() {
         driver.get("http://localhost:8080/index");
@@ -98,6 +110,10 @@ public class AdminCanCreateaUserTest {
         element.sendKeys(password);
         element = driver.findElement(By.xpath("//button[contains(.,'Kirjaudu sisään')]"));
         element.click();
+    }
+    
+    private void createDummyAdmin(){
+        userService.createUser("admin@a.com", "admin", "Arto Admin", "admin");
     }
 
 
